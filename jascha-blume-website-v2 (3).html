@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jascha Blume — Sensory Translation Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Spectral:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --color-bg: #0b0b0c;
+            --color-surface: #1a1a1c;
+            --color-text: #f4f4f2;
+            --color-muted: #9a9a96;
+            --color-accent: #b4f000;
+            --color-border: #2a2a2c;
+            
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Spectral', serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-weight: 400;
+            overflow-x: hidden;
+        }
+        
+        /* Typography */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.1;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            letter-spacing: -0.02em;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            letter-spacing: -0.01em;
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        
+        p {
+            font-size: clamp(1.0625rem, 2vw, 1.1875rem);
+            max-width: 70ch;
+        }
+        
+        .mono {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        /* Layout */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-accent);
+            color: var(--color-bg);
+            padding: 0.5rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            text-decoration: none;
+            z-index: 10000;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 clamp(1.5rem, 5vw, 4rem);
+        }
+        
+        section {
+            position: relative;
+            padding: var(--spacing-xl) 0;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        section:first-of-type {
+            border-top: none;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
+            transition: background 0.3s ease;
+        }
+        
+        header.scrolled {
+            background: rgba(11, 11, 12, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav a {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 6rem;
+            overflow: hidden;
+        }
+        
+        .signal-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-label {
+            color: var(--color-accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.2s;
+        }
+        
+        .hero h1 {
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.4s;
+        }
+        
+        .hero-subtitle {
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            color: var(--color-muted);
+            margin-bottom: 3rem;
+            max-width: 60ch;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.6s;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.8s;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            border: 1px solid;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: var(--color-bg);
+            border-color: var(--color-accent);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(180, 240, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-text);
+            border-color: var(--color-border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(180, 240, 0, 0.1);
+        }
+        
+        .trust-signals {
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--color-border);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 1s;
+        }
+        
+        .trust-label {
+            color: var(--color-muted);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .partners {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .partner {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            letter-spacing: 0.05em;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        .partner:hover {
+            opacity: 1;
+        }
+        
+        /* Worldview Section */
+        .worldview {
+            background-color: var(--color-surface);
+        }
+        
+        .section-label {
+            color: var(--color-accent);
+            margin-bottom: 2rem;
+        }
+        
+        .worldview-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+        
+        .tension {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .tension.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tension-number {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+        }
+        
+        .tension h3 {
+            margin-bottom: 1.5rem;
+            color: var(--color-text);
+        }
+        
+        .tension p {
+            color: var(--color-muted);
+        }
+        
+        /* Practice Section */
+        .practice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .practice-item {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--color-surface) 0%, transparent 100%);
+            border: 1px solid var(--color-border);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+            position: relative;
+        }
+        
+        .practice-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .practice-item:hover {
+            border-color: var(--color-accent);
+        }
+        
+        .practice-index {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        
+        .practice-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .practice-item p {
+            color: var(--color-muted);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .practice-disruption {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-accent);
+            letter-spacing: 0.05em;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+            opacity: 0.8;
+        }
+        
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            gap: 6rem;
+            margin-top: 4rem;
+        }
+        
+        .project {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .project.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project:nth-child(even) {
+            direction: rtl;
+        }
+        
+        .project:nth-child(even) > * {
+            direction: ltr;
+        }
+        
+        .project-visual {
+            position: relative;
+            aspect-ratio: 4/3;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+        
+        .project:hover .project-visual {
+            border-color: var(--color-accent);
+        }
+        
+        .project-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 700;
+            color: var(--color-text);
+            letter-spacing: -0.02em;
+            text-align: center;
+            padding: 2rem;
+            line-height: 1.2;
+        }
+        
+        .project-info {
+            padding: 2rem 0;
+        }
+        
+        .project-meta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+        
+        .project-info h3 {
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-info p {
+            color: var(--color-muted);
+            margin-bottom: 2rem;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .tag {
+            padding: 0.5rem 1rem;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            letter-spacing: 0.1em;
+            color: var(--color-muted);
+        }
+        
+        /* Impact Section */
+        .impact {
+            background-color: var(--color-surface);
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .metric {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .metric.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .metric-value {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-family: var(--font-display);
+            color: var(--color-accent);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            letter-spacing: 0.1em;
+        }
+        
+        .partners-list {
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .institution {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-muted);
+            letter-spacing: 0.05em;
+            padding: 1rem;
+            border: 1px solid var(--color-border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .institution:hover {
+            border-color: var(--color-accent);
+            color: var(--color-text);
+        }
+        
+        /* Collaboration Section */
+        .collaboration-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .collaboration h2 {
+            margin-bottom: 2rem;
+        }
+        
+        .collaboration-intro {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--color-muted);
+            margin-bottom: 4rem;
+        }
+        
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+            text-align: left;
+        }
+        
+        .audience-item {
+            padding: 2rem;
+            border: 1px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+        
+        .audience-item:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+        }
+        
+        .audience-item h4 {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--color-text);
+        }
+        
+        .audience-item p {
+            font-size: 0.875rem;
+            color: var(--color-muted);
+        }
+        
+        /* Footer */
+        .accessibility-statement {
+            background-color: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            padding: 3rem 0;
+        }
+        
+        .accessibility-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .accessibility-statement h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .accessibility-statement p {
+            color: var(--color-muted);
+            margin-bottom: 1.5rem;
+        }
+        
+        .accessibility-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .accessibility-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .feature-marker {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            letter-spacing: 0.1em;
+            min-width: 2rem;
+        }
+        
+        .feature-text {
+            font-size: 0.875rem;
+            color: var(--color-muted);
+            line-height: 1.6;
+        }
+        
+        footer {
+            border-top: 1px solid var(--color-border);
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+        
+        .footer-section h4 {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--color-accent);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .footer-links a {
+            color: var(--color-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        .language-toggle {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .language-toggle button {
+            background: none;
+            border: 1px solid var(--color-border);
+            color: var(--color-muted);
+            padding: 0.5rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .language-toggle button:hover,
+        .language-toggle button.active {
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            padding: 0.75rem 1rem;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+        }
+        
+        .newsletter-form input::placeholder {
+            color: var(--color-muted);
+        }
+        
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+        
+        .newsletter-form button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--color-accent);
+            color: var(--color-bg);
+            border: none;
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: transparent;
+            color: var(--color-accent);
+            border: 1px solid var(--color-accent);
+        }
+        
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .copyright {
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            color: var(--color-muted);
+            letter-spacing: 0.1em;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-links a {
+            font-family: var(--font-mono);
+            font-size: 0.625rem;
+            color: var(--color-muted);
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--color-accent);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Accessibility: Focus States */
+        *:focus {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 4px;
+        }
+        
+        *:focus:not(:focus-visible) {
+            outline: none;
+        }
+        
+        *:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 4px;
+        }
+        
+        /* Accessibility: Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .signal-canvas {
+                display: none;
+            }
+            
+            .tension,
+            .practice-item,
+            .project,
+            .metric {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .project {
+                grid-template-columns: 1fr;
+            }
+            
+            .project:nth-child(even) {
+                direction: ltr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">JASCHA BLUME</a>
+                <nav aria-label="Main navigation">
+                    <a href="#practice">PRACTICE</a>
+                    <a href="#projects">WORK</a>
+                    <a href="#impact">IMPACT</a>
+                    <a href="#contact">CONTACT</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <canvas class="signal-canvas" id="signalCanvas"></canvas>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="mono hero-label">SENSORY TRANSLATION LAB</div>
+                    <h1>I translate between languages, forms, and systems.</h1>
+                    <p class="hero-subtitle">
+                        Dutch-Italian Deaf artist and cultural coordinator based between Amsterdam and Bologna, working at the intersection of accessibility, film, and cultural infrastructure.
+                    </p>
+                    <div class="cta-group">
+                        <a href="#projects" class="btn btn-primary">EXPLORE THE WORK</a>
+                        <a href="#contact" class="btn btn-secondary">START A CONVERSATION</a>
+                    </div>
+                    <div class="trust-signals">
+                        <div class="trust-label mono">RECOGNIZED BY</div>
+                        <div class="partners">
+                            <span class="partner">VAN ABBEMUSEUM</span>
+                            <span class="partner">EU CULTURE MOVES</span>
+                            <span class="partner">BOLOGNA DESIGN WEEK</span>
+                            <span class="partner">IDFA DOCUMENTARY FESTIVAL</span>
+                            <span class="partner">CREATIVE EUROPE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Worldview Section -->
+        <section class="worldview">
+            <div class="container">
+                <div class="mono section-label">CULTURAL TENSIONS</div>
+                <h2>Accessibility is not an afterthought.<br>It's a design philosophy.</h2>
+                <div class="worldview-grid">
+                    <div class="tension">
+                        <div class="tension-number">01</div>
+                        <h3>Institutions design for the majority, then retrofit for the rest.</h3>
+                        <p>Museums, festivals, and cultural spaces treat accessibility as compliance—checkbox accommodations bolted onto finished products. This approach reveals a fundamental misunderstanding: accessibility constraints often generate the most innovative design solutions.</p>
+                    </div>
+                    <div class="tension">
+                        <div class="tension-number">02</div>
+                        <h3>Deaf perception exposes blind spots in dominant systems.</h3>
+                        <p>When you build culture primarily through sound, you miss the visual frequencies, spatial rhythms, and tactile signals that shape how millions experience the world. Deafness isn't absence—it's a different sensory hierarchy that reveals what hearing-centric design overlooks.</p>
+                    </div>
+                    <div class="tension">
+                        <div class="tension-number">03</div>
+                        <h3>Translation is not simplification. It's transformation.</h3>
+                        <p>Every cultural and sensory translation changes meaning. Rather than treating this as loss, I work with translation as a creative force—where shifting between Dutch, Italian, Sign Language, and visual systems generates new forms of knowing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section id="practice">
+            <div class="container">
+                <div class="mono section-label">PRACTICE AREAS</div>
+                <h2>Cross-modal translation<br>across five disciplines</h2>
+                <div class="practice-grid">
+                    <div class="practice-item">
+                        <span class="practice-index">[01]</span>
+                        <h3>Film & Documentary</h3>
+                        <p>Deaf-led storytelling exploring language, identity, and sensory experience. Work featured at international festivals including IDFA and in programs at Van Abbemuseum.</p>
+                        <div class="practice-disruption">DISRUPTS → Documentary as hearing-centric narrative</div>
+                    </div>
+                    <div class="practice-item">
+                        <span class="practice-index">[02]</span>
+                        <h3>Multisensory Installation</h3>
+                        <p>Visual performance and VJ work that translates sound into spatial patterns, creating immersive environments accessible across sensory modalities.</p>
+                        <div class="practice-disruption">DISRUPTS → Sound as the primary performance medium</div>
+                    </div>
+                    <div class="practice-item">
+                        <span class="practice-index">[03]</span>
+                        <h3>Inclusive Cooperatives</h3>
+                        <p>Co-founder of L'Altro Spazio, a cultural bar in Bologna with majority staff from vulnerable backgrounds—exploring how inclusive hiring structures can support both social impact and operational sustainability.</p>
+                        <div class="practice-disruption">DISRUPTS → "Charity model" approaches to disability employment</div>
+                    </div>
+                    <div class="practice-item">
+                        <span class="practice-index">[04]</span>
+                        <h3>Accessibility Innovation</h3>
+                        <p>Working with institutions on accessibility planning, prototyping sign language interfaces, and developing tools that center disabled perspectives from inception.</p>
+                        <div class="practice-disruption">DISRUPTS → Accessibility as compliance retrofit</div>
+                    </div>
+                    <div class="practice-item">
+                        <span class="practice-index">[05]</span>
+                        <h3>Cultural Infrastructure</h3>
+                        <p>Coordinating international artist residencies within EU-funded programs, managing logistics and accessibility requirements.</p>
+                        <div class="practice-disruption">DISRUPTS → Mobility as individual artist privilege</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="container">
+                <div class="mono section-label">SELECTED WORK</div>
+                <h2>Projects that translate<br>perception into systems</h2>
+                <div class="projects-grid">
+                    <div class="project">
+                        <div class="project-visual">
+                            <div class="project-placeholder">I SIGN, I LIVE (2012)</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">DOCUMENTARY FILM</div>
+                            <h3>I Sign, I Live</h3>
+                            <p>Feature documentary following deaf individuals across cultures, examining how sign language shapes identity, community, and ways of knowing. Premiered at IDFA, featured at Van Abbemuseum's Young Art Night.</p>
+                            <div class="project-tags">
+                                <span class="tag">SIGN LANGUAGE</span>
+                                <span class="tag">IDENTITY</span>
+                                <span class="tag">CROSS-CULTURAL</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project">
+                        <div class="project-visual">
+                            <div class="project-placeholder">SIGN LANGUAGE INTERFACES</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">ACCESSIBILITY TECHNOLOGY</div>
+                            <h3>Sign Language Interface Prototype</h3>
+                            <p>Experimental interface prototyping exploring sign language as a visual communication system for digital environments. Research-stage work investigating how Deaf-led design thinking can reshape human-computer interaction beyond voice and text paradigms.</p>
+                            <div class="project-tags">
+                                <span class="tag">PROTOTYPE</span>
+                                <span class="tag">SIGN LANGUAGE</span>
+                                <span class="tag">AI RESEARCH</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project">
+                        <div class="project-visual">
+                            <div class="project-placeholder">L'ALTRO SPAZIO</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">SOCIAL COOPERATIVE</div>
+                            <h3>L'Altro Spazio</h3>
+                            <p>Cultural bar and event space in Bologna with majority staff from vulnerable backgrounds. Combines radical inclusion with financial sustainability, hosting cultural programming throughout the year.</p>
+                            <div class="project-tags">
+                                <span class="tag">COOPERATIVE</span>
+                                <span class="tag">CULTURAL SPACE</span>
+                                <span class="tag">INCLUSION</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project">
+                        <div class="project-visual">
+                            <div class="project-placeholder">CENA AL BUIO</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">SENSORY EXPERIENCE</div>
+                            <h3>Cena al Buio</h3>
+                            <p>Immersive dining experience in complete darkness, guided by blind staff. Participants experience food, space, and social interaction through non-visual senses—an exploration of sensory translation through direct experience.</p>
+                            <div class="project-tags">
+                                <span class="tag">MULTISENSORY</span>
+                                <span class="tag">ACCESSIBILITY</span>
+                                <span class="tag">EXPERIENCE</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project">
+                        <div class="project-visual">
+                            <div class="project-placeholder">RADICAL INCLUSION</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">DESIGN CONCEPT</div>
+                            <h3>Radical Inclusion</h3>
+                            <p>Design concept for disability-positive fashion line centered on sign language and Deaf culture. Developing brand strategy and initial product designs that challenge "inspiration porn" aesthetics and center community representation.</p>
+                            <div class="project-tags">
+                                <span class="tag">FASHION</span>
+                                <span class="tag">INCLUSION</span>
+                                <span class="tag">DESIGN</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project">
+                        <div class="project-visual">
+                            <div class="project-placeholder">MULTISENSORY RESIDENCY</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">ARTIST RESIDENCY</div>
+                            <h3>Multisensory Residency Bologna</h3>
+                            <p>Curated and hosted a multisensory artist residency in Bologna, funded by Culture Moves Europe. Designed and managed an accessibility-first residency structure focused on cross-sensory translation and inclusive working conditions for international artists.</p>
+                            <div class="project-tags">
+                                <span class="tag">RESIDENCY</span>
+                                <span class="tag">EU FUNDED</span>
+                                <span class="tag">ACCESSIBILITY</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section id="impact" class="impact">
+            <div class="container">
+                <div class="mono section-label">IMPACT & REACH</div>
+                <h2>Measured outcomes,<br>not just intentions</h2>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <div class="metric-value">MAJORITY</div>
+                        <div class="metric-label">STAFF FROM VULNERABLE BACKGROUNDS</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">INTL</div>
+                        <div class="metric-label">INTERNATIONAL COLLABORATIONS</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">ONGOING</div>
+                        <div class="metric-label">EU-FUNDED PROJECTS INVOLVED IN</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">LOCAL</div>
+                        <div class="metric-label">AUDIENCES REACHED</div>
+                    </div>
+                </div>
+                <div class="partners-list">
+                    <div class="mono section-label">INSTITUTIONAL CONTEXT & COLLABORATIONS</div>
+                    <div class="partners-grid">
+                        <div class="institution">VAN ABBEMUSEUM</div>
+                        <div class="institution">CREATIVE EUROPE</div>
+                        <div class="institution">IDFA</div>
+                        <div class="institution">BOLOGNA DESIGN WEEK</div>
+                        <div class="institution">GOETHE INSTITUT</div>
+                        <div class="institution">DUTCH EMBASSY</div>
+                        <div class="institution">COMUNE DI BOLOGNA</div>
+                        <div class="institution">EUROPEAN COMMISSION</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaboration Section -->
+        <section id="contact" class="collaboration">
+            <div class="container">
+                <div class="collaboration-content">
+                    <div class="mono section-label">COLLABORATION</div>
+                    <h2>Let's build something<br>that matters</h2>
+                    <p class="collaboration-intro">
+                        I work with institutions, funders, and innovators who understand that accessibility isn't a constraint—it's a catalyst for better design.
+                    </p>
+                    <div class="audience-grid">
+                        <div class="audience-item">
+                            <h4>Cultural Institutions</h4>
+                            <p>Museums, festivals, and venues seeking authentic accessibility strategies beyond compliance.</p>
+                        </div>
+                        <div class="audience-item">
+                            <h4>EU Funders & Policymakers</h4>
+                            <p>Programs supporting cross-border cultural mobility and inclusive infrastructure.</p>
+                        </div>
+                        <div class="audience-item">
+                            <h4>Tech & Research Labs</h4>
+                            <p>Teams building AI, interfaces, or tools that need deaf-led design thinking.</p>
+                        </div>
+                        <div class="audience-item">
+                            <h4>Artists & Collaborators</h4>
+                            <p>Creators working at intersections of accessibility, film, performance, and systems.</p>
+                        </div>
+                    </div>
+                    <div class="cta-group" style="justify-content: center;">
+                        <a href="/cdn-cgi/l/email-protection#98f2f9ebfbf0f9d8fde0f9f5e8f4fdb6fbf7f5" class="btn btn-primary">START A CONVERSATION</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Accessibility Statement -->
+    <section class="accessibility-statement">
+        <div class="container">
+            <div class="accessibility-content">
+                <div class="mono section-label">ACCESSIBILITY AS METHOD</div>
+                <h3>This site is built with accessibility at its foundation, not as an afterthought.</h3>
+                <p>Accessibility constraints generate better design for everyone. Every interaction and layout choice here reflects this principle.</p>
+                <div class="accessibility-features">
+                    <div class="accessibility-feature">
+                        <span class="feature-marker">→</span>
+                        <span class="feature-text">Respects prefers-reduced-motion settings by disabling animations and transitions</span>
+                    </div>
+                    <div class="accessibility-feature">
+                        <span class="feature-marker">→</span>
+                        <span class="feature-text">Maintains contrast ratios exceeding WCAG AA guidelines throughout</span>
+                    </div>
+                    <div class="accessibility-feature">
+                        <span class="feature-marker">→</span>
+                        <span class="feature-text">Fully keyboard navigable with visible focus indicators</span>
+                    </div>
+                    <div class="accessibility-feature">
+                        <span class="feature-marker">→</span>
+                        <span class="feature-text">Semantic HTML5 structure optimized for screen readers</span>
+                    </div>
+                    <div class="accessibility-feature">
+                        <span class="feature-marker">→</span>
+                        <span class="feature-text">Fluid typography and responsive layout from mobile to 4K displays</span>
+                    </div>
+                    <div class="accessibility-feature">
+                        <span class="feature-marker">→</span>
+                        <span class="feature-text">No auto-playing media or disruptive animations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>NAVIGATION</h4>
+                    <div class="footer-links">
+                        <a href="#practice">Practice</a>
+                        <a href="#projects">Selected Work</a>
+                        <a href="#impact">Impact</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>LANGUAGE</h4>
+                    <div class="language-toggle">
+                        <button class="active">EN</button>
+                        <button>NL</button>
+                        <button>IT</button>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>FIELD NOTES</h4>
+                    <p style="color: var(--color-muted); font-size: 0.875rem; margin-bottom: 1rem;">
+                        Occasional updates on projects, experiments, and observations.
+                    </p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email address" required>
+                        <button type="submit">SUBSCRIBE</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">© 2026 JASCHA BLUME — ALL RIGHTS RESERVED</div>
+                <div class="social-links">
+                    <a href="#">LINKEDIN</a>
+                    <a href="#">INSTAGRAM</a>
+                    <a href="#">VIMEO</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Signal Canvas Animation - Spatial Echo System
+        // Concept: Mimics Deaf spatial perception with delayed response, gesture memory, and echo trails
+        const canvas = document.getElementById('signalCanvas');
+        const ctx = canvas.getContext('2d');
+        let isCanvasVisible = true;
+        let animationId = null;
+        
+        // Declare mouse tracking variables first
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetX = 0;
+        let targetY = 0;
+        
+        function resizeCanvas() {
+            const parent = canvas.parentElement;
+            canvas.width = parent.offsetWidth;
+            canvas.height = parent.offsetHeight;
+            // Reset mouse position to center after resize
+            mouseX = canvas.width / 2;
+            mouseY = canvas.height / 2;
+            targetX = mouseX;
+            targetY = mouseY;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Spatial Echo System
+        const echoes = [];
+        const maxEchoes = 50;
+        
+        // Track cursor with latency (delayed perception) - listen to hero section
+        const heroSection = document.querySelector('.hero');
+        heroSection.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            targetX = e.clientX - rect.left;
+            targetY = e.clientY - rect.top;
+        });
+        
+        // Initialize position when mouse enters
+        heroSection.addEventListener('mouseenter', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+            targetX = mouseX;
+            targetY = mouseY;
+        });
+        
+        // Touch support for mobile
+        heroSection.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const rect = canvas.getBoundingClientRect();
+                targetX = e.touches[0].clientX - rect.left;
+                targetY = e.touches[0].clientY - rect.top;
+            }
+        }, { passive: true });
+        
+        // Echo object - represents spatial memory
+        class Echo {
+            constructor(x, y, isMain = false) {
+                this.x = x;
+                this.y = y;
+                this.life = isMain ? 100 : 60;
+                this.maxLife = this.life;
+                this.isMain = isMain;
+                this.radius = isMain ? 3 : 2;
+                this.angle = Math.random() * Math.PI * 2;
+                this.drift = Math.random() * 0.5 + 0.2;
+            }
+            
+            update() {
+                // Slow drift (spatial persistence)
+                this.x += Math.cos(this.angle) * this.drift;
+                this.y += Math.sin(this.angle) * this.drift;
+                this.life -= 0.8;
+            }
+            
+            draw() {
+                // Ensure life is positive before calculations
+                if (this.life <= 0) return;
+                
+                const alpha = Math.max(0, this.life / this.maxLife);
+                const size = Math.max(0.1, this.radius * (this.life / this.maxLife));
+                
+                // Draw echo point
+                ctx.fillStyle = `rgba(180, 240, 0, ${alpha * 0.6})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw halo for main cursor
+                if (this.isMain && size > 0.5) {
+                    ctx.strokeStyle = `rgba(180, 240, 0, ${alpha * 0.2})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, size + 5, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Ambient field nodes (background spatial awareness)
+        const fieldNodes = [];
+        const nodeCount = 30;
+        
+        for (let i = 0; i < nodeCount; i++) {
+            fieldNodes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+        
+        function animate() {
+            try {
+                // Fade effect (creates trails)
+                ctx.fillStyle = 'rgba(11, 11, 12, 0.15)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Smooth cursor movement with latency (delayed perception)
+                mouseX += (targetX - mouseX) * 0.12;
+                mouseY += (targetY - mouseY) * 0.12;
+                
+                // Create new echo at cursor position (spatial memory)
+                if (Math.random() < 0.5) {
+                    echoes.push(new Echo(mouseX, mouseY, true));
+                    
+                    // Create secondary echoes (gesture trail)
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 30 + 10;
+                    echoes.push(new Echo(
+                        mouseX + Math.cos(angle) * distance,
+                        mouseY + Math.sin(angle) * distance,
+                        false
+                    ));
+                }
+                
+                // Update and draw echoes
+                for (let i = echoes.length - 1; i >= 0; i--) {
+                    const echo = echoes[i];
+                    
+                    // Remove dead echoes before update
+                    if (echo.life <= 0) {
+                        echoes.splice(i, 1);
+                        continue;
+                    }
+                    
+                    echo.update();
+                    echo.draw();
+                }
+                
+                // Maintain echo limit
+                while (echoes.length > maxEchoes) {
+                    echoes.shift();
+                }
+                
+                // Update ambient field
+                fieldNodes.forEach(node => {
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    node.phase += 0.02;
+                    
+                    // Bounce at edges
+                    if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                    if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+                    
+                    // Draw node with safety check
+                    const pulse = Math.sin(node.phase) * 0.5 + 0.5;
+                    const alpha = Math.max(0, Math.min(1, pulse * 0.15));
+                    ctx.fillStyle = `rgba(180, 240, 0, ${alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                // Draw connections between nearby nodes (spatial field)
+                for (let i = 0; i < fieldNodes.length; i++) {
+                    for (let j = i + 1; j < fieldNodes.length; j++) {
+                        const dx = fieldNodes[i].x - fieldNodes[j].x;
+                        const dy = fieldNodes[i].y - fieldNodes[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 150) {
+                            const alpha = Math.max(0, (1 - distance / 150) * 0.1);
+                            ctx.strokeStyle = `rgba(180, 240, 0, ${alpha})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(fieldNodes[i].x, fieldNodes[i].y);
+                            ctx.lineTo(fieldNodes[j].x, fieldNodes[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Canvas animation error:', error);
+                // Continue animation even if error occurs
+            }
+            
+            if (isCanvasVisible) {
+                animationId = requestAnimationFrame(animate);
+            }
+        }
+        
+        // Performance: Pause animation when canvas is off-screen
+        const canvasObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !isCanvasVisible) {
+                    isCanvasVisible = true;
+                    animate();
+                } else if (!entry.isIntersecting && isCanvasVisible) {
+                    isCanvasVisible = false;
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                    }
+                }
+            });
+        }, { threshold: 0 });
+        
+        canvasObserver.observe(canvas);
+        animate();
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.tension, .practice-item, .project, .metric').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Newsletter form
+        document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Newsletter subscription coming soon!');
+        });
+
+        // Language toggle
+        document.querySelectorAll('.language-toggle button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.language-toggle button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
