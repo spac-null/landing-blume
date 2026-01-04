@@ -1039,14 +1039,14 @@
                     </div>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_newsletter_title">FIELD NOTES</h4>
-                    <p style="color: var(--color-muted); font-size: 0.875rem; margin-bottom: 1rem;" data-i18n="footer_newsletter_desc">
-                        Occasional updates—projects, experiments, observations.
+                    <h4 data-i18n="footer_pdf_title">BUY PDF PAPER</h4>
+                    <p style="color: var(--color-muted); font-size: 0.875rem; margin-bottom: 1rem;" data-i18n="footer_pdf_desc">
+                        Two short texts on accessibility, authorship, and perception.
                     </p>
-                    <form class="newsletter-form">
-                        <input type="email" data-i18n-placeholder="footer_newsletter_placeholder" placeholder="Email address" required>
-                        <button type="submit" data-i18n="footer_newsletter_button">SUBSCRIBE</button>
-                    </form>
+                    <div class="footer-links">
+                        <a href="#" data-i18n="footer_pdf_item1">Accessibility Is Not a Checklist — €24</a>
+                        <a href="#" data-i18n="footer_pdf_item2">Accessibility as Authorship — By inquiry</a>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -1319,11 +1319,14 @@
             });
         });
 
-        // Newsletter form
-        document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Newsletter subscription coming soon!');
-        });
+        // Newsletter form (if present)
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Newsletter subscription coming soon!');
+            });
+        }
 
         // i18n Translation System
         const i18n = {
@@ -1393,10 +1396,10 @@
                 footer_nav_work: "Selected Work",
                 footer_nav_contact: "Contact",
                 footer_lang_title: "LANGUAGE",
-                footer_newsletter_title: "FIELD NOTES",
-                footer_newsletter_desc: "Occasional updates on projects, experiments, and observations.",
-                footer_newsletter_placeholder: "Email address",
-                footer_newsletter_button: "SUBSCRIBE"
+                footer_pdf_title: "BUY PDF PAPER",
+                footer_pdf_desc: "Two short texts on accessibility, authorship, and perception.",
+                footer_pdf_item1: "Accessibility Is Not a Checklist — €24",
+                footer_pdf_item2: "Accessibility as Authorship — By inquiry"
             },
             nl: {
                 skip_to_content: "Ga naar hoofdinhoud",
@@ -1464,10 +1467,10 @@
                 footer_nav_work: "Geselecteerd Werk",
                 footer_nav_contact: "Contact",
                 footer_lang_title: "TAAL",
-                footer_newsletter_title: "VELDNOTITIES",
-                footer_newsletter_desc: "Af en toe updates over projecten, experimenten en observaties.",
-                footer_newsletter_placeholder: "E-mailadres",
-                footer_newsletter_button: "ABONNEREN"
+                footer_pdf_title: "KOOP PDF PAPER",
+                footer_pdf_desc: "Twee korte teksten over toegankelijkheid, auteurschap en perceptie.",
+                footer_pdf_item1: "Accessibility Is Not a Checklist — €24",
+                footer_pdf_item2: "Accessibility as Authorship — Op aanvraag"
             },
             it: {
                 skip_to_content: "Vai al contenuto principale",
@@ -1535,10 +1538,10 @@
                 footer_nav_work: "Lavoro Selezionato",
                 footer_nav_contact: "Contatto",
                 footer_lang_title: "LINGUA",
-                footer_newsletter_title: "NOTE DAL CAMPO",
-                footer_newsletter_desc: "Aggiornamenti occasionali su progetti, esperimenti e osservazioni.",
-                footer_newsletter_placeholder: "Indirizzo email",
-                footer_newsletter_button: "ISCRIVITI"
+                footer_pdf_title: "ACQUISTA PDF PAPER",
+                footer_pdf_desc: "Due testi brevi su accessibilità, autorialità e percezione.",
+                footer_pdf_item1: "Accessibility Is Not a Checklist — €24",
+                footer_pdf_item2: "Accessibility as Authorship — Su richiesta"
             }
         };
 
