@@ -183,6 +183,7 @@
             height: 100%;
             opacity: 0.4;
             z-index: 0;
+            pointer-events: none;
         }
         
         .hero-content {
@@ -1094,11 +1095,13 @@
         let targetY = mouseY;
         
         // Track cursor with latency (delayed perception)
-        canvas.addEventListener('mousemove', (e) => {
+        function updateCursorPosition(e) {
             const rect = canvas.getBoundingClientRect();
             targetX = e.clientX - rect.left;
             targetY = e.clientY - rect.top;
-        });
+        }
+
+        window.addEventListener('mousemove', updateCursorPosition);
         
         // Echo object - represents spatial memory
         class Echo {
