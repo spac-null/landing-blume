@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /jascha-blume-website-v2
+Disallow: /DNA.md
+Disallow: /PROPOSAL.md
+
+Sitemap: https://jaschablume.nl/sitemap.xml
