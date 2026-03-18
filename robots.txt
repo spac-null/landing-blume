@@ -2,6 +2,8 @@ User-agent: *
 Allow: /
 Disallow: /jascha-blume-website-v2
 Disallow: /DNA.md
+Disallow: /PROMPTS.md
 Disallow: /PROPOSAL.md
 
 Sitemap: https://jaschablume.nl/sitemap.xml
+LLMs: https://jaschablume.nl/llms.txt
