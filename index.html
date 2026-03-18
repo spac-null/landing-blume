@@ -1032,5 +1032,43 @@
         })();
     </script>
     <script data-goatcounter="https://stats.jaschablume.nl/count" async src="//stats.jaschablume.nl/count.js"></script>
+    <script>
+    (function() {
+        // Section scroll tracking
+        var sections = ['work', 'thinking', 'recognition', 'contact'];
+        var seen = new Set();
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(e) {
+                if (e.isIntersecting && !seen.has(e.target.id)) {
+                    seen.add(e.target.id);
+                    if (window.goatcounter && window.goatcounter.count) {
+                        window.goatcounter.count({ path: 'section-' + e.target.id, title: 'Reached: ' + e.target.id });
+                    }
+                }
+            });
+        }, { threshold: 0.2 });
+        sections.forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        // Outbound + mailto click tracking
+        document.addEventListener('click', function(e) {
+            var a = e.target.closest('a');
+            if (!a) return;
+            var href = a.getAttribute('href') || '';
+            if (href.startsWith('mailto:')) {
+                if (window.goatcounter && window.goatcounter.count) {
+                    window.goatcounter.count({ path: 'click-email', title: 'Click: email' });
+                }
+            } else if (href.startsWith('http') && !href.includes('jaschablume.nl')) {
+                var label = a.hostname || href;
+                if (window.goatcounter && window.goatcounter.count) {
+                    window.goatcounter.count({ path: 'click-' + a.hostname, title: 'Click: ' + a.hostname });
+                }
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
