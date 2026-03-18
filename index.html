@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jascha Blume — Sensory Translation Lab</title>
-    <meta name="description" content="Jascha Blume is a Deaf artist based between Amsterdam and Bologna. Film, photography, installation, and accessibility design — translating between worlds.">
+    <title>Jascha Blume</title>
+    <meta name="description" content="Jascha Blume is a Deaf artist based between Amsterdam and Bologna. Film, photography, installation, social enterprise, and writing -- working in the gap between what is said and what is received.">
+    <meta property="og:title" content="Jascha Blume">
+    <meta property="og:description" content="Deaf artist. Film, photography, installation, social enterprise, writing. Amsterdam &amp; Bologna.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.jaschablume.nl">
+    <link rel="canonical" href="https://www.jaschablume.nl">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Spectral:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --color-bg: #0b0b0c;
-            --color-surface: #1a1a1c;
-            --color-text: #f4f4f2;
-            --color-muted: #9a9a96;
-            --color-accent: #b4f000;
-            --color-border: #2a2a2c;
+            --color-bg: #f5f2ed;
+            --color-surface: #ece8e1;
+            --color-text: #1a1a1a;
+            --color-muted: #6b6560;
+            --color-accent: #b5702e;
+            --color-border: #d4cfc8;
+            --color-highlight: #faf8f5;
 
-            --font-display: 'Playfair Display', serif;
-            --font-body: 'Spectral', serif;
+            --font-display: 'DM Serif Display', serif;
+            --font-body: 'Inter', sans-serif;
             --font-mono: 'IBM Plex Mono', monospace;
-
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 1rem;
-            --spacing-md: 2rem;
-            --spacing-lg: 4rem;
-            --spacing-xl: 6rem;
         }
 
         * {
@@ -37,7 +37,6 @@
 
         html {
             scroll-behavior: smooth;
-            overflow-x: hidden;
         }
 
         body {
@@ -46,43 +45,39 @@
             color: var(--color-text);
             line-height: 1.7;
             font-weight: 400;
-            overflow-x: hidden;
+            font-size: 16px;
         }
 
         h1, h2, h3, h4 {
             font-family: var(--font-display);
-            font-weight: 700;
-            line-height: 1.1;
+            font-weight: 400;
+            line-height: 1.15;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 6rem);
-            letter-spacing: -0.02em;
-        }
-
-        h2 {
-            font-size: clamp(2rem, 5vw, 4rem);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             letter-spacing: -0.01em;
         }
 
-        h3 {
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
+        h2 {
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
         }
 
-        h4 {
-            font-size: clamp(1.25rem, 2vw, 1.75rem);
+        h3 {
+            font-size: clamp(1.25rem, 2.5vw, 1.75rem);
         }
 
         p {
-            font-size: clamp(1.0625rem, 2vw, 1.1875rem);
-            max-width: 70ch;
+            font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+            max-width: 65ch;
         }
 
         .mono {
             font-family: var(--font-mono);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
+            color: var(--color-accent);
         }
 
         .skip-link {
@@ -90,10 +85,10 @@
             top: -40px;
             left: 0;
             background: var(--color-accent);
-            color: var(--color-bg);
+            color: #fff;
             padding: 0.5rem 1rem;
             font-family: var(--font-mono);
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             text-decoration: none;
             z-index: 10000;
         }
@@ -103,35 +98,19 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 clamp(1.5rem, 5vw, 4rem);
+            padding: 0 clamp(1.25rem, 5vw, 3rem);
         }
 
         section {
-            position: relative;
-            padding: var(--spacing-xl) 0;
-            border-top: 1px solid var(--color-border);
+            padding: clamp(4rem, 8vw, 7rem) 0;
         }
 
-        section:first-of-type {
-            border-top: none;
-        }
+        /* --- HEADER --- */
 
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 0;
-            background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
-            transition: background 0.3s ease;
-        }
-
-        header.scrolled {
-            background: rgba(11, 11, 12, 0.95);
-            backdrop-filter: blur(10px);
+            padding: 1.25rem 0;
         }
 
         .header-content {
@@ -142,24 +121,24 @@
 
         .logo {
             font-family: var(--font-mono);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             color: var(--color-text);
             text-decoration: none;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
         }
 
         nav {
             display: flex;
-            gap: 2rem;
+            gap: 1.75rem;
         }
 
         nav a {
             font-family: var(--font-mono);
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
             color: var(--color-muted);
             text-decoration: none;
-            letter-spacing: 0.1em;
-            transition: color 0.3s ease;
+            letter-spacing: 0.08em;
+            transition: color 0.2s;
         }
 
         nav a:hover,
@@ -167,425 +146,343 @@
             color: var(--color-accent);
         }
 
+        /* --- HERO --- */
+
         .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-top: 6rem;
-            overflow: hidden;
+            padding: clamp(4rem, 12vw, 10rem) 0 clamp(3rem, 8vw, 6rem);
         }
 
-        .signal-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.4;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-label {
-            color: var(--color-accent);
-            margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.2s;
+        .hero-epigraph {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+            color: var(--color-muted);
+            margin-bottom: 2.5rem;
+            max-width: 40ch;
         }
 
         .hero h1 {
             margin-bottom: 2rem;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.4s;
+            max-width: 20ch;
         }
 
-        .hero-subtitle {
-            font-size: clamp(1.25rem, 3vw, 2rem);
+        .hero-text {
             color: var(--color-muted);
-            margin-bottom: 3rem;
-            max-width: 60ch;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.6s;
+            font-size: clamp(1rem, 1.8vw, 1.1875rem);
+            max-width: 55ch;
+            line-height: 1.7;
         }
 
-        .hero-recognition {
-            margin-top: 3rem;
-            padding: 2rem;
+        .hero-text a {
+            color: var(--color-text);
+            text-decoration: underline;
+            text-decoration-color: var(--color-border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s;
+        }
+
+        .hero-text a:hover,
+        .hero-text a:focus {
+            text-decoration-color: var(--color-accent);
+        }
+
+        /* --- POSITION --- */
+
+        .position {
             background: var(--color-surface);
-            border-left: 3px solid var(--color-accent);
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.8s;
         }
 
-        .hero-recognition p {
-            color: var(--color-muted);
-            font-size: 1rem;
-        }
-
-        .hero-recognition strong {
-            color: var(--color-text);
-        }
-
-        .cta-group {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 1s;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2rem;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            text-decoration: none;
-            border: 1px solid;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .btn-primary {
-            background-color: var(--color-accent);
-            color: var(--color-bg);
-            border-color: var(--color-accent);
-        }
-
-        .btn-primary:hover,
-        .btn-primary:focus {
-            background-color: transparent;
-            color: var(--color-accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(180, 240, 0, 0.2);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--color-text);
-            border-color: var(--color-border);
-        }
-
-        .btn-secondary:hover,
-        .btn-secondary:focus {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(180, 240, 0, 0.1);
-        }
-
-        .worldview {
-            background-color: var(--color-surface);
-        }
-
-        .section-label {
-            color: var(--color-accent);
-            margin-bottom: 2rem;
-        }
-
-        .worldview-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 4rem;
-            margin-top: 4rem;
-        }
-
-        .tension {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .tension.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .tension-number {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--color-accent);
-            margin-bottom: 1rem;
-        }
-
-        .tension h3 {
+        .position-body p {
             margin-bottom: 1.5rem;
-            color: var(--color-text);
+            font-size: clamp(0.9375rem, 1.6vw, 1.0625rem);
+            line-height: 1.8;
         }
 
-        .tension p {
-            color: var(--color-muted);
-        }
-
-        .practice-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .practice-item {
-            padding: 2rem;
-            background: linear-gradient(135deg, var(--color-surface) 0%, transparent 100%);
-            border: 1px solid var(--color-border);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-            position: relative;
-        }
-
-        .practice-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .practice-item:hover {
-            border-color: var(--color-accent);
-        }
-
-        .practice-index {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--color-accent);
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .practice-item h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .practice-item p {
-            color: var(--color-muted);
-            font-size: 1rem;
+        .position-body p:last-child {
             margin-bottom: 0;
         }
 
-        .projects-grid {
-            display: grid;
-            gap: 5rem;
-            margin-top: 4rem;
+        /* --- PULLQUOTE --- */
+
+        .pullquote {
+            padding: clamp(3rem, 6vw, 5rem) 0;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .pullquote blockquote {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            line-height: 1.4;
+            max-width: 45ch;
+            color: var(--color-text);
+        }
+
+        .pullquote cite {
+            display: block;
+            font-family: var(--font-mono);
+            font-style: normal;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--color-muted);
+            margin-top: 1.5rem;
+        }
+
+        /* --- TIMELINE --- */
+
+        .timeline {
+            background: var(--color-highlight);
+        }
+
+        .timeline-list {
+            list-style: none;
+            margin-top: 3rem;
+            border-left: 2px solid var(--color-border);
+            padding-left: 2rem;
+        }
+
+        .timeline-item {
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: calc(-2rem - 5px);
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            border-radius: 50%;
+        }
+
+        .timeline-year {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            color: var(--color-accent);
+            display: block;
+            margin-bottom: 0.375rem;
+        }
+
+        .timeline-text {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--color-text);
+            max-width: 60ch;
+        }
+
+        .timeline-text em {
+            font-style: italic;
+        }
+
+        .timeline-detail {
+            color: var(--color-muted);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        /* --- WORK --- */
+
+        .work-intro {
+            margin-bottom: 3rem;
+        }
+
+        .work-intro p {
+            color: var(--color-muted);
+            margin-top: 1rem;
         }
 
         .project {
+            border-top: 1px solid var(--color-border);
+            padding: 2.5rem 0;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
         }
 
-        .project.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .project:nth-child(even) {
-            direction: rtl;
-        }
-
-        .project:nth-child(even) > * {
-            direction: ltr;
-        }
-
-        .project-visual {
-            position: relative;
-            aspect-ratio: 4/3;
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            overflow: hidden;
-            transition: border-color 0.3s ease;
-        }
-
-        .project:hover .project-visual {
-            border-color: var(--color-accent);
-        }
-
-        .project-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: var(--font-display);
-            font-size: clamp(1.25rem, 2.5vw, 2rem);
-            font-weight: 700;
-            color: var(--color-text);
-            letter-spacing: -0.02em;
-            text-align: center;
-            padding: 2rem;
-            line-height: 1.2;
-        }
-
-        .project-info {
-            padding: 1rem 0;
+        .project:last-child {
+            border-bottom: 1px solid var(--color-border);
         }
 
         .project-meta {
+            padding-top: 0.25rem;
+        }
+
+        .project-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.25rem, 2vw, 1.5rem);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .project-year {
             font-family: var(--font-mono);
-            font-size: 0.75rem;
+            font-size: 0.6875rem;
+            letter-spacing: 0.08em;
             color: var(--color-accent);
-            margin-bottom: 1rem;
-            letter-spacing: 0.1em;
+            display: block;
+            margin-bottom: 0.25rem;
         }
 
-        .project-info h3 {
-            margin-bottom: 1rem;
-            font-size: clamp(1.25rem, 2.5vw, 2rem);
-        }
-
-        .project-info p {
+        .project-medium {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            letter-spacing: 0.05em;
             color: var(--color-muted);
+        }
+
+        .project-body p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .project-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* --- THINKING --- */
+
+        .thinking {
+            background: var(--color-surface);
+        }
+
+        .thinking-body {
+            margin-top: 2rem;
+        }
+
+        .thinking-body p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .thinking-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .framework-list {
+            list-style: none;
+            margin-top: 2rem;
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .framework-item {
+            padding-left: 1.25rem;
+            border-left: 2px solid var(--color-accent);
+        }
+
+        .framework-name {
+            font-family: var(--font-display);
+            font-size: 1.0625rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .framework-desc {
+            font-size: 0.875rem;
+            color: var(--color-muted);
+            line-height: 1.6;
+            max-width: 55ch;
+        }
+
+        /* --- RECOGNITION --- */
+
+        .recognition-grid {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .recognition-category h3 {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            letter-spacing: 0.08em;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .recognition-list {
+            list-style: none;
+        }
+
+        .recognition-list li {
+            font-size: 0.9375rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--color-border);
+            line-height: 1.5;
+        }
+
+        .recognition-list li:last-child {
+            border-bottom: none;
+        }
+
+        .recognition-list .rec-detail {
+            display: block;
+            font-size: 0.8125rem;
+            color: var(--color-muted);
+        }
+
+        /* --- CONTACT --- */
+
+        .contact {
+            background: var(--color-text);
+            color: var(--color-bg);
+        }
+
+        .contact h2 {
+            color: var(--color-bg);
             margin-bottom: 1.5rem;
         }
 
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .tag {
-            padding: 0.5rem 1rem;
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-border);
-            font-family: var(--font-mono);
-            font-size: 0.625rem;
-            letter-spacing: 0.1em;
-            color: var(--color-muted);
-        }
-
-        .collaboration {
-            background-color: var(--color-surface);
-        }
-
-        .collaboration-content {
-            max-width: 900px;
-        }
-
-        .collaboration h2 {
-            margin-bottom: 2rem;
-        }
-
-        .collaboration-intro {
-            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-            color: var(--color-muted);
-            margin-bottom: 3rem;
-        }
-
-        .audience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .audience-item {
-            padding: 2rem;
-            border: 1px solid var(--color-border);
-            transition: all 0.3s ease;
-        }
-
-        .audience-item:hover {
-            border-color: var(--color-accent);
-        }
-
-        .audience-item h4 {
-            font-family: var(--font-body);
-            font-size: 1.25rem;
+        .contact p {
+            color: var(--color-border);
             margin-bottom: 1rem;
-            color: var(--color-text);
-            font-weight: 600;
         }
 
-        .audience-item p {
-            font-size: 0.9375rem;
-            color: var(--color-muted);
+        .contact-email {
+            font-family: var(--font-display);
+            font-size: clamp(1.25rem, 3vw, 2rem);
+            color: var(--color-bg);
+            text-decoration: none;
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 0.125rem;
+            transition: border-color 0.2s;
+        }
+
+        .contact-email:hover,
+        .contact-email:focus {
+            border-color: var(--color-bg);
         }
 
         .contact-details {
-            margin-top: 2rem;
+            margin-top: 2.5rem;
             padding-top: 2rem;
-            border-top: 1px solid var(--color-border);
+            border-top: 1px solid #333;
         }
 
         .contact-details p {
-            color: var(--color-muted);
-            font-size: 0.9375rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #999;
+            margin-bottom: 0.25rem;
         }
 
-        .contact-details a {
-            color: var(--color-accent);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-details a:hover,
-        .contact-details a:focus {
-            color: var(--color-text);
-        }
+        /* --- FOOTER --- */
 
         footer {
+            padding: 2rem 0;
             border-top: 1px solid var(--color-border);
-            padding: 3rem 0 2rem;
         }
 
         .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h4 {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-            color: var(--color-accent);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-links a {
-            color: var(--color-muted);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover,
-        .footer-links a:focus {
-            color: var(--color-accent);
-        }
-
-        .footer-text {
-            color: var(--color-muted);
-            font-size: 0.875rem;
-            line-height: 1.6;
-        }
-
-        .footer-bottom {
-            padding-top: 2rem;
-            border-top: 1px solid var(--color-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -597,42 +494,21 @@
             font-family: var(--font-mono);
             font-size: 0.625rem;
             color: var(--color-muted);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
         }
 
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .social-links a {
-            font-family: var(--font-mono);
-            font-size: 0.625rem;
+        .footer-access {
+            font-size: 0.75rem;
             color: var(--color-muted);
-            text-decoration: none;
-            letter-spacing: 0.1em;
-            transition: color 0.3s ease;
+            max-width: 45ch;
+            text-align: right;
         }
 
-        .social-links a:hover,
-        .social-links a:focus {
-            color: var(--color-accent);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* --- FOCUS --- */
 
         *:focus {
             outline: 2px solid var(--color-accent);
-            outline-offset: 4px;
+            outline-offset: 3px;
         }
 
         *:focus:not(:focus-visible) {
@@ -641,8 +517,23 @@
 
         *:focus-visible {
             outline: 2px solid var(--color-accent);
-            outline-offset: 4px;
+            outline-offset: 3px;
         }
+
+        /* --- SCROLL REVEAL --- */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- REDUCED MOTION --- */
 
         @media (prefers-reduced-motion: reduce) {
             *,
@@ -654,58 +545,43 @@
                 scroll-behavior: auto !important;
             }
 
-            .signal-canvas {
-                display: none;
-            }
-
-            .hero-label,
-            .hero h1,
-            .hero-subtitle,
-            .hero-recognition,
-            .cta-group {
-                opacity: 1 !important;
-                transform: none !important;
-            }
-
-            .tension,
-            .practice-item,
-            .project {
+            .reveal {
                 opacity: 1 !important;
                 transform: none !important;
             }
         }
 
-        @media (max-width: 1024px) {
-            .project {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .project:nth-child(even) {
-                direction: ltr;
-            }
-        }
+        /* --- RESPONSIVE --- */
 
         @media (max-width: 768px) {
             nav {
                 display: none;
             }
 
-            .practice-grid {
+            .project {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .recognition-grid {
                 grid-template-columns: 1fr;
             }
 
             .footer-content {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-bottom {
                 flex-direction: column;
                 text-align: center;
             }
 
-            .hero-recognition {
-                padding: 1.5rem;
+            .footer-access {
+                text-align: center;
+            }
+
+            .timeline-list {
+                padding-left: 1.25rem;
+            }
+
+            .timeline-item::before {
+                left: calc(-1.25rem - 5px);
             }
         }
     </style>
@@ -713,485 +589,356 @@
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <header id="header" role="banner">
+    <header role="banner">
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo" aria-label="Jascha Blume, return to top">JASCHA BLUME</a>
                 <nav aria-label="Main navigation">
-                    <a href="#practice">PRACTICE</a>
                     <a href="#work">WORK</a>
-                    <a href="#collaborate">COLLABORATE</a>
+                    <a href="#thinking">THINKING</a>
+                    <a href="#recognition">RECOGNITION</a>
+                    <a href="#contact">CONTACT</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <main id="main-content">
-        <!-- Hero: Who are you + core claim -->
+
+        <!-- HERO -->
         <section class="hero" aria-label="Introduction">
-            <canvas class="signal-canvas" id="signalCanvas" aria-hidden="true"></canvas>
-            <noscript>
-                <style>.signal-canvas { display: none; }</style>
-            </noscript>
             <div class="container">
-                <div class="hero-content">
-                    <div class="mono hero-label">SENSORY TRANSLATION LAB</div>
-                    <h1>I translate silence into images, spaces, and tools.</h1>
-                    <p class="hero-subtitle">
-                        I am a Deaf artist and designer based between Amsterdam and Bologna. I make films, photographs, installations, and accessibility systems. The medium changes. The question stays the same: what happens when you build culture from a different sensory starting point?
-                    </p>
-                    <div class="hero-recognition">
-                        <p>Work shown at <strong>Van Abbemuseum</strong>, Eindhoven. Featured at <strong>IDFA</strong>. Supported by <strong>Creative Europe</strong> and <strong>Comune di Bologna</strong>.</p>
-                    </div>
-                    <div class="cta-group">
-                        <a href="#work" class="btn btn-primary">SEE THE WORK</a>
-                        <a href="#collaborate" class="btn btn-secondary">START A CONVERSATION</a>
-                    </div>
+                <p class="hero-epigraph">Signo ergo sum. I sign, therefore I exist.</p>
+                <h1>I am an artist and I am Deaf.</h1>
+                <p class="hero-text">
+                    I make films, photographs, installations, and spaces. I co-founded a <a href="#laltro">bar in Bologna</a> where 80% of the staff are people institutions call too complicated to hire. I write for <a href="https://www.mistermotley.nl/authors/jascha-blume/" rel="noopener">Mister Motley</a>. I built a <a href="#cripmind">disability culture publication</a>. The medium changes. The question stays the same: what happens in the gap between what is said and what is received?
+                </p>
+            </div>
+        </section>
+
+        <!-- POSITION -->
+        <section class="position" aria-labelledby="position-heading">
+            <div class="container">
+                <span class="mono" id="position-heading">The practice</span>
+                <div class="position-body">
+                    <p>An interpreter does not translate simultaneously. They must first understand a few sentences, then choose. I always receive things a few seconds late. If someone tells a joke, I laugh after everyone else. I live in a slightly different time zone than whatever room I am in.</p>
+                    <p>That gap -- being present but offset, inside and behind at the same time -- is the central problem of my work. I have also been in the room where the gap disappears entirely, where everyone shares a language and nobody needs to translate. That room exists. It just does not last. The grey zone between worlds is where I draw my energy. I stay there deliberately.</p>
+                    <p>I am not a disability studies academic. My formation is through art, through making things, through living in a Deaf body in a hearing world. I do not want to be called "you-know-that-deaf-artist." I am the artist Jascha Blume. To bring something deep from within yourself to the surface -- that is something more individual than being Deaf. That is something individual, not collective.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Cultural Tensions: the worldview that drives the practice -->
-        <section class="worldview" aria-labelledby="tensions-heading">
+        <!-- PULLQUOTE 1 -->
+        <div class="pullquote" role="presentation">
             <div class="container">
-                <div class="mono section-label">CULTURAL TENSIONS</div>
-                <h2 id="tensions-heading">Accessibility is not an afterthought.<br>It is a design philosophy.</h2>
-                <div class="worldview-grid">
-                    <div class="tension">
-                        <div class="tension-number" aria-hidden="true">01</div>
-                        <h3>Institutions design for the majority, then retrofit for the rest.</h3>
-                        <p>Museums, festivals, and cultural spaces treat accessibility as compliance — checkbox accommodations bolted onto finished products. This approach misses something fundamental: accessibility constraints often generate the most innovative design solutions.</p>
-                    </div>
-                    <div class="tension">
-                        <div class="tension-number" aria-hidden="true">02</div>
-                        <h3>Deaf perception exposes blind spots in dominant systems.</h3>
-                        <p>When you build culture primarily through sound, you miss the visual frequencies, spatial rhythms, and tactile signals that shape how millions experience the world. Deafness is not absence — it is a different sensory hierarchy that reveals what hearing-centric design overlooks.</p>
-                    </div>
-                    <div class="tension">
-                        <div class="tension-number" aria-hidden="true">03</div>
-                        <h3>Translation is not simplification. It is transformation.</h3>
-                        <p>Every cultural and sensory translation changes meaning. Rather than treating this as loss, I work with translation as a creative force — shifting between Dutch, Italian, Sign Language, and visual systems to generate new forms of knowing.</p>
-                    </div>
-                </div>
+                <blockquote>
+                    Sometimes I want to move to that place that no longer exists. Where should I go? When you mix blue and yellow you get green. I wish I could get that green back into its two original colours. Probably not. The exact blue and yellow live only in your memory.
+                </blockquote>
+                <cite>-- on the temporary Deaf community</cite>
+            </div>
+        </div>
+
+        <!-- TIMELINE -->
+        <section class="timeline reveal" aria-labelledby="timeline-heading">
+            <div class="container">
+                <span class="mono">Arc</span>
+                <h2 id="timeline-heading">Twenty-five years of practice</h2>
+                <ol class="timeline-list">
+                    <li class="timeline-item">
+                        <span class="timeline-year">2000</span>
+                        <span class="timeline-text"><em>Gewoon Doof</em> -- documented at 13, attending two schools simultaneously. The film screens at IDFA, Amsterdam.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2005</span>
+                        <span class="timeline-text">Gallaudet University, Washington DC. The world's only Deaf university. No interpreters. No time-lag. Everything direct.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2008 -- 2013</span>
+                        <span class="timeline-text">Gerrit Rietveld Academie, Amsterdam. Audio Visual department. Thesis: <em>Behind the GIF Images and Sign Language</em> -- nominated for best thesis prize.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2010 -- 2012</span>
+                        <span class="timeline-text">Rietveld Uncut performance, Brakke Grond. Group exhibition <em>OMG</em>, de Oude Kerk, Amsterdam. Storage Space Exhibition #4.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2011</span>
+                        <span class="timeline-text"><em>De Gebarentaaltolk en Ik</em> -- three-channel video installation. A poem from a dream, translated live by two interpreters, all three running simultaneously. The first time I could watch my own language without the translation lag.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2012</span>
+                        <span class="timeline-text"><em>Ik Gebaar, Ik Leef / I Sign, I Live</em> -- feature documentary, co-directed with Anja Hiddinga. Best Documentary awards in Moscow, Seattle, and Palermo. Screened in 20+ countries.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2013</span>
+                        <span class="timeline-text">DovenExpo, Amsterdam -- co-organized exhibition of 13 Deaf artists, 46 works. Mini solo exhibition, MuteSounds Festival, Scheveningen. Graduation show, Rietveld. <em>De Gebarentaaltolk en Ik</em> screened at Sadho Poetry Film Festival, New Delhi. Honourable Mention, Picture This Film Festival, Calgary.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2013 -- 2015</span>
+                        <span class="timeline-text">Van Abbemuseum, Eindhoven. Museum guide for the Special Guests accessibility programme. Monthly sign language tours through exhibitions including Ahmet Ogut's <em>Exploded City</em>.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2015</span>
+                        <span class="timeline-text"><em>Here &amp; There</em> -- short documentary. Deaf twins in an Addis Ababa slum and Deaf sisters on a Groningen farm. Screened in Toronto, Hong Kong, Rome, New Delhi. Young Art Night prize, Van Abbemuseum.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2015</span>
+                        <span class="timeline-text">Co-founded L'Altro Spazio, Bologna -- cocktail bar, cultural space, social cooperative. 80% staff from vulnerable backgrounds. Braille menus. Staff trained in Italian Sign Language. Listed in Lonely Planet.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2016</span>
+                        <span class="timeline-text"><em>Claim a Piece of Territory</em> -- three exhibitions curated at L'Altro Spazio for ART CITY Bologna. <em>Deconstructing Presence</em> -- performance at Museum Boerhaave, Leiden, alongside professor Douwe Draaisma.</span>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">2026</span>
+                        <span class="timeline-text">Crip Minds -- disability culture publication, active and publishing. Workshop facilitator, Kunstinstituut Melly, Rotterdam.</span>
+                    </li>
+                </ol>
             </div>
         </section>
 
-        <!-- Practice: What do you actually make -->
-        <section id="practice" aria-labelledby="practice-heading">
+        <!-- PULLQUOTE 2 -->
+        <div class="pullquote" role="presentation">
             <div class="container">
-                <div class="mono section-label">PRACTICE</div>
-                <h2 id="practice-heading">Five disciplines,<br>one underlying question</h2>
-                <div class="practice-grid">
-                    <div class="practice-item">
-                        <span class="practice-index" aria-hidden="true">[01]</span>
-                        <h3>Film &amp; Documentary</h3>
-                        <p>Feature films and short documentaries about Deaf life, sign language identity, and sensory experience. Deaf-led storytelling where the camera follows a different logic than hearing-centric narrative.</p>
-                    </div>
-                    <div class="practice-item">
-                        <span class="practice-index" aria-hidden="true">[02]</span>
-                        <h3>Photography</h3>
-                        <p>Series-based portraiture and documentary work. Intimate, long-duration projects about aging, identity, and how people inhabit their bodies over time.</p>
-                    </div>
-                    <div class="practice-item">
-                        <span class="practice-index" aria-hidden="true">[03]</span>
-                        <h3>Installation &amp; Video</h3>
-                        <p>Multi-channel video installations and spatial work that translate between senses. Environments built to be experienced through sight and touch, not only sound.</p>
-                    </div>
-                    <div class="practice-item">
-                        <span class="practice-index" aria-hidden="true">[04]</span>
-                        <h3>Accessibility Design</h3>
-                        <p>Consulting and building with institutions on accessibility systems, sign language interfaces, and inclusive cultural programming. Accessibility as a design principle, not a retrofit.</p>
-                    </div>
-                    <div class="practice-item">
-                        <span class="practice-index" aria-hidden="true">[05]</span>
-                        <h3>Social Enterprise</h3>
-                        <p>Co-founding and running cultural spaces where radical inclusion is the business model. Proving that disability employment and financial sustainability are not contradictions.</p>
-                    </div>
-                </div>
+                <blockquote>
+                    Sound is important in life, but for me sound is no more than watching the sea. I can see the sea moving, but what happens there I cannot see.
+                </blockquote>
+                <cite>-- on invisible soundscapes</cite>
             </div>
-        </section>
+        </div>
 
-        <!-- Work: Show specific projects -->
+        <!-- SELECTED WORK -->
         <section id="work" aria-labelledby="work-heading">
             <div class="container">
-                <div class="mono section-label">SELECTED WORK</div>
-                <h2 id="work-heading">Projects that translate<br>perception into form</h2>
-                <div class="projects-grid">
-                    <article class="project">
-                        <div class="project-visual" role="img" aria-label="Title card for I Sign, I Live, a 2012 feature documentary about Deaf identity across cultures">
-                            <div class="project-placeholder">I SIGN, I LIVE</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta">2012 — FEATURE DOCUMENTARY</div>
-                            <h3>I Sign, I Live</h3>
-                            <p>A feature-length documentary following Deaf individuals across cultures, exploring how sign language shapes identity, community, and the experience of the world. The film treats sign language not as accommodation but as a complete linguistic and cultural system. Shown at Van Abbemuseum and international festivals.</p>
-                            <div class="project-tags">
-                                <span class="tag">FILM</span>
-                                <span class="tag">SIGN LANGUAGE</span>
-                                <span class="tag">IDENTITY</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project-visual" role="img" aria-label="Title card for Kalokagathia, a 2020 video portrait series exploring beauty and goodness in harmony">
-                            <div class="project-placeholder">KALOKAGATHIA</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta">2020 — VIDEO PORTRAIT SERIES</div>
-                            <h3>Kalokagathia</h3>
-                            <p>Nine collaborators — Bart, Casper, Kim, Maaike, Marie, Pieternel, Sif, Stella, and Marq — filmed in intimate video portraits that explore the ancient Greek ideal of beauty and goodness in harmony. Each portrait asks: what does it mean to embody both inner and outer wholeness? Multi-channel video installation.</p>
-                            <div class="project-tags">
-                                <span class="tag">VIDEO</span>
-                                <span class="tag">COLLABORATION</span>
-                                <span class="tag">INSTALLATION</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project-visual" role="img" aria-label="Title card for Elderly, a 2020 photography series on aging with dignity">
-                            <div class="project-placeholder">ELDERLY</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta">2020 — PHOTOGRAPHY, 8 WORKS</div>
-                            <h3>Elderly</h3>
-                            <p>A photographic series that refuses to look away from aging. Where culture marginalizes older people or renders them invisible, these eight portraits look closely, with respect and without sentimentality. Documentary portraiture as an act of care.</p>
-                            <div class="project-tags">
-                                <span class="tag">PHOTOGRAPHY</span>
-                                <span class="tag">PORTRAITURE</span>
-                                <span class="tag">AGING</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project-visual" role="img" aria-label="Title card for Binnenkamer, a 2020 installation exploring the Dutch concept of the inner room">
-                            <div class="project-placeholder">BINNENKAMER</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta">2020 — INSTALLATION</div>
-                            <h3>Binnenkamer</h3>
-                            <p>An installation exploring the Dutch concept of the "binnenkamer" — the inner room — as both physical location and psychological state. The work plays with where private space ends and public space begins, and what it means to invite someone inside.</p>
-                            <div class="project-tags">
-                                <span class="tag">INSTALLATION</span>
-                                <span class="tag">SPACE</span>
-                                <span class="tag">DUTCH CULTURE</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project-visual" role="img" aria-label="Title card for Me_Myself, a decade-long self-documentation project spanning 2011 to 2020">
-                            <div class="project-placeholder">ME_MYSELF</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta">2011&ndash;2020 — PHOTOGRAPHY</div>
-                            <h3>Me_Myself</h3>
-                            <p>A decade of self-documentation. Not vanity but inquiry: what does it mean to witness yourself over ten years? Identity as process, not state. The archive itself becomes a form of research into how a person changes and persists.</p>
-                            <div class="project-tags">
-                                <span class="tag">PHOTOGRAPHY</span>
-                                <span class="tag">SELF-PORTRAIT</span>
-                                <span class="tag">LONG-DURATION</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project-visual" role="img" aria-label="Title card for L'Altro Spazio, a social cooperative cultural bar in Bologna">
-                            <div class="project-placeholder">L'ALTRO SPAZIO</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta">ONGOING — SOCIAL COOPERATIVE, BOLOGNA</div>
-                            <h3>L'Altro Spazio</h3>
-                            <p>A cultural bar and event space in Bologna, co-founded as a social cooperative. Eighty percent of staff come from vulnerable backgrounds. The project tests a model where radical inclusion and financial sustainability reinforce each other rather than compete.</p>
-                            <div class="project-tags">
-                                <span class="tag">COOPERATIVE</span>
-                                <span class="tag">CULTURAL SPACE</span>
-                                <span class="tag">BOLOGNA</span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="project">
-                        <div class="project-visual" role="img" aria-label="Title card for Tolk/Tolknet, a 2020 project on interpretation and translation as artistic theme">
-                            <div class="project-placeholder">TOLK / TOLKNET</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta">2020 — MIXED MEDIA</div>
-                            <h3>Tolk / Tolknet</h3>
-                            <p>A project that treats interpretation and translation not as neutral service but as artistic material. "Tolk" is Dutch for interpreter — someone who stands between languages and cultures. The work examines what happens in the space between what is said and what is understood.</p>
-                            <div class="project-tags">
-                                <span class="tag">TRANSLATION</span>
-                                <span class="tag">LANGUAGE</span>
-                                <span class="tag">INTERPRETATION</span>
-                            </div>
-                        </div>
-                    </article>
+                <div class="work-intro">
+                    <span class="mono">Selected work</span>
+                    <h2 id="work-heading">Projects across media</h2>
+                    <p>Film, photography, installation, social enterprise, community organizing, writing. Different instruments for the same inquiry.</p>
                 </div>
+
+                <article class="project reveal">
+                    <div class="project-meta">
+                        <h3 class="project-title">I Sign, I Live</h3>
+                        <span class="project-year">2012</span>
+                        <span class="project-medium">Feature documentary, 58 min</span>
+                    </div>
+                    <div class="project-body">
+                        <p>Armed with a camera, I visited Europe's only home for elderly Deaf people. They told me about their youth, when sign language was forbidden, about the struggles against embarrassment and indignity. All dialogue is in Dutch Sign Language. My camera images are sometimes edited in split screen, serving as comments on what I encounter and reflections on my own life. Co-directed with Anja Hiddinga.</p>
+                        <p>Best Documentary: International Disability Film Festival, Moscow. Best Documentary: Seattle Deaf Film Festival. Best Documentary: Sole Luna Festival, Palermo. Screened in Tokyo, Belgrade, New Delhi, and 20+ countries.</p>
+                    </div>
+                </article>
+
+                <article class="project reveal">
+                    <div class="project-meta">
+                        <h3 class="project-title">De Gebarentaaltolk en Ik</h3>
+                        <span class="project-year">2011</span>
+                        <span class="project-medium">Three-channel video installation</span>
+                    </div>
+                    <div class="project-body">
+                        <p>A poem from my dream, translated by an interpreter into spoken Dutch, translated back by a second interpreter into Dutch Sign Language. Three videos, three people, recorded separately, synchronised. When the videos run simultaneously, my focus shifts to the difference between me and the interpreter -- not the content but the gap. The tension in that difference is what I find interesting.</p>
+                        <p>Screened at 4th Sadho Poetry Film Festival, New Delhi, 2013.</p>
+                    </div>
+                </article>
+
+                <article class="project reveal">
+                    <div class="project-meta">
+                        <h3 class="project-title">Here &amp; There</h3>
+                        <span class="project-year">2015</span>
+                        <span class="project-medium">Short documentary, 10 min, silent</span>
+                    </div>
+                    <div class="project-body">
+                        <p>Seventeen-year-old Deaf twins Ekram and Euphrates in an Addis Ababa slum, and Deaf sisters Hilene and Willemijn on a Groningen farm. Their lives are totally different, yet the same. The Deaf community around the world is one big virtual country without borders. Dutch and Ethiopian Sign Languages with English subtitles. Cinematographer: Bart Koolen.</p>
+                        <p>Screened in Toronto, Hong Kong, Rome, New Delhi.</p>
+                    </div>
+                </article>
+
+                <article class="project reveal" id="laltro">
+                    <div class="project-meta">
+                        <h3 class="project-title">L'Altro Spazio</h3>
+                        <span class="project-year">2015 -- ongoing</span>
+                        <span class="project-medium">Social cooperative, Bologna</span>
+                    </div>
+                    <div class="project-body">
+                        <p>A cocktail bar and cultural space co-founded with Nunzia Vannuccini. Eighty percent of staff come from backgrounds that elsewhere make them too complicated to hire. Braille menus. All staff trained in Italian Sign Language. Dinners in the dark, guided by blind staff. Multiple locations across Bologna. Listed in Lonely Planet.</p>
+                        <p>We applied for a wheelchair ramp permit in a heritage zone. We waited eleven years. We installed it anyway. Accumulated fines. The ramp is a complete picture of what accessibility means in practice: something obviously necessary, technically straightforward, and structurally blocked by institutions that were never designed with disabled people in the room. We named a beer after it.</p>
+                    </div>
+                </article>
+
+                <article class="project reveal">
+                    <div class="project-meta">
+                        <h3 class="project-title">Kalokagathia</h3>
+                        <span class="project-year">2020</span>
+                        <span class="project-medium">Video portrait series, multi-channel installation</span>
+                    </div>
+                    <div class="project-body">
+                        <p>Nine collaborators filmed in intimate video portraits exploring the ancient Greek ideal of beauty and goodness in harmony. The research behind it: a mathematical formula for ideal facial proportion (the Marquardt Phi Mask, based on the golden ratio) was applied to real faces. People preferred the original, unmodified faces 63.7% of the time. The mathematically perfected face was less attractive. The formula works. What it produces is horror. The corrected face is more perfect and less desired.</p>
+                    </div>
+                </article>
+
+                <article class="project reveal">
+                    <div class="project-meta">
+                        <h3 class="project-title">Deconstructing Presence</h3>
+                        <span class="project-year">2016</span>
+                        <span class="project-medium">Performance</span>
+                    </div>
+                    <div class="project-body">
+                        <p>Museum Boerhaave, Leiden -- part of Perspectives on Diversity: The Cultural Life of Absence. Performed alongside professor Douwe Draaisma and comedian-writer Vincent Bijlo. As a Deaf person in a hearing space, presence is always partial, always mediated. The performance asks what culture is built in and around absence.</p>
+                    </div>
+                </article>
+
+                <article class="project reveal">
+                    <div class="project-meta">
+                        <h3 class="project-title">Artifical</h3>
+                        <span class="project-year">2013</span>
+                        <span class="project-medium">Photography</span>
+                    </div>
+                    <div class="project-body">
+                        <p>Technology brings us to the world of illusion. Everything will be fake, and that is the source of inspiration, not a problem. The sky becomes artificial. It dances constantly. Everyone is looking for something while it could be nothing.</p>
+                    </div>
+                </article>
+
+                <article class="project reveal" id="cripmind">
+                    <div class="project-meta">
+                        <h3 class="project-title">Crip Minds</h3>
+                        <span class="project-year">2026</span>
+                        <span class="project-medium">Publication</span>
+                    </div>
+                    <div class="project-body">
+                        <p>A disability culture publication. Disability culture has built an enormous body of expert knowledge. Almost none of it reaches the places where culture gets made and interpreted. Not because it is hidden. Because nobody is looking.</p>
+                    </div>
+                </article>
             </div>
         </section>
 
-        <!-- Collaboration: What kind of partner + how to start -->
-        <section id="collaborate" class="collaboration" aria-labelledby="collaborate-heading">
+        <!-- THINKING -->
+        <section id="thinking" class="thinking reveal" aria-labelledby="thinking-heading">
             <div class="container">
-                <div class="collaboration-content">
-                    <div class="mono section-label">COLLABORATION</div>
-                    <h2 id="collaborate-heading">I work with people who understand that accessibility makes everything better.</h2>
-                    <p class="collaboration-intro">
-                        The best projects start with a question, not a brief. If you are thinking about accessibility, sensory design, Deaf culture, or inclusive practice — and you want a collaborator who has worked across institutions, countries, and disciplines — let's talk.
-                    </p>
-                    <div class="audience-grid">
-                        <div class="audience-item">
-                            <h4>Museums &amp; Festivals</h4>
-                            <p>Accessibility programming, inclusive exhibition design, Deaf-led cultural projects. I have worked with Van Abbemuseum, Art City Bologna, and Creative Europe.</p>
-                        </div>
-                        <div class="audience-item">
-                            <h4>Research &amp; Technology</h4>
-                            <p>Sign language interfaces, sensory translation tools, accessibility-first product design. Deaf design input at the architecture level, not as an afterthought.</p>
-                        </div>
-                        <div class="audience-item">
-                            <h4>Artists &amp; Filmmakers</h4>
-                            <p>Cross-sensory collaboration, documentary co-production, installation work. I bring a practice rooted in Deaf perception and visual thinking.</p>
-                        </div>
+                <span class="mono">Thinking</span>
+                <h2 id="thinking-heading">The intellectual formation</h2>
+                <div class="thinking-body">
+                    <p>My thesis at the Gerrit Rietveld Academie -- <em>Behind the GIF Images and Sign Language</em>, nominated for best thesis prize, 2013 -- argued that repetition in GIFs, in sign language, and in installation works changes the viewer's experience of time. GIFs and sign language share a structure: both are time-based, both loop, both lose something the moment they stop. That loss is the message.</p>
+                    <p>The thinkers I actually work with: Warhol on repetition and the copy. Baudrillard on the simulacrum -- the copy without an original. Brecht on the gestus: a single gesture that contains a whole paradigm, which is what brought me to sign language as artistic medium. Tarkovsky on sculpted time. Benjamin on what mechanical reproduction does to aura. Hume: "Repetition changes nothing in the object repeated, but does change something in the mind that contemplates it."</p>
+                </div>
+                <ul class="framework-list">
+                    <li class="framework-item">
+                        <span class="framework-name">The time-lag</span>
+                        <span class="framework-desc">An interpreter must first understand a few sentences, then choose. I always receive things a few seconds late. This gap is the engine of the work.</span>
+                    </li>
+                    <li class="framework-item">
+                        <span class="framework-name">The tussenruimte</span>
+                        <span class="framework-desc">The space between the work and the viewer. When does a work affect that space? The interpreter installation, the GIF thesis, the binnenkamer -- all ask what happens in this gap.</span>
+                    </li>
+                    <li class="framework-item">
+                        <span class="framework-name">Meta-time</span>
+                        <span class="framework-desc">A parallel timeline running alongside reality, containing memory, anticipation, imagination. Every head contains its own meta-time, which is why communication is always a translation problem.</span>
+                    </li>
+                    <li class="framework-item">
+                        <span class="framework-name">The temporary sacred community</span>
+                        <span class="framework-desc">Gallaudet. The Deaflympics. DovenExpo. L'Altro Spazio on a Friday night. The village that dissolves. The green that cannot be unmixed back into blue and yellow.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- PULLQUOTE 3 -->
+        <div class="pullquote" role="presentation">
+            <div class="container">
+                <blockquote>
+                    The physicality of Jascha's language as well as the necessity he feels to create visual art to "see himself speak" struck me as a rich source for a great variety of works. His experimenting with GIFs -- which have striking similarities to the coding of signs -- suggests a sensitivity to what is actual in the world of the moving image.
+                </blockquote>
+                <cite>-- Sander Blom, Master of Film, Nederlandse Filmacademie</cite>
+            </div>
+        </div>
+
+        <!-- RECOGNITION -->
+        <section id="recognition" aria-labelledby="recognition-heading">
+            <div class="container">
+                <span class="mono">Recognition</span>
+                <h2 id="recognition-heading">Awards, screenings, institutions</h2>
+                <div class="recognition-grid">
+                    <div class="recognition-category">
+                        <h3>Awards</h3>
+                        <ul class="recognition-list">
+                            <li>Best Documentary, International Disability Film Festival <span class="rec-detail">Moscow, 2012</span></li>
+                            <li>Best Documentary, Sole Luna Festival <span class="rec-detail">Palermo</span></li>
+                            <li>Best Documentary, Seattle Deaf Film Festival <span class="rec-detail">2014</span></li>
+                            <li>Honourable Mention, Picture This Film Festival <span class="rec-detail">Calgary, 2013</span></li>
+                            <li>Young Art Night Prize <span class="rec-detail">Van Abbemuseum, Eindhoven, 2015</span></li>
+                        </ul>
                     </div>
-                    <div class="cta-group">
-                        <a href="mailto:studio@jaschablume.nl" class="btn btn-primary">STUDIO@JASCHABLUME.NL</a>
+                    <div class="recognition-category">
+                        <h3>Screenings</h3>
+                        <ul class="recognition-list">
+                            <li>IDFA, Amsterdam</li>
+                            <li>Sadho Poetry Film Festival, New Delhi</li>
+                            <li>Eurorama Film Festival</li>
+                            <li>Toronto, Hong Kong, Rome, Tokyo, Belgrade</li>
+                            <li>20+ countries</li>
+                        </ul>
                     </div>
-                    <div class="contact-details">
-                        <p>Studio Blume — Amsterdam &amp; Bologna</p>
-                        <p>For project inquiries: <a href="mailto:studio@jaschablume.nl">studio@jaschablume.nl</a></p>
+                    <div class="recognition-category">
+                        <h3>Institutions</h3>
+                        <ul class="recognition-list">
+                            <li>Van Abbemuseum, Eindhoven <span class="rec-detail">Guide, Special Guests programme</span></li>
+                            <li>Kunstinstituut Melly, Rotterdam <span class="rec-detail">Workshop facilitator</span></li>
+                            <li>Museum Boerhaave, Leiden <span class="rec-detail">Performance</span></li>
+                            <li>Gerrit Rietveld Academie, Amsterdam <span class="rec-detail">BFA, Audio Visual</span></li>
+                            <li>Gallaudet University, Washington DC <span class="rec-detail">IIP programme</span></li>
+                        </ul>
+                    </div>
+                    <div class="recognition-category">
+                        <h3>Publications &amp; venues</h3>
+                        <ul class="recognition-list">
+                            <li>Mister Motley <span class="rec-detail">Author</span></li>
+                            <li>Lonely Planet Bologna <span class="rec-detail">L'Altro Spazio</span></li>
+                            <li>ART CITY Bologna <span class="rec-detail">Curator, 2016</span></li>
+                            <li>de Oude Kerk, Amsterdam <span class="rec-detail">Group exhibition OMG, 2012</span></li>
+                            <li>Brakke Grond, Amsterdam <span class="rec-detail">Rietveld Uncut, 2010</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="contact" aria-labelledby="contact-heading">
+            <div class="container">
+                <span class="mono" style="color: var(--color-accent);">Contact</span>
+                <h2 id="contact-heading">Studio Blume</h2>
+                <p>Amsterdam &amp; Bologna. For projects, collaborations, and press inquiries.</p>
+                <a href="mailto:studio@jaschablume.nl" class="contact-email">studio@jaschablume.nl</a>
+                <div class="contact-details">
+                    <p>Languages: Dutch Sign Language (NGT), American Sign Language (ASL), International Sign (IS), Dutch, English, Italian</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer role="contentinfo">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h4>NAVIGATION</h4>
-                    <nav aria-label="Footer navigation">
-                        <div class="footer-links">
-                            <a href="#practice">Practice</a>
-                            <a href="#work">Selected Work</a>
-                            <a href="#collaborate">Collaborate</a>
-                        </div>
-                    </nav>
-                </div>
-                <div class="footer-section">
-                    <h4>STUDIO BLUME</h4>
-                    <p class="footer-text">
-                        Multi-disciplinary practice spanning film, photography, installation, and accessibility design. Based between Amsterdam and Bologna.
-                    </p>
-                </div>
-                <div class="footer-section">
-                    <h4>ACCESSIBILITY</h4>
-                    <p class="footer-text">
-                        This site respects reduced-motion preferences, maintains high contrast ratios, uses semantic HTML, and is fully keyboard navigable. No auto-playing media. Built to be experienced, not endured.
-                    </p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <div class="copyright">&copy; 2026 JASCHA BLUME / STUDIO BLUME</div>
-                <div class="social-links">
-                    <a href="mailto:studio@jaschablume.nl">EMAIL</a>
-                </div>
+                <span class="copyright">&copy; 2026 JASCHA BLUME / STUDIO BLUME</span>
+                <p class="footer-access">This site uses semantic HTML, respects reduced-motion preferences, maintains high contrast, and works without JavaScript.</p>
             </div>
         </div>
     </footer>
 
     <script>
         (function() {
-            var header = document.getElementById('header');
-            if (header) {
-                window.addEventListener('scroll', function() {
-                    if (window.scrollY > 100) {
-                        header.classList.add('scrolled');
-                    } else {
-                        header.classList.remove('scrolled');
-                    }
-                });
-            }
-
-            var canvas = document.getElementById('signalCanvas');
-            if (!canvas) return;
-            var ctx = canvas.getContext('2d');
-            if (!ctx) return;
-
-            var isCanvasVisible = true;
-            var animationId = null;
-
-            function resizeCanvas() {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-            }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            var echoes = [];
-            var maxEchoes = 50;
-            var mouseX = canvas.width / 2;
-            var mouseY = canvas.height / 2;
-            var targetX = mouseX;
-            var targetY = mouseY;
-
-            document.querySelector('.hero').addEventListener('mousemove', function(e) {
-                var rect = canvas.getBoundingClientRect();
-                targetX = e.clientX - rect.left;
-                targetY = e.clientY - rect.top;
-            });
-
-            function Echo(x, y, isMain) {
-                this.x = x;
-                this.y = y;
-                this.life = isMain ? 100 : 60;
-                this.maxLife = this.life;
-                this.isMain = isMain;
-                this.radius = isMain ? 3 : 2;
-                this.angle = Math.random() * Math.PI * 2;
-                this.drift = Math.random() * 0.5 + 0.2;
-            }
-
-            Echo.prototype.update = function() {
-                this.x += Math.cos(this.angle) * this.drift;
-                this.y += Math.sin(this.angle) * this.drift;
-                this.life -= 0.8;
-                if (this.life < -1) this.life = -1;
-            };
-
-            Echo.prototype.draw = function() {
-                if (this.life <= 0 || !this.maxLife || this.maxLife <= 0) return;
-                var lifeRatio = Math.max(0, Math.min(1, this.life / this.maxLife));
-                var size = Math.max(1, this.radius * lifeRatio);
-                if (!isFinite(size) || !isFinite(lifeRatio) || size < 1) return;
-
-                ctx.fillStyle = 'rgba(180, 240, 0, ' + (lifeRatio * 0.6) + ')';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
-                ctx.fill();
-
-                if (this.isMain && size >= 2) {
-                    ctx.strokeStyle = 'rgba(180, 240, 0, ' + (lifeRatio * 0.2) + ')';
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, size + 5, 0, Math.PI * 2);
-                    ctx.stroke();
-                }
-            };
-
-            var fieldNodes = [];
-            var nodeCount = 30;
-            for (var i = 0; i < nodeCount; i++) {
-                fieldNodes.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
-                    phase: Math.random() * Math.PI * 2
-                });
-            }
-
-            function animate() {
-                try {
-                    ctx.fillStyle = 'rgba(11, 11, 12, 0.15)';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-                    mouseX += (targetX - mouseX) * 0.12;
-                    mouseY += (targetY - mouseY) * 0.12;
-
-                    if (Math.random() < 0.5) {
-                        echoes.push(new Echo(mouseX, mouseY, true));
-                        var angle = Math.random() * Math.PI * 2;
-                        var distance = Math.random() * 30 + 10;
-                        echoes.push(new Echo(
-                            mouseX + Math.cos(angle) * distance,
-                            mouseY + Math.sin(angle) * distance,
-                            false
-                        ));
-                    }
-
-                    for (var i = echoes.length - 1; i >= 0; i--) {
-                        if (echoes[i].life <= 0) {
-                            echoes.splice(i, 1);
-                            continue;
-                        }
-                        echoes[i].update();
-                        echoes[i].draw();
-                    }
-
-                    while (echoes.length > maxEchoes) {
-                        echoes.shift();
-                    }
-
-                    for (var n = 0; n < fieldNodes.length; n++) {
-                        var node = fieldNodes[n];
-                        node.x += node.vx;
-                        node.y += node.vy;
-                        node.phase += 0.02;
-                        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-                        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-                        var pulse = Math.sin(node.phase) * 0.5 + 0.5;
-                        ctx.fillStyle = 'rgba(180, 240, 0, ' + Math.max(0, Math.min(1, pulse * 0.15)) + ')';
-                        ctx.beginPath();
-                        ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-
-                    for (var a = 0; a < fieldNodes.length; a++) {
-                        for (var b = a + 1; b < fieldNodes.length; b++) {
-                            var dx = fieldNodes[a].x - fieldNodes[b].x;
-                            var dy = fieldNodes[a].y - fieldNodes[b].y;
-                            var dist = Math.sqrt(dx * dx + dy * dy);
-                            if (dist < 150) {
-                                var alpha = Math.max(0, (1 - dist / 150) * 0.1);
-                                ctx.strokeStyle = 'rgba(180, 240, 0, ' + alpha + ')';
-                                ctx.lineWidth = 0.5;
-                                ctx.beginPath();
-                                ctx.moveTo(fieldNodes[a].x, fieldNodes[a].y);
-                                ctx.lineTo(fieldNodes[b].x, fieldNodes[b].y);
-                                ctx.stroke();
-                            }
-                        }
-                    }
-                } catch (error) {}
-
-                if (isCanvasVisible) {
-                    animationId = requestAnimationFrame(animate);
-                }
-            }
-
             if ('IntersectionObserver' in window) {
-                var canvasObserver = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting && !isCanvasVisible) {
-                            isCanvasVisible = true;
-                            animate();
-                        } else if (!entry.isIntersecting && isCanvasVisible) {
-                            isCanvasVisible = false;
-                            if (animationId) cancelAnimationFrame(animationId);
-                        }
-                    });
-                }, { threshold: 0 });
-                canvasObserver.observe(canvas);
-            }
-            animate();
-
-            if ('IntersectionObserver' in window) {
-                var scrollObserver = new IntersectionObserver(function(entries) {
+                var observer = new IntersectionObserver(function(entries) {
                     entries.forEach(function(entry) {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('visible');
                         }
                     });
-                }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+                }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
 
-                document.querySelectorAll('.tension, .practice-item, .project').forEach(function(el) {
-                    scrollObserver.observe(el);
+                document.querySelectorAll('.reveal').forEach(function(el) {
+                    observer.observe(el);
                 });
             } else {
-                document.querySelectorAll('.tension, .practice-item, .project').forEach(function(el) {
+                document.querySelectorAll('.reveal').forEach(function(el) {
                     el.classList.add('visible');
                 });
             }
