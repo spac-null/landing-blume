@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jascha Blume — Sensory Translation Lab</title>
+    <meta name="description" content="Jascha Blume is a Deaf artist based between Amsterdam and Bologna. Film, photography, installation, and accessibility design — translating between worlds.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Spectral:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --color-bg: #0b0b0c;
@@ -16,29 +17,29 @@
             --color-muted: #9a9a96;
             --color-accent: #b4f000;
             --color-border: #2a2a2c;
-            
+
             --font-display: 'Playfair Display', serif;
             --font-body: 'Spectral', serif;
             --font-mono: 'IBM Plex Mono', monospace;
-            
+
             --spacing-xs: 0.5rem;
             --spacing-sm: 1rem;
             --spacing-md: 2rem;
             --spacing-lg: 4rem;
             --spacing-xl: 6rem;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         html {
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
-        
+
         body {
             font-family: var(--font-body);
             background-color: var(--color-bg);
@@ -47,41 +48,43 @@
             font-weight: 400;
             overflow-x: hidden;
         }
-        
-        /* Typography */
-        h1, h2, h3 {
+
+        h1, h2, h3, h4 {
             font-family: var(--font-display);
             font-weight: 700;
             line-height: 1.1;
         }
-        
+
         h1 {
             font-size: clamp(2.5rem, 8vw, 6rem);
             letter-spacing: -0.02em;
         }
-        
+
         h2 {
             font-size: clamp(2rem, 5vw, 4rem);
             letter-spacing: -0.01em;
         }
-        
+
         h3 {
             font-size: clamp(1.5rem, 3vw, 2.5rem);
         }
-        
+
+        h4 {
+            font-size: clamp(1.25rem, 2vw, 1.75rem);
+        }
+
         p {
             font-size: clamp(1.0625rem, 2vw, 1.1875rem);
             max-width: 70ch;
         }
-        
+
         .mono {
             font-family: var(--font-mono);
             font-size: 0.875rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
-        
-        /* Layout */
+
         .skip-link {
             position: absolute;
             top: -40px;
@@ -94,28 +97,27 @@
             text-decoration: none;
             z-index: 10000;
         }
-        
+
         .skip-link:focus {
             top: 0;
         }
-        
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 clamp(1.5rem, 5vw, 4rem);
         }
-        
+
         section {
             position: relative;
             padding: var(--spacing-xl) 0;
             border-top: 1px solid var(--color-border);
         }
-        
+
         section:first-of-type {
             border-top: none;
         }
-        
-        /* Header */
+
         header {
             position: fixed;
             top: 0;
@@ -126,18 +128,18 @@
             background: linear-gradient(to bottom, var(--color-bg) 0%, transparent 100%);
             transition: background 0.3s ease;
         }
-        
+
         header.scrolled {
             background: rgba(11, 11, 12, 0.95);
             backdrop-filter: blur(10px);
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-family: var(--font-mono);
             font-size: 0.875rem;
@@ -145,12 +147,12 @@
             text-decoration: none;
             letter-spacing: 0.1em;
         }
-        
+
         nav {
             display: flex;
             gap: 2rem;
         }
-        
+
         nav a {
             font-family: var(--font-mono);
             font-size: 0.75rem;
@@ -159,12 +161,12 @@
             letter-spacing: 0.1em;
             transition: color 0.3s ease;
         }
-        
-        nav a:hover {
+
+        nav a:hover,
+        nav a:focus {
             color: var(--color-accent);
         }
-        
-        /* Hero Section */
+
         .hero {
             position: relative;
             min-height: 100vh;
@@ -174,7 +176,7 @@
             padding-top: 6rem;
             overflow: hidden;
         }
-        
+
         .signal-canvas {
             position: absolute;
             top: 0;
@@ -185,25 +187,25 @@
             z-index: 0;
             pointer-events: none;
         }
-        
+
         .hero-content {
             position: relative;
             z-index: 1;
         }
-        
+
         .hero-label {
             color: var(--color-accent);
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeInUp 1s ease forwards 0.2s;
         }
-        
+
         .hero h1 {
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeInUp 1s ease forwards 0.4s;
         }
-        
+
         .hero-subtitle {
             font-size: clamp(1.25rem, 3vw, 2rem);
             color: var(--color-muted);
@@ -212,15 +214,34 @@
             opacity: 0;
             animation: fadeInUp 1s ease forwards 0.6s;
         }
-        
+
+        .hero-recognition {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--color-surface);
+            border-left: 3px solid var(--color-accent);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.8s;
+        }
+
+        .hero-recognition p {
+            color: var(--color-muted);
+            font-size: 1rem;
+        }
+
+        .hero-recognition strong {
+            color: var(--color-text);
+        }
+
         .cta-group {
             display: flex;
             gap: 1.5rem;
             flex-wrap: wrap;
             opacity: 0;
-            animation: fadeInUp 1s ease forwards 0.8s;
+            animation: fadeInUp 1s ease forwards 1s;
+            margin-top: 2rem;
         }
-        
+
         .btn {
             display: inline-block;
             padding: 1rem 2rem;
@@ -233,119 +254,85 @@
             cursor: pointer;
             position: relative;
         }
-        
+
         .btn-primary {
             background-color: var(--color-accent);
             color: var(--color-bg);
             border-color: var(--color-accent);
         }
-        
-        .btn-primary:hover {
+
+        .btn-primary:hover,
+        .btn-primary:focus {
             background-color: transparent;
             color: var(--color-accent);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(180, 240, 0, 0.2);
         }
-        
+
         .btn-secondary {
             background-color: transparent;
             color: var(--color-text);
             border-color: var(--color-border);
         }
-        
-        .btn-secondary:hover {
+
+        .btn-secondary:hover,
+        .btn-secondary:focus {
             border-color: var(--color-accent);
             color: var(--color-accent);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(180, 240, 0, 0.1);
         }
-        
-        .trust-signals {
-            margin-top: 4rem;
-            padding-top: 3rem;
-            border-top: 1px solid var(--color-border);
-            opacity: 0;
-            animation: fadeInUp 1s ease forwards 1s;
-        }
-        
-        .trust-label {
-            color: var(--color-muted);
-            font-size: 0.875rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .partners {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            align-items: center;
-        }
-        
-        .partner {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--color-muted);
-            letter-spacing: 0.05em;
-            opacity: 0.6;
-            transition: opacity 0.3s ease;
-        }
-        
-        .partner:hover {
-            opacity: 1;
-        }
-        
-        /* Worldview Section */
+
         .worldview {
             background-color: var(--color-surface);
         }
-        
+
         .section-label {
             color: var(--color-accent);
             margin-bottom: 2rem;
         }
-        
+
         .worldview-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 4rem;
             margin-top: 4rem;
         }
-        
+
         .tension {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s ease;
         }
-        
+
         .tension.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .tension-number {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--color-accent);
             margin-bottom: 1rem;
         }
-        
+
         .tension h3 {
             margin-bottom: 1.5rem;
             color: var(--color-text);
         }
-        
+
         .tension p {
             color: var(--color-muted);
         }
-        
-        /* Practice Section */
+
         .practice-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
             margin-top: 4rem;
         }
-        
+
         .practice-item {
             padding: 2rem;
             background: linear-gradient(135deg, var(--color-surface) 0%, transparent 100%);
@@ -355,16 +342,16 @@
             transition: all 0.6s ease;
             position: relative;
         }
-        
+
         .practice-item.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .practice-item:hover {
             border-color: var(--color-accent);
         }
-        
+
         .practice-index {
             font-family: var(--font-mono);
             font-size: 0.75rem;
@@ -373,59 +360,47 @@
             margin-bottom: 1.5rem;
             display: block;
         }
-        
+
         .practice-item h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
         }
-        
+
         .practice-item p {
             color: var(--color-muted);
             font-size: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0;
         }
-        
-        .practice-disruption {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--color-accent);
-            letter-spacing: 0.05em;
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--color-border);
-            opacity: 0.8;
-        }
-        
-        /* Projects Section */
+
         .projects-grid {
             display: grid;
-            gap: 6rem;
+            gap: 5rem;
             margin-top: 4rem;
         }
-        
+
         .project {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
-            align-items: center;
+            align-items: start;
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.8s ease;
         }
-        
+
         .project.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .project:nth-child(even) {
             direction: rtl;
         }
-        
+
         .project:nth-child(even) > * {
             direction: ltr;
         }
-        
+
         .project-visual {
             position: relative;
             aspect-ratio: 4/3;
@@ -434,11 +409,11 @@
             overflow: hidden;
             transition: border-color 0.3s ease;
         }
-        
+
         .project:hover .project-visual {
             border-color: var(--color-accent);
         }
-        
+
         .project-placeholder {
             width: 100%;
             height: 100%;
@@ -446,7 +421,7 @@
             align-items: center;
             justify-content: center;
             font-family: var(--font-display);
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-size: clamp(1.25rem, 2.5vw, 2rem);
             font-weight: 700;
             color: var(--color-text);
             letter-spacing: -0.02em;
@@ -454,34 +429,35 @@
             padding: 2rem;
             line-height: 1.2;
         }
-        
+
         .project-info {
-            padding: 2rem 0;
+            padding: 1rem 0;
         }
-        
+
         .project-meta {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             color: var(--color-accent);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             letter-spacing: 0.1em;
         }
-        
+
         .project-info h3 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: clamp(1.25rem, 2.5vw, 2rem);
         }
-        
+
         .project-info p {
             color: var(--color-muted);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
-        
+
         .project-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
         }
-        
+
         .tag {
             padding: 0.5rem 1rem;
             background-color: var(--color-surface);
@@ -491,116 +467,90 @@
             letter-spacing: 0.1em;
             color: var(--color-muted);
         }
-        
-        /* Collaboration Section */
+
+        .collaboration {
+            background-color: var(--color-surface);
+        }
+
         .collaboration-content {
             max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
         }
-        
+
         .collaboration h2 {
             margin-bottom: 2rem;
         }
-        
+
         .collaboration-intro {
-            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-size: clamp(1.125rem, 2.5vw, 1.5rem);
             color: var(--color-muted);
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
-        
+
         .audience-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-bottom: 4rem;
-            text-align: left;
+            margin-bottom: 3rem;
         }
-        
+
         .audience-item {
             padding: 2rem;
             border: 1px solid var(--color-border);
             transition: all 0.3s ease;
         }
-        
+
         .audience-item:hover {
             border-color: var(--color-accent);
-            transform: translateY(-4px);
         }
-        
+
         .audience-item h4 {
             font-family: var(--font-body);
             font-size: 1.25rem;
             margin-bottom: 1rem;
             color: var(--color-text);
+            font-weight: 600;
         }
-        
+
         .audience-item p {
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
             color: var(--color-muted);
         }
-        
-        /* Footer */
-        .accessibility-statement {
-            background-color: var(--color-surface);
-            border-top: 1px solid var(--color-border);
-            padding: 3rem 0;
-        }
-        
-        .accessibility-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        .accessibility-statement h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .accessibility-statement p {
-            color: var(--color-muted);
-            margin-bottom: 1.5rem;
-        }
-        
-        .accessibility-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+
+        .contact-details {
             margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--color-border);
         }
-        
-        .accessibility-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-        
-        .feature-marker {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--color-accent);
-            letter-spacing: 0.1em;
-            min-width: 2rem;
-        }
-        
-        .feature-text {
-            font-size: 0.875rem;
+
+        .contact-details p {
             color: var(--color-muted);
-            line-height: 1.6;
+            font-size: 0.9375rem;
+            margin-bottom: 0.5rem;
         }
-        
+
+        .contact-details a {
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover,
+        .contact-details a:focus {
+            color: var(--color-text);
+        }
+
         footer {
             border-top: 1px solid var(--color-border);
-            padding: 4rem 0 2rem;
+            padding: 3rem 0 2rem;
         }
-        
+
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 4rem;
-            margin-bottom: 4rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
-        
+
         .footer-section h4 {
             font-family: var(--font-mono);
             font-size: 0.75rem;
@@ -608,90 +558,31 @@
             color: var(--color-accent);
             margin-bottom: 1.5rem;
         }
-        
+
         .footer-links {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
         }
-        
+
         .footer-links a {
             color: var(--color-muted);
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.3s ease;
         }
-        
-        .footer-links a:hover {
+
+        .footer-links a:hover,
+        .footer-links a:focus {
             color: var(--color-accent);
         }
-        
-        .language-toggle {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .language-toggle button {
-            background: none;
-            border: 1px solid var(--color-border);
+
+        .footer-text {
             color: var(--color-muted);
-            padding: 0.5rem 1rem;
-            font-family: var(--font-mono);
-            font-size: 0.625rem;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .language-toggle button:hover,
-        .language-toggle button.active {
-            border-color: var(--color-accent);
-            color: var(--color-accent);
-        }
-        
-        .newsletter-form {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .newsletter-form input {
-            flex: 1;
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-border);
-            color: var(--color-text);
-            padding: 0.75rem 1rem;
-            font-family: var(--font-body);
             font-size: 0.875rem;
+            line-height: 1.6;
         }
-        
-        .newsletter-form input::placeholder {
-            color: var(--color-muted);
-        }
-        
-        .newsletter-form input:focus {
-            outline: none;
-            border-color: var(--color-accent);
-        }
-        
-        .newsletter-form button {
-            padding: 0.75rem 1.5rem;
-            background-color: var(--color-accent);
-            color: var(--color-bg);
-            border: none;
-            font-family: var(--font-mono);
-            font-size: 0.625rem;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .newsletter-form button:hover {
-            background-color: transparent;
-            color: var(--color-accent);
-            border: 1px solid var(--color-accent);
-        }
-        
+
         .footer-bottom {
             padding-top: 2rem;
             border-top: 1px solid var(--color-border);
@@ -701,19 +592,19 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-        
+
         .copyright {
             font-family: var(--font-mono);
             font-size: 0.625rem;
             color: var(--color-muted);
             letter-spacing: 0.1em;
         }
-        
+
         .social-links {
             display: flex;
             gap: 1.5rem;
         }
-        
+
         .social-links a {
             font-family: var(--font-mono);
             font-size: 0.625rem;
@@ -722,12 +613,12 @@
             letter-spacing: 0.1em;
             transition: color 0.3s ease;
         }
-        
-        .social-links a:hover {
+
+        .social-links a:hover,
+        .social-links a:focus {
             color: var(--color-accent);
         }
-        
-        /* Animations */
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -738,23 +629,21 @@
                 transform: translateY(0);
             }
         }
-        
-        /* Accessibility: Focus States */
+
         *:focus {
             outline: 2px solid var(--color-accent);
             outline-offset: 4px;
         }
-        
+
         *:focus:not(:focus-visible) {
             outline: none;
         }
-        
+
         *:focus-visible {
             outline: 2px solid var(--color-accent);
             outline-offset: 4px;
         }
-        
-        /* Accessibility: Reduced Motion Support */
+
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
@@ -764,348 +653,397 @@
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
-            
+
             .signal-canvas {
                 display: none;
             }
-            
+
+            .hero-label,
+            .hero h1,
+            .hero-subtitle,
+            .hero-recognition,
+            .cta-group {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
             .tension,
             .practice-item,
-            .project,
-            .metric {
+            .project {
                 opacity: 1 !important;
                 transform: none !important;
             }
         }
-        
-        /* Responsive */
+
         @media (max-width: 1024px) {
             .project {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
-            
+
             .project:nth-child(even) {
                 direction: ltr;
             }
         }
-        
+
         @media (max-width: 768px) {
             nav {
                 display: none;
             }
-            
+
+            .practice-grid {
+                grid-template-columns: 1fr;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr;
             }
-            
+
             .footer-bottom {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .hero-recognition {
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link" data-i18n="skip_to_content">Skip to main content</a>
-    
-    <header id="header">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header id="header" role="banner">
         <div class="container">
             <div class="header-content">
-                <a href="#" class="logo">JASCHA BLUME</a>
+                <a href="#" class="logo" aria-label="Jascha Blume, return to top">JASCHA BLUME</a>
                 <nav aria-label="Main navigation">
-                    <a href="#practice" data-i18n="nav_practice">PRACTICE</a>
-                    <a href="#projects" data-i18n="nav_work">WORK</a>
-                    <a href="#contact" data-i18n="nav_contact">CONTACT</a>
+                    <a href="#practice">PRACTICE</a>
+                    <a href="#work">WORK</a>
+                    <a href="#collaborate">COLLABORATE</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <main id="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <canvas class="signal-canvas" id="signalCanvas"></canvas>
+        <!-- Hero: Who are you + core claim -->
+        <section class="hero" aria-label="Introduction">
+            <canvas class="signal-canvas" id="signalCanvas" aria-hidden="true"></canvas>
+            <noscript>
+                <style>.signal-canvas { display: none; }</style>
+            </noscript>
             <div class="container">
                 <div class="hero-content">
-                    <div class="mono hero-label" data-i18n="hero_label">SENSORY TRANSLATION LAB</div>
-                    <h1 data-i18n="hero_headline">I translate silence into images, spaces, and tools.</h1>
-                    <p class="hero-subtitle" data-i18n="hero_subtitle">
-                        I’m a Deaf artist based between Amsterdam and Bologna. I work with film, live visuals, and accessibility-first design—always starting with questions, not assumptions.
+                    <div class="mono hero-label">SENSORY TRANSLATION LAB</div>
+                    <h1>I translate silence into images, spaces, and tools.</h1>
+                    <p class="hero-subtitle">
+                        I am a Deaf artist and designer based between Amsterdam and Bologna. I make films, photographs, installations, and accessibility systems. The medium changes. The question stays the same: what happens when you build culture from a different sensory starting point?
                     </p>
-                    <div class="cta-group">
-                        <a href="#projects" class="btn btn-primary" data-i18n="cta_explore">EXPLORE THE WORK</a>
-                        <a href="#contact" class="btn btn-secondary" data-i18n="cta_contact">START A CONVERSATION</a>
+                    <div class="hero-recognition">
+                        <p>Work shown at <strong>Van Abbemuseum</strong>, Eindhoven. Featured at <strong>IDFA</strong>. Supported by <strong>Creative Europe</strong> and <strong>Comune di Bologna</strong>.</p>
                     </div>
-                    <div class="trust-signals">
-                        <div class="trust-label mono" data-i18n="trust_label">RECOGNIZED BY</div>
-                        <div class="partners">
-                            <span class="partner">VAN ABBEMUSEUM</span>
-                            <span class="partner">KUNSTINSTITUUT MELLY</span>
-                            <span class="partner">ART CITY BOLOGNA</span>
-                            <span class="partner">COMUNE DI BOLOGNA</span>
-                            <span class="partner">CREATIVE EUROPE</span>
-                        </div>
+                    <div class="cta-group">
+                        <a href="#work" class="btn btn-primary">SEE THE WORK</a>
+                        <a href="#collaborate" class="btn btn-secondary">START A CONVERSATION</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Worldview Section -->
-        <section class="worldview">
+        <!-- Cultural Tensions: the worldview that drives the practice -->
+        <section class="worldview" aria-labelledby="tensions-heading">
             <div class="container">
-                <div class="mono section-label" data-i18n="worldview_label">CULTURAL TENSIONS</div>
-                <h2 data-i18n="worldview_headline">Accessibility is not an afterthought.<br>It's a design philosophy.</h2>
+                <div class="mono section-label">CULTURAL TENSIONS</div>
+                <h2 id="tensions-heading">Accessibility is not an afterthought.<br>It is a design philosophy.</h2>
                 <div class="worldview-grid">
                     <div class="tension">
-                        <div class="tension-number">01</div>
-                        <h3 data-i18n="tension1_title">Institutions design for the majority, then retrofit for the rest.</h3>
-                        <p data-i18n="tension1_body">Museums, festivals, and cultural spaces treat accessibility as compliance—checkbox accommodations bolted onto finished products. This approach reveals a fundamental misunderstanding: accessibility constraints often generate the most innovative design solutions.</p>
+                        <div class="tension-number" aria-hidden="true">01</div>
+                        <h3>Institutions design for the majority, then retrofit for the rest.</h3>
+                        <p>Museums, festivals, and cultural spaces treat accessibility as compliance — checkbox accommodations bolted onto finished products. This approach misses something fundamental: accessibility constraints often generate the most innovative design solutions.</p>
                     </div>
                     <div class="tension">
-                        <div class="tension-number">02</div>
-                        <h3 data-i18n="tension2_title">Deaf perception exposes blind spots in dominant systems.</h3>
-                        <p data-i18n="tension2_body">When you build culture primarily through sound, you miss the visual frequencies, spatial rhythms, and tactile signals that shape how millions experience the world. Deafness isn't absence—it's a different sensory hierarchy that reveals what hearing-centric design overlooks.</p>
+                        <div class="tension-number" aria-hidden="true">02</div>
+                        <h3>Deaf perception exposes blind spots in dominant systems.</h3>
+                        <p>When you build culture primarily through sound, you miss the visual frequencies, spatial rhythms, and tactile signals that shape how millions experience the world. Deafness is not absence — it is a different sensory hierarchy that reveals what hearing-centric design overlooks.</p>
                     </div>
                     <div class="tension">
-                        <div class="tension-number">03</div>
-                        <h3 data-i18n="tension3_title">Translation is not simplification. It's transformation.</h3>
-                        <p data-i18n="tension3_body">Every cultural and sensory translation changes meaning. Rather than treating this as loss, I work with translation as a creative force—where shifting between Dutch, Italian, Sign Language, and visual systems generates new forms of knowing.</p>
+                        <div class="tension-number" aria-hidden="true">03</div>
+                        <h3>Translation is not simplification. It is transformation.</h3>
+                        <p>Every cultural and sensory translation changes meaning. Rather than treating this as loss, I work with translation as a creative force — shifting between Dutch, Italian, Sign Language, and visual systems to generate new forms of knowing.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Practice Section -->
-        <section id="practice">
+        <!-- Practice: What do you actually make -->
+        <section id="practice" aria-labelledby="practice-heading">
             <div class="container">
-                <div class="mono section-label" data-i18n="practice_label">PRACTICE AREAS</div>
-                <h2 data-i18n="practice_headline">Cross-sensory work<br>across five disciplines</h2>
+                <div class="mono section-label">PRACTICE</div>
+                <h2 id="practice-heading">Five disciplines,<br>one underlying question</h2>
                 <div class="practice-grid">
                     <div class="practice-item">
-                        <span class="practice-index">[01]</span>
-                        <h3 data-i18n="practice1_title">Film & Documentary</h3>
-                        <p data-i18n="practice1_desc">Deaf-led storytelling about language, identity, and everyday life. I’m drawn to long-form attention: how time changes people—and how language holds them.</p>
-                        <div class="practice-disruption">DISRUPTS → Documentary as hearing-centric narrative</div>
+                        <span class="practice-index" aria-hidden="true">[01]</span>
+                        <h3>Film &amp; Documentary</h3>
+                        <p>Feature films and short documentaries about Deaf life, sign language identity, and sensory experience. Deaf-led storytelling where the camera follows a different logic than hearing-centric narrative.</p>
                     </div>
                     <div class="practice-item">
-                        <span class="practice-index">[02]</span>
-                        <h3 data-i18n="practice2_title">Multisensory Installation</h3>
-                        <p data-i18n="practice2_desc">VJ and spatial work that turns sound into light, pattern, and timing. Performances you can follow with your eyes, your body, your distance.</p>
-                        <div class="practice-disruption">DISRUPTS → Sound as the primary performance medium</div>
+                        <span class="practice-index" aria-hidden="true">[02]</span>
+                        <h3>Photography</h3>
+                        <p>Series-based portraiture and documentary work. Intimate, long-duration projects about aging, identity, and how people inhabit their bodies over time.</p>
                     </div>
                     <div class="practice-item">
-                        <span class="practice-index">[03]</span>
-                        <h3 data-i18n="practice3_title">Inclusive Cooperatives</h3>
-                        <p data-i18n="practice3_desc">Co-founder of L’Altro Spazio in Bologna: a cultural bar where accessibility is daily practice, not branding. A place to test what inclusion looks like when things get real.</p>
-                        <div class="practice-disruption">DISRUPTS → "Charity model" approaches to disability employment</div>
+                        <span class="practice-index" aria-hidden="true">[03]</span>
+                        <h3>Installation &amp; Video</h3>
+                        <p>Multi-channel video installations and spatial work that translate between senses. Environments built to be experienced through sight and touch, not only sound.</p>
                     </div>
                     <div class="practice-item">
-                        <span class="practice-index">[04]</span>
-                        <h3 data-i18n="practice4_title">Accessibility Innovation</h3>
-                        <p data-i18n="practice4_desc">I help teams design access as a creative constraint: clearer information, better spatial logic, less friction. Accessibility built in from the start—not added at the end.</p>
-                        <div class="practice-disruption">DISRUPTS → Accessibility as compliance retrofit</div>
+                        <span class="practice-index" aria-hidden="true">[04]</span>
+                        <h3>Accessibility Design</h3>
+                        <p>Consulting and building with institutions on accessibility systems, sign language interfaces, and inclusive cultural programming. Accessibility as a design principle, not a retrofit.</p>
                     </div>
                     <div class="practice-item">
-                        <span class="practice-index">[05]</span>
-                        <h3 data-i18n="practice5_title">Residencies & Mobility</h3>
-                        <p data-i18n="practice5_desc">I host and shape small international residencies and exchanges with an access-first approach—so artists can work without the usual barriers.</p>
-                        <div class="practice-disruption">DISRUPTS → Mobility as individual artist privilege</div>
+                        <span class="practice-index" aria-hidden="true">[05]</span>
+                        <h3>Social Enterprise</h3>
+                        <p>Co-founding and running cultural spaces where radical inclusion is the business model. Proving that disability employment and financial sustainability are not contradictions.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects">
+        <!-- Work: Show specific projects -->
+        <section id="work" aria-labelledby="work-heading">
             <div class="container">
-                <div class="mono section-label" data-i18n="projects_label">SELECTED WORK</div>
-                <h2 data-i18n="projects_headline">Projects that turn<br>perception into form</h2>
+                <div class="mono section-label">SELECTED WORK</div>
+                <h2 id="work-heading">Projects that translate<br>perception into form</h2>
                 <div class="projects-grid">
-                    <div class="project">
-                        <div class="project-visual">
-                            <div class="project-placeholder">I SIGN, I LIVE (2012)</div>
+                    <article class="project">
+                        <div class="project-visual" role="img" aria-label="Title card for I Sign, I Live, a 2012 feature documentary about Deaf identity across cultures">
+                            <div class="project-placeholder">I SIGN, I LIVE</div>
                         </div>
                         <div class="project-info">
-                            <div class="project-meta" data-i18n="project1_meta">DOCUMENTARY FILM</div>
+                            <div class="project-meta">2012 — FEATURE DOCUMENTARY</div>
                             <h3>I Sign, I Live</h3>
-                            <p data-i18n="project1_desc">A feature documentary on Deaf life across cultures—how sign language shapes identity, relationships, and belonging.</p>
+                            <p>A feature-length documentary following Deaf individuals across cultures, exploring how sign language shapes identity, community, and the experience of the world. The film treats sign language not as accommodation but as a complete linguistic and cultural system. Shown at Van Abbemuseum and international festivals.</p>
                             <div class="project-tags">
-                                <span class="tag" data-i18n="tag_sign_language">SIGN LANGUAGE</span>
-                                <span class="tag" data-i18n="tag_identity">IDENTITY</span>
-                                <span class="tag" data-i18n="tag_cross_cultural">CROSS-CULTURAL</span>
+                                <span class="tag">FILM</span>
+                                <span class="tag">SIGN LANGUAGE</span>
+                                <span class="tag">IDENTITY</span>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="project">
-                        <div class="project-visual">
+                    </article>
+
+                    <article class="project">
+                        <div class="project-visual" role="img" aria-label="Title card for Kalokagathia, a 2020 video portrait series exploring beauty and goodness in harmony">
+                            <div class="project-placeholder">KALOKAGATHIA</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">2020 — VIDEO PORTRAIT SERIES</div>
+                            <h3>Kalokagathia</h3>
+                            <p>Nine collaborators — Bart, Casper, Kim, Maaike, Marie, Pieternel, Sif, Stella, and Marq — filmed in intimate video portraits that explore the ancient Greek ideal of beauty and goodness in harmony. Each portrait asks: what does it mean to embody both inner and outer wholeness? Multi-channel video installation.</p>
+                            <div class="project-tags">
+                                <span class="tag">VIDEO</span>
+                                <span class="tag">COLLABORATION</span>
+                                <span class="tag">INSTALLATION</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project">
+                        <div class="project-visual" role="img" aria-label="Title card for Elderly, a 2020 photography series on aging with dignity">
+                            <div class="project-placeholder">ELDERLY</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">2020 — PHOTOGRAPHY, 8 WORKS</div>
+                            <h3>Elderly</h3>
+                            <p>A photographic series that refuses to look away from aging. Where culture marginalizes older people or renders them invisible, these eight portraits look closely, with respect and without sentimentality. Documentary portraiture as an act of care.</p>
+                            <div class="project-tags">
+                                <span class="tag">PHOTOGRAPHY</span>
+                                <span class="tag">PORTRAITURE</span>
+                                <span class="tag">AGING</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project">
+                        <div class="project-visual" role="img" aria-label="Title card for Binnenkamer, a 2020 installation exploring the Dutch concept of the inner room">
+                            <div class="project-placeholder">BINNENKAMER</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">2020 — INSTALLATION</div>
+                            <h3>Binnenkamer</h3>
+                            <p>An installation exploring the Dutch concept of the "binnenkamer" — the inner room — as both physical location and psychological state. The work plays with where private space ends and public space begins, and what it means to invite someone inside.</p>
+                            <div class="project-tags">
+                                <span class="tag">INSTALLATION</span>
+                                <span class="tag">SPACE</span>
+                                <span class="tag">DUTCH CULTURE</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project">
+                        <div class="project-visual" role="img" aria-label="Title card for Me_Myself, a decade-long self-documentation project spanning 2011 to 2020">
+                            <div class="project-placeholder">ME_MYSELF</div>
+                        </div>
+                        <div class="project-info">
+                            <div class="project-meta">2011&ndash;2020 — PHOTOGRAPHY</div>
+                            <h3>Me_Myself</h3>
+                            <p>A decade of self-documentation. Not vanity but inquiry: what does it mean to witness yourself over ten years? Identity as process, not state. The archive itself becomes a form of research into how a person changes and persists.</p>
+                            <div class="project-tags">
+                                <span class="tag">PHOTOGRAPHY</span>
+                                <span class="tag">SELF-PORTRAIT</span>
+                                <span class="tag">LONG-DURATION</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project">
+                        <div class="project-visual" role="img" aria-label="Title card for L'Altro Spazio, a social cooperative cultural bar in Bologna">
                             <div class="project-placeholder">L'ALTRO SPAZIO</div>
                         </div>
                         <div class="project-info">
-                            <div class="project-meta" data-i18n="project2_meta">SOCIAL COOPERATIVE</div>
+                            <div class="project-meta">ONGOING — SOCIAL COOPERATIVE, BOLOGNA</div>
                             <h3>L'Altro Spazio</h3>
-                            <p data-i18n="project2_desc">Co-founded an inclusive cultural cooperative and bar in Bologna. A long-term experiment in accessibility-first hospitality, programming, and work culture.</p>
+                            <p>A cultural bar and event space in Bologna, co-founded as a social cooperative. Eighty percent of staff come from vulnerable backgrounds. The project tests a model where radical inclusion and financial sustainability reinforce each other rather than compete.</p>
                             <div class="project-tags">
-                                <span class="tag" data-i18n="tag_cooperative">COOPERATIVE</span>
-                                <span class="tag" data-i18n="tag_cultural_space">CULTURAL SPACE</span>
-                                <span class="tag" data-i18n="tag_inclusion">INCLUSION</span>
+                                <span class="tag">COOPERATIVE</span>
+                                <span class="tag">CULTURAL SPACE</span>
+                                <span class="tag">BOLOGNA</span>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="project">
-                        <div class="project-visual">
-                            <div class="project-placeholder">CENA AL BUIO</div>
+                    </article>
+
+                    <article class="project">
+                        <div class="project-visual" role="img" aria-label="Title card for Tolk/Tolknet, a 2020 project on interpretation and translation as artistic theme">
+                            <div class="project-placeholder">TOLK / TOLKNET</div>
                         </div>
                         <div class="project-info">
-                            <div class="project-meta" data-i18n="project3_meta">SENSORY EXPERIENCE</div>
-                            <h3>Cena al Buio</h3>
-                            <p data-i18n="project3_desc">An immersive dinner in complete darkness, guided by blind staff. A direct encounter with how space, trust, and attention shift when vision disappears.</p>
+                            <div class="project-meta">2020 — MIXED MEDIA</div>
+                            <h3>Tolk / Tolknet</h3>
+                            <p>A project that treats interpretation and translation not as neutral service but as artistic material. "Tolk" is Dutch for interpreter — someone who stands between languages and cultures. The work examines what happens in the space between what is said and what is understood.</p>
                             <div class="project-tags">
-                                <span class="tag" data-i18n="tag_multisensory">MULTISENSORY</span>
-                                <span class="tag" data-i18n="tag_accessibility">ACCESSIBILITY</span>
-                                <span class="tag" data-i18n="tag_experience">EXPERIENCE</span>
+                                <span class="tag">TRANSLATION</span>
+                                <span class="tag">LANGUAGE</span>
+                                <span class="tag">INTERPRETATION</span>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="project">
-                        <div class="project-visual">
-                            <div class="project-placeholder">EU MOBILITY NETWORKS</div>
-                        </div>
-                        <div class="project-info">
-                            <div class="project-meta" data-i18n="project4_meta">ARTIST RESIDENCY</div>
-                            <h3>Culture Moves Europe</h3>
-                            <p data-i18n="project4_desc">Recipient of Culture Moves Europe (Creative Europe) support to host a multisensory artist residency in Bologna. I designed the working conditions with accessibility as the baseline.</p>
-                            <div class="project-tags">
-                                <span class="tag" data-i18n="tag_eu_project">EU PROJECT</span>
-                                <span class="tag" data-i18n="tag_residency">RESIDENCY</span>
-                                <span class="tag" data-i18n="tag_accessibility">ACCESSIBILITY</span>
-                            </div>
-                        </div>
-                    </div>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- Collaboration Section -->
-        <section id="contact" class="collaboration">
+        <!-- Collaboration: What kind of partner + how to start -->
+        <section id="collaborate" class="collaboration" aria-labelledby="collaborate-heading">
             <div class="container">
                 <div class="collaboration-content">
-                    <div class="mono section-label" data-i18n="collab_label">COLLABORATION</div>
-                    <h2 data-i18n="collab_headline">Let’s make something<br>clear, bold, and accessible.</h2>
-                    <p class="collaboration-intro" data-i18n="collab_intro">
-                        If you’re building a program, a space, or a tool—and you want accessibility to be real—I’m interested.
+                    <div class="mono section-label">COLLABORATION</div>
+                    <h2 id="collaborate-heading">I work with people who understand that accessibility makes everything better.</h2>
+                    <p class="collaboration-intro">
+                        The best projects start with a question, not a brief. If you are thinking about accessibility, sensory design, Deaf culture, or inclusive practice — and you want a collaborator who has worked across institutions, countries, and disciplines — let's talk.
                     </p>
                     <div class="audience-grid">
                         <div class="audience-item">
-                            <h4 data-i18n="audience1_title">Cultural Institutions</h4>
-                            <p data-i18n="audience1_desc">Museums, festivals, and venues building accessible experiences that don’t feel like an add-on.</p>
+                            <h4>Museums &amp; Festivals</h4>
+                            <p>Accessibility programming, inclusive exhibition design, Deaf-led cultural projects. I have worked with Van Abbemuseum, Art City Bologna, and Creative Europe.</p>
                         </div>
                         <div class="audience-item">
-                            <h4 data-i18n="audience2_title">Tech & Research Labs</h4>
-                            <p data-i18n="audience2_desc">Teams building interfaces or tools that need Deaf-led design thinking and testing.</p>
+                            <h4>Research &amp; Technology</h4>
+                            <p>Sign language interfaces, sensory translation tools, accessibility-first product design. Deaf design input at the architecture level, not as an afterthought.</p>
                         </div>
                         <div class="audience-item">
-                            <h4 data-i18n="audience3_title">Artists & Collaborators</h4>
-                            <p data-i18n="audience3_desc">People who want to experiment across film, performance, space, and translation.</p>
+                            <h4>Artists &amp; Filmmakers</h4>
+                            <p>Cross-sensory collaboration, documentary co-production, installation work. I bring a practice rooted in Deaf perception and visual thinking.</p>
                         </div>
                     </div>
-                    <div class="cta-group" style="justify-content: center;">
-                        <a href="mailto:hello@jascha-blume.com" class="btn btn-primary" data-i18n="cta_contact">START A CONVERSATION</a>
+                    <div class="cta-group">
+                        <a href="mailto:studio@jaschablume.nl" class="btn btn-primary">STUDIO@JASCHABLUME.NL</a>
+                    </div>
+                    <div class="contact-details">
+                        <p>Studio Blume — Amsterdam &amp; Bologna</p>
+                        <p>For project inquiries: <a href="mailto:studio@jaschablume.nl">studio@jaschablume.nl</a></p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
+    <footer role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4 data-i18n="footer_nav_title">NAVIGATION</h4>
-                    <div class="footer-links">
-                        <a href="#practice" data-i18n="footer_nav_practice">Practice</a>
-                        <a href="#projects" data-i18n="footer_nav_work">Selected Work</a>
-                        <a href="#contact" data-i18n="footer_nav_contact">Contact</a>
-                    </div>
+                    <h4>NAVIGATION</h4>
+                    <nav aria-label="Footer navigation">
+                        <div class="footer-links">
+                            <a href="#practice">Practice</a>
+                            <a href="#work">Selected Work</a>
+                            <a href="#collaborate">Collaborate</a>
+                        </div>
+                    </nav>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer_lang_title">LANGUAGE</h4>
-                    <div class="language-toggle">
-                        <button class="active" data-lang="en" aria-pressed="true">EN</button>
-                        <button data-lang="nl" aria-pressed="false">NL</button>
-                        <button data-lang="it" aria-pressed="false">IT</button>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="footer_pdf_title">BUY PDF PAPER</h4>
-                    <p style="color: var(--color-muted); font-size: 0.875rem; margin-bottom: 1rem;" data-i18n="footer_pdf_desc">
-                        Two short texts on accessibility, authorship, and perception.
+                    <h4>STUDIO BLUME</h4>
+                    <p class="footer-text">
+                        Multi-disciplinary practice spanning film, photography, installation, and accessibility design. Based between Amsterdam and Bologna.
                     </p>
-                    <div class="footer-links">
-                        <a href="#" data-i18n="footer_pdf_item1">Accessibility Is Not a Checklist — €24</a>
-                        <a href="#" data-i18n="footer_pdf_item2">Accessibility as Authorship — By inquiry</a>
-                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>ACCESSIBILITY</h4>
+                    <p class="footer-text">
+                        This site respects reduced-motion preferences, maintains high contrast ratios, uses semantic HTML, and is fully keyboard navigable. No auto-playing media. Built to be experienced, not endured.
+                    </p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <div class="copyright" data-i18n="copyright_line">© 2026 JASCHA BLUME — ALL RIGHTS RESERVED</div>
+                <div class="copyright">&copy; 2026 JASCHA BLUME / STUDIO BLUME</div>
                 <div class="social-links">
-                    <a href="#">LINKEDIN</a>
-                    <a href="#">INSTAGRAM</a>
-                    <a href="#">VIMEO</a>
+                    <a href="mailto:studio@jaschablume.nl">EMAIL</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // Header scroll effect
-        const header = document.getElementById('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+    <script>
+        (function() {
+            var header = document.getElementById('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 100) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
             }
-        });
 
-        // Signal Canvas Animation - Spatial Echo System
-        // Concept: Mimics Deaf spatial perception with delayed response, gesture memory, and echo trails
-        const canvas = document.getElementById('signalCanvas');
-        const ctx = canvas.getContext('2d');
-        let isCanvasVisible = true;
-        let animationId = null;
-        
-        function resizeCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+            var canvas = document.getElementById('signalCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            if (!ctx) return;
 
-        // Spatial Echo System
-        const echoes = [];
-        const maxEchoes = 50;
-        let mouseX = canvas.width / 2;
-        let mouseY = canvas.height / 2;
-        let targetX = mouseX;
-        let targetY = mouseY;
-        
-        // Track cursor with latency (delayed perception)
-        function updateCursorPosition(e) {
-            const rect = canvas.getBoundingClientRect();
-            targetX = e.clientX - rect.left;
-            targetY = e.clientY - rect.top;
-        }
+            var isCanvasVisible = true;
+            var animationId = null;
 
-        window.addEventListener('mousemove', updateCursorPosition);
-        
-        // Echo object - represents spatial memory
-        class Echo {
-            constructor(x, y, isMain = false) {
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            var echoes = [];
+            var maxEchoes = 50;
+            var mouseX = canvas.width / 2;
+            var mouseY = canvas.height / 2;
+            var targetX = mouseX;
+            var targetY = mouseY;
+
+            document.querySelector('.hero').addEventListener('mousemove', function(e) {
+                var rect = canvas.getBoundingClientRect();
+                targetX = e.clientX - rect.left;
+                targetY = e.clientY - rect.top;
+            });
+
+            function Echo(x, y, isMain) {
                 this.x = x;
                 this.y = y;
                 this.life = isMain ? 100 : 60;
@@ -1115,486 +1053,159 @@
                 this.angle = Math.random() * Math.PI * 2;
                 this.drift = Math.random() * 0.5 + 0.2;
             }
-            
-            update() {
-                // Slow drift (spatial persistence)
+
+            Echo.prototype.update = function() {
                 this.x += Math.cos(this.angle) * this.drift;
                 this.y += Math.sin(this.angle) * this.drift;
                 this.life -= 0.8;
-                
-                // Ensure life doesn't go wildly negative
                 if (this.life < -1) this.life = -1;
-            }
-            
-            draw() {
-                // Safety check: ensure life is positive
-                if (this.life <= 0) return;
-                
-                // Safety check: ensure maxLife is valid
-                if (!this.maxLife || this.maxLife <= 0) return;
-                
-                // Calculate alpha and size with multiple safety checks
-                const lifeRatio = Math.max(0, Math.min(1, this.life / this.maxLife));
-                const alpha = lifeRatio;
-                const calculatedSize = this.radius * lifeRatio;
-                const size = Math.max(1, calculatedSize);
-                
-                // Final safety: verify all values are valid numbers
-                if (!isFinite(size) || !isFinite(alpha) || size < 1) return;
-                
-                try {
-                    // Draw echo point
-                    ctx.fillStyle = `rgba(180, 240, 0, ${alpha * 0.6})`;
+            };
+
+            Echo.prototype.draw = function() {
+                if (this.life <= 0 || !this.maxLife || this.maxLife <= 0) return;
+                var lifeRatio = Math.max(0, Math.min(1, this.life / this.maxLife));
+                var size = Math.max(1, this.radius * lifeRatio);
+                if (!isFinite(size) || !isFinite(lifeRatio) || size < 1) return;
+
+                ctx.fillStyle = 'rgba(180, 240, 0, ' + (lifeRatio * 0.6) + ')';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+                ctx.fill();
+
+                if (this.isMain && size >= 2) {
+                    ctx.strokeStyle = 'rgba(180, 240, 0, ' + (lifeRatio * 0.2) + ')';
+                    ctx.lineWidth = 1;
                     ctx.beginPath();
-                    ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
-                    ctx.fill();
-                    
-                    // Draw halo for main cursor
-                    if (this.isMain && size >= 2) {
-                        const haloRadius = size + 5;
-                        if (haloRadius > 0) {
-                            ctx.strokeStyle = `rgba(180, 240, 0, ${alpha * 0.2})`;
-                            ctx.lineWidth = 1;
-                            ctx.beginPath();
-                            ctx.arc(this.x, this.y, haloRadius, 0, Math.PI * 2);
-                            ctx.stroke();
-                        }
-                    }
-                } catch (e) {
-                    // Silently handle any arc drawing errors
-                    console.error('Arc drawing error:', e, {life: this.life, maxLife: this.maxLife, size: size});
+                    ctx.arc(this.x, this.y, size + 5, 0, Math.PI * 2);
+                    ctx.stroke();
                 }
-            }
-        }
-        
-        // Ambient field nodes (background spatial awareness)
-        const fieldNodes = [];
-        const nodeCount = 30;
-        
-        for (let i = 0; i < nodeCount; i++) {
-            fieldNodes.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3,
-                phase: Math.random() * Math.PI * 2
-            });
-        }
-        
-        function animate() {
-            try {
-                // Fade effect (creates trails)
-                ctx.fillStyle = 'rgba(11, 11, 12, 0.15)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Smooth cursor movement with latency (delayed perception)
-                mouseX += (targetX - mouseX) * 0.12;
-                mouseY += (targetY - mouseY) * 0.12;
-                
-                // Create new echo at cursor position (spatial memory)
-                if (Math.random() < 0.5) {
-                    echoes.push(new Echo(mouseX, mouseY, true));
-                    
-                    // Create secondary echoes (gesture trail)
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = Math.random() * 30 + 10;
-                    echoes.push(new Echo(
-                        mouseX + Math.cos(angle) * distance,
-                        mouseY + Math.sin(angle) * distance,
-                        false
-                    ));
-                }
-                
-                // Update and draw echoes
-                for (let i = echoes.length - 1; i >= 0; i--) {
-                    const echo = echoes[i];
-                    
-                    // Remove dead echoes before processing
-                    if (echo.life <= 0) {
-                        echoes.splice(i, 1);
-                        continue;
-                    }
-                    
-                    echo.update();
-                    echo.draw();
-                }
-                
-                // Maintain echo limit
-                while (echoes.length > maxEchoes) {
-                    echoes.shift();
-                }
-                
-                // Update ambient field
-                fieldNodes.forEach(node => {
-                    node.x += node.vx;
-                    node.y += node.vy;
-                    node.phase += 0.02;
-                    
-                    // Bounce at edges
-                    if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-                    if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-                    
-                    // Draw node with safety check
-                    const pulse = Math.sin(node.phase) * 0.5 + 0.5;
-                    const alpha = Math.max(0, Math.min(1, pulse * 0.15));
-                    ctx.fillStyle = `rgba(180, 240, 0, ${alpha})`;
-                    ctx.beginPath();
-                    ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
-                    ctx.fill();
+            };
+
+            var fieldNodes = [];
+            var nodeCount = 30;
+            for (var i = 0; i < nodeCount; i++) {
+                fieldNodes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    phase: Math.random() * Math.PI * 2
                 });
-                
-                // Draw connections between nearby nodes (spatial field)
-                for (let i = 0; i < fieldNodes.length; i++) {
-                    for (let j = i + 1; j < fieldNodes.length; j++) {
-                        const dx = fieldNodes[i].x - fieldNodes[j].x;
-                        const dy = fieldNodes[i].y - fieldNodes[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 150) {
-                            const alpha = Math.max(0, (1 - distance / 150) * 0.1);
-                            ctx.strokeStyle = `rgba(180, 240, 0, ${alpha})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.beginPath();
-                            ctx.moveTo(fieldNodes[i].x, fieldNodes[i].y);
-                            ctx.lineTo(fieldNodes[j].x, fieldNodes[j].y);
-                            ctx.stroke();
+            }
+
+            function animate() {
+                try {
+                    ctx.fillStyle = 'rgba(11, 11, 12, 0.15)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    mouseX += (targetX - mouseX) * 0.12;
+                    mouseY += (targetY - mouseY) * 0.12;
+
+                    if (Math.random() < 0.5) {
+                        echoes.push(new Echo(mouseX, mouseY, true));
+                        var angle = Math.random() * Math.PI * 2;
+                        var distance = Math.random() * 30 + 10;
+                        echoes.push(new Echo(
+                            mouseX + Math.cos(angle) * distance,
+                            mouseY + Math.sin(angle) * distance,
+                            false
+                        ));
+                    }
+
+                    for (var i = echoes.length - 1; i >= 0; i--) {
+                        if (echoes[i].life <= 0) {
+                            echoes.splice(i, 1);
+                            continue;
+                        }
+                        echoes[i].update();
+                        echoes[i].draw();
+                    }
+
+                    while (echoes.length > maxEchoes) {
+                        echoes.shift();
+                    }
+
+                    for (var n = 0; n < fieldNodes.length; n++) {
+                        var node = fieldNodes[n];
+                        node.x += node.vx;
+                        node.y += node.vy;
+                        node.phase += 0.02;
+                        if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                        if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+                        var pulse = Math.sin(node.phase) * 0.5 + 0.5;
+                        ctx.fillStyle = 'rgba(180, 240, 0, ' + Math.max(0, Math.min(1, pulse * 0.15)) + ')';
+                        ctx.beginPath();
+                        ctx.arc(node.x, node.y, 1, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    for (var a = 0; a < fieldNodes.length; a++) {
+                        for (var b = a + 1; b < fieldNodes.length; b++) {
+                            var dx = fieldNodes[a].x - fieldNodes[b].x;
+                            var dy = fieldNodes[a].y - fieldNodes[b].y;
+                            var dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist < 150) {
+                                var alpha = Math.max(0, (1 - dist / 150) * 0.1);
+                                ctx.strokeStyle = 'rgba(180, 240, 0, ' + alpha + ')';
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(fieldNodes[a].x, fieldNodes[a].y);
+                                ctx.lineTo(fieldNodes[b].x, fieldNodes[b].y);
+                                ctx.stroke();
+                            }
                         }
                     }
+                } catch (error) {}
+
+                if (isCanvasVisible) {
+                    animationId = requestAnimationFrame(animate);
                 }
-            } catch (error) {
-                console.error('Canvas animation error:', error);
-                // Continue animation even if error occurs
             }
-            
-            if (isCanvasVisible) {
-                animationId = requestAnimationFrame(animate);
-            }
-        }
-        
-        // Performance: Pause animation when canvas is off-screen
-        const canvasObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !isCanvasVisible) {
-                    isCanvasVisible = true;
-                    animate();
-                } else if (!entry.isIntersecting && isCanvasVisible) {
-                    isCanvasVisible = false;
-                    if (animationId) {
-                        cancelAnimationFrame(animationId);
-                    }
-                }
-            });
-        }, { threshold: 0 });
-        
-        canvasObserver.observe(canvas);
-        animate();
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all animated elements
-        document.querySelectorAll('.tension, .practice-item, .project').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+            if ('IntersectionObserver' in window) {
+                var canvasObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting && !isCanvasVisible) {
+                            isCanvasVisible = true;
+                            animate();
+                        } else if (!entry.isIntersecting && isCanvasVisible) {
+                            isCanvasVisible = false;
+                            if (animationId) cancelAnimationFrame(animationId);
+                        }
                     });
-                }
-            });
-        });
-
-        // Newsletter form (if present)
-        const newsletterForm = document.querySelector('.newsletter-form');
-        if (newsletterForm) {
-            newsletterForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Newsletter subscription coming soon!');
-            });
-        }
-
-        // i18n Translation System
-        const i18n = {
-            en: {
-                skip_to_content: "Skip to main content",
-                nav_practice: "PRACTICE",
-                nav_work: "WORK",
-                nav_contact: "CONTACT",
-                hero_label: "SENSORY TRANSLATION LAB",
-                hero_headline: "I translate silence into images, spaces, and tools.",
-                hero_subtitle: "I’m a Deaf artist based between Amsterdam and Bologna. I work with film, live visuals, and accessibility-first design—always starting with questions, not assumptions.",
-                cta_explore: "EXPLORE THE WORK",
-                cta_contact: "START A CONVERSATION",
-                trust_label: "RECOGNIZED BY",
-                worldview_label: "CULTURAL TENSIONS",
-                worldview_headline: "Accessibility is not an afterthought.<br>It's a design philosophy.",
-                tension1_title: "Institutions design for the majority, then retrofit for the rest.",
-                tension1_body: "Museums, festivals, and cultural spaces treat accessibility as compliance—checkbox accommodations bolted onto finished products. This approach reveals a fundamental misunderstanding: accessibility constraints often generate the most innovative design solutions.",
-                tension2_title: "Deaf perception exposes blind spots in dominant systems.",
-                tension2_body: "When you build culture primarily through sound, you miss the visual frequencies, spatial rhythms, and tactile signals that shape how millions experience the world. Deafness isn't absence—it's a different sensory hierarchy that reveals what hearing-centric design overlooks.",
-                tension3_title: "Translation is not simplification. It's transformation.",
-                tension3_body: "Every cultural and sensory translation changes meaning. Rather than treating this as loss, I work with translation as a creative force—where shifting between Dutch, Italian, Sign Language, and visual systems generates new forms of knowing.",
-                practice_label: "PRACTICE AREAS",
-                practice_headline: "Cross-sensory work<br>across five disciplines",
-                practice1_title: "Film & Documentary",
-                practice1_desc: "Deaf-led storytelling about language, identity, and everyday life. I’m drawn to long-form attention: how time changes people—and how language holds them.",
-                practice2_title: "Multisensory Installation",
-                practice2_desc: "VJ and spatial work that turns sound into light, pattern, and timing. Performances you can follow with your eyes, your body, your distance.",
-                practice3_title: "Inclusive Cooperatives",
-                practice3_desc: "Co-founder of L’Altro Spazio in Bologna: a cultural bar where accessibility is daily practice, not branding. A place to test what inclusion looks like when things get real.",
-                practice4_title: "Accessibility Innovation",
-                practice4_desc: "I help teams design access as a creative constraint: clearer information, better spatial logic, less friction. Accessibility built in from the start—not added at the end.",
-                practice5_title: "Residencies & Mobility",
-                practice5_desc: "I host and shape small international residencies and exchanges with an access-first approach—so artists can work without the usual barriers.",
-                projects_label: "SELECTED WORK",
-                projects_headline: "Projects that turn<br>perception into form",
-                project1_meta: "DOCUMENTARY FILM",
-                project1_desc: "A feature documentary on Deaf life across cultures—how sign language shapes identity, relationships, and belonging.",
-                project2_meta: "SOCIAL COOPERATIVE",
-                project2_desc: "Co-founded an inclusive cultural cooperative and bar in Bologna. A long-term experiment in accessibility-first hospitality, programming, and work culture.",
-                project3_meta: "SENSORY EXPERIENCE",
-                project3_desc: "An immersive dinner in complete darkness, guided by blind staff. A direct encounter with how space, trust, and attention shift when vision disappears.",
-                project4_meta: "ARTIST RESIDENCY",
-                project4_desc: "Recipient of Culture Moves Europe (Creative Europe) support to host a multisensory artist residency in Bologna. Designed and hosted accessibility-first residency conditions for international artists.",
-                tag_sign_language: "SIGN LANGUAGE",
-                tag_identity: "IDENTITY",
-                tag_cross_cultural: "CROSS-CULTURAL",
-                tag_cooperative: "COOPERATIVE",
-                tag_cultural_space: "CULTURAL SPACE",
-                tag_inclusion: "INCLUSION",
-                tag_multisensory: "MULTISENSORY",
-                tag_accessibility: "ACCESSIBILITY",
-                tag_experience: "EXPERIENCE",
-                tag_eu_project: "EU PROJECT",
-                tag_residency: "RESIDENCY",
-                collab_label: "COLLABORATION",
-                collab_headline: "Let’s make something<br>clear, bold, and accessible.",
-                collab_intro: "If you’re building a program, a space, or a tool—and you want accessibility to be real—I’m interested.",
-                audience1_title: "Cultural Institutions",
-                audience1_desc: "Museums, festivals, and venues building accessible programs and spaces.",
-                audience2_title: "Tech & Research Labs",
-                audience2_desc: "Teams building AI, interfaces, or tools who need deaf design input.",
-                audience3_title: "Artists & Collaborators",
-                audience3_desc: "Creators working across accessibility, film, performance, and installation.",
-                footer_nav_title: "NAVIGATION",
-                footer_nav_practice: "Practice",
-                footer_nav_work: "Selected Work",
-                footer_nav_contact: "Contact",
-                footer_lang_title: "LANGUAGE",
-                footer_pdf_title: "BUY PDF PAPER",
-                footer_pdf_desc: "Two short texts on accessibility, authorship, and perception.",
-                footer_pdf_item1: "Accessibility Is Not a Checklist — €24",
-                footer_pdf_item2: "Accessibility as Authorship — By inquiry"
-            },
-            nl: {
-                skip_to_content: "Ga naar hoofdinhoud",
-                nav_practice: "PRAKTIJK",
-                nav_work: "WERK",
-                nav_contact: "CONTACT",
-                hero_label: "ZINTUIGLIJKE VERTAALLAB",
-                hero_headline: "Ik vertaal stilte naar beelden, ruimtes en tools.",
-                hero_subtitle: "Ik ben een Dove kunstenaar tussen Amsterdam en Bologna. Ik werk met film, live visuals en toegankelijkheid-eerst ontwerp—altijd beginnend met vragen, niet aannames.",
-                cta_explore: "ONTDEK HET WERK",
-                cta_contact: "START EEN GESPREK",
-                trust_label: "ERKEND DOOR",
-                worldview_label: "CULTURELE SPANNINGEN",
-                worldview_headline: "Toegankelijkheid is geen bijgedachte.<br>Het is een ontwerpfilosofie.",
-                tension1_title: "Instituten ontwerpen voor de meerderheid en plakken de rest er achteraf bij.",
-                tension1_body: "Musea, festivals en culturele plekken zien toegankelijkheid als compliance—aanvinkoplossingen die op het einde worden vastgeschroefd. Dat mist het punt: beperkingen leveren vaak de meest vernieuwende ontwerpkeuzes op.",
-                tension2_title: "Dove waarneming legt blinde vlekken in dominante systemen bloot.",
-                tension2_body: "Als je cultuur vooral via geluid bouwt, mis je visuele frequenties, ruimtelijke ritmes en tastbare signalen die bepalen hoe miljoenen de wereld ervaren. Doofheid is geen afwezigheid—het is een andere zintuiglijke hiërarchie die laat zien wat horend ontwerp over het hoofd ziet.",
-                tension3_title: "Vertaling is geen vereenvoudiging. Het is transformatie.",
-                tension3_body: "Elke culturele en zintuiglijke vertaling verandert betekenis. In plaats van dat als verlies te zien, werk ik met vertaling als creatieve kracht—waar schakelen tussen Nederlands, Italiaans, gebarentaal en visuele systemen nieuwe manieren van weten opent.",
-                practice_label: "PRAKTIJKGEBIEDEN",
-                practice_headline: "Cross-sensorisch werk<br>over vijf disciplines",
-                practice1_title: "Film & Documentaire",
-                practice1_desc: "Door Doven geleide verhalen over taal, identiteit en dagelijks leven. Ik ben aangetrokken tot langzame aandacht: hoe tijd mensen verandert—en hoe taal hen draagt.",
-                practice2_title: "Multisensorische Installatie",
-                practice2_desc: "VJ- en ruimtelijk werk dat geluid vertaalt naar licht, patroon en timing. Performances die je kunt volgen met je ogen, je lichaam, je afstand.",
-                practice3_title: "Inclusieve Coöperaties",
-                practice3_desc: "Mede-oprichter van L’Altro Spazio in Bologna: een culturele bar waar toegankelijkheid dagelijkse praktijk is, geen branding. Een plek om te testen hoe inclusie eruitziet als het echt wordt.",
-                practice4_title: "Toegankelijkheidsinnovatie",
-                practice4_desc: "Ik help teams toegang ontwerpen als creatieve beperking: heldere informatie, betere ruimtelijke logica, minder frictie. Toegankelijkheid vanaf het begin ingebouwd—niet achteraf toegevoegd.",
-                practice5_title: "Residenties & Mobiliteit",
-                practice5_desc: "Ik organiseer en vorm kleinschalige internationale residenties en uitwisselingen met een toegankelijkheid-eerst aanpak—zodat kunstenaars kunnen werken zonder de gebruikelijke barrières.",
-                projects_label: "GESELECTEERD WERK",
-                projects_headline: "Projecten die<br>perceptie omzetten in vorm",
-                project1_meta: "DOCUMENTAIRE FILM",
-                project1_desc: "Een lange documentaire over doof leven over culturen heen—hoe gebarentaal identiteit, relaties en verbondenheid vormt.",
-                project2_meta: "SOCIALE COÖPERATIE",
-                project2_desc: "Mede-oprichter van een inclusieve culturele coöperatie en bar in Bologna. Een langetermijnexperiment in toegankelijkheid-eerst gastvrijheid, programmering en werkcultuur.",
-                project3_meta: "ZINTUIGLIJKE ERVARING",
-                project3_desc: "Een immersief diner in volledige duisternis, begeleid door blind personeel. Een directe ontmoeting met hoe ruimte, vertrouwen en aandacht verschuiven wanneer zicht verdwijnt.",
-                project4_meta: "KUNSTENAARSRESIDENTIE",
-                project4_desc: "Ontvanger van Culture Moves Europe (Creative Europe) steun om multisensorische kunstenaarsresidentie in Bologna te hosten. Ontworpen en gehost toegankelijkheid-eerst residentievooru voor internationale kunstenaars.",
-                tag_sign_language: "GEBARENTAAL",
-                tag_identity: "IDENTITEIT",
-                tag_cross_cultural: "CROSS-CULTUREEL",
-                tag_cooperative: "COÖPERATIE",
-                tag_cultural_space: "CULTURELE RUIMTE",
-                tag_inclusion: "INCLUSIE",
-                tag_multisensory: "MULTISENSORISCH",
-                tag_accessibility: "TOEGANKELIJKHEID",
-                tag_experience: "ERVARING",
-                tag_eu_project: "EU PROJECT",
-                tag_residency: "RESIDENTIE",
-                collab_label: "SAMENWERKING",
-                collab_headline: "Laten we iets maken<br>dat helder, krachtig en toegankelijk is.",
-                collab_intro: "Als je een programma, een ruimte of een tool bouwt—en je wilt dat toegankelijkheid echt is—dan hoor ik graag van je.",
-                audience1_title: "Culturele Instellingen",
-                audience1_desc: "Musea, festivals en venues die toegankelijke programma's en ruimtes bouwen.",
-                audience2_title: "Tech & Research Labs",
-                audience2_desc: "Teams die AI, interfaces of tools bouwen die dove ontwerpinput nodig hebben.",
-                audience3_title: "Kunstenaars & Samenwerkingspartners",
-                audience3_desc: "Makers die werken over toegankelijkheid, film, performance en installatie.",
-                footer_nav_title: "NAVIGATIE",
-                footer_nav_practice: "Praktijk",
-                footer_nav_work: "Geselecteerd Werk",
-                footer_nav_contact: "Contact",
-                footer_lang_title: "TAAL",
-                footer_pdf_title: "KOOP PDF PAPER",
-                footer_pdf_desc: "Twee korte teksten over toegankelijkheid, auteurschap en perceptie.",
-                footer_pdf_item1: "Accessibility Is Not a Checklist — €24",
-                footer_pdf_item2: "Accessibility as Authorship — Op aanvraag"
-            },
-            it: {
-                skip_to_content: "Vai al contenuto principale",
-                nav_practice: "PRATICA",
-                nav_work: "LAVORO",
-                nav_contact: "CONTATTO",
-                hero_label: "LABORATORIO DI TRADUZIONE SENSORIALE",
-                hero_headline: "Traduco il silenzio in immagini, spazi e strumenti.",
-                hero_subtitle: "Sono un artista Sordo tra Amsterdam e Bologna. Lavoro con film, visual dal vivo e design accessibile—sempre partendo da domande, non presupposti.",
-                cta_explore: "ESPLORA IL LAVORO",
-                cta_contact: "INIZIA UNA CONVERSAZIONE",
-                trust_label: "RICONOSCIUTO DA",
-                worldview_label: "TENSIONI CULTURALI",
-                worldview_headline: "L'accessibilità non è un ripensamento.<br>È una filosofia di progettazione.",
-                tension1_title: "Le istituzioni progettano per la maggioranza e poi aggiustano per il resto.",
-                tension1_body: "Musei, festival e spazi culturali trattano l’accessibilità come conformità—aggiunte spuntate a fine lavoro. Questo rivela un fraintendimento di base: i vincoli di accessibilità spesso generano le soluzioni di design più innovative.",
-                tension2_title: "La percezione Sorda mette a nudo i punti ciechi dei sistemi dominanti.",
-                tension2_body: "Quando costruisci cultura soprattutto attraverso il suono, perdi frequenze visive, ritmi spaziali e segnali tattili che plasmano l’esperienza di milioni di persone. La sordità non è assenza—è una diversa gerarchia sensoriale che mostra ciò che il design centrato sull’udito ignora.",
-                tension3_title: "La traduzione non è semplificazione. È trasformazione.",
-                tension3_body: "Ogni traduzione culturale e sensoriale cambia il significato. Invece di leggerla come perdita, lavoro con la traduzione come forza creativa—dove passare tra olandese, italiano, lingua dei segni e sistemi visivi genera nuovi modi di conoscere.",
-                practice_label: "AREE DI PRATICA",
-                practice_headline: "Lavoro cross-sensoriale<br>attraverso cinque discipline",
-                practice1_title: "Film & Documentario",
-                practice1_desc: "Narrazione guidata da persone Sorde su lingua, identità e vita quotidiana. Mi interessa l’attenzione lunga: come il tempo cambia le persone—e come il linguaggio le tiene insieme.",
-                practice2_title: "Installazione Multisensoriale",
-                practice2_desc: "Lavoro VJ e spaziale che traduce il suono in luce, pattern e tempo. Performance che puoi seguire con gli occhi, il corpo, la distanza.",
-                practice3_title: "Cooperative Inclusive",
-                practice3_desc: "Co-fondatore di L’Altro Spazio a Bologna: un bar culturale dove l’accessibilità è pratica quotidiana, non branding. Un luogo per testare cosa significa inclusione quando si fa sul serio.",
-                practice4_title: "Innovazione nell'Accessibilità",
-                practice4_desc: "Aiuto i team a progettare l’accesso come vincolo creativo: informazioni più chiare, migliore logica spaziale, meno attrito. Accessibilità costruita dall’inizio—non aggiunta alla fine.",
-                practice5_title: "Residenze & Mobilità",
-                practice5_desc: "Ospito e costruisco piccole residenze e scambi internazionali con un approccio access-first—così gli artisti possono lavorare senza le barriere abituali.",
-                projects_label: "LAVORO SELEZIONATO",
-                projects_headline: "Progetti che trasformano<br>la percezione in forma",
-                project1_meta: "FILM DOCUMENTARIO",
-                project1_desc: "Un documentario lungo sulla vita Sorda attraverso culture—come il linguaggio dei segni plasma identità, relazioni e appartenenza.",
-                project2_meta: "COOPERATIVA SOCIALE",
-                project2_desc: "Co-fondatore di una cooperativa culturale inclusiva e bar a Bologna. Un esperimento di lungo periodo su ospitalità, programmazione e cultura del lavoro accessibili.",
-                project3_meta: "ESPERIENZA SENSORIALE",
-                project3_desc: "Una cena immersiva nel buio completo, guidata da personale cieco. Un incontro diretto con come spazio, fiducia e attenzione cambiano quando la vista scompare.",
-                project4_meta: "RESIDENZA ARTISTICA",
-                project4_desc: "Destinatario del supporto Culture Moves Europe (Creative Europe) per ospitare una residenza artistica multisensoriale a Bologna. Progettato e ospitato condizioni di residenza accessibilità-prima per artisti internazionali.",
-                tag_sign_language: "LINGUAGGIO DEI SEGNI",
-                tag_identity: "IDENTITÀ",
-                tag_cross_cultural: "CROSS-CULTURALE",
-                tag_cooperative: "COOPERATIVA",
-                tag_cultural_space: "SPAZIO CULTURALE",
-                tag_inclusion: "INCLUSIONE",
-                tag_multisensory: "MULTISENSORIALE",
-                tag_accessibility: "ACCESSIBILITÀ",
-                tag_experience: "ESPERIENZA",
-                tag_eu_project: "PROGETTO UE",
-                tag_residency: "RESIDENZA",
-                collab_label: "COLLABORAZIONE",
-                collab_headline: "Facciamo qualcosa<br>di chiaro, deciso e accessibile.",
-                collab_intro: "Se stai costruendo un programma, uno spazio o uno strumento—e vuoi che l’accessibilità sia reale—mi interessa.",
-                audience1_title: "Istituzioni Culturali",
-                audience1_desc: "Musei, festival e luoghi che costruiscono programmi e spazi accessibili.",
-                audience2_title: "Tech & Research Labs",
-                audience2_desc: "Team che costruiscono AI, interfacce o strumenti che necessitano input di design sordo.",
-                audience3_title: "Artisti & Collaboratori",
-                audience3_desc: "Creatori che lavorano attraverso accessibilità, film, performance e installazione.",
-                footer_nav_title: "NAVIGAZIONE",
-                footer_nav_practice: "Pratica",
-                footer_nav_work: "Lavoro Selezionato",
-                footer_nav_contact: "Contatto",
-                footer_lang_title: "LINGUA",
-                footer_pdf_title: "ACQUISTA PDF PAPER",
-                footer_pdf_desc: "Due testi brevi su accessibilità, autorialità e percezione.",
-                footer_pdf_item1: "Accessibility Is Not a Checklist — €24",
-                footer_pdf_item2: "Accessibility as Authorship — Su richiesta"
+                }, { threshold: 0 });
+                canvasObserver.observe(canvas);
             }
-        };
+            animate();
 
-        function setLanguage(lang) {
-            // Update all elements with data-i18n attribute
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (i18n[lang] && i18n[lang][key]) {
-                    el.innerHTML = i18n[lang][key];
-                }
+            if ('IntersectionObserver' in window) {
+                var scrollObserver = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+                document.querySelectorAll('.tension, .practice-item, .project').forEach(function(el) {
+                    scrollObserver.observe(el);
+                });
+            } else {
+                document.querySelectorAll('.tension, .practice-item, .project').forEach(function(el) {
+                    el.classList.add('visible');
+                });
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
             });
-
-            // Update placeholders
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                if (i18n[lang] && i18n[lang][key]) {
-                    el.placeholder = i18n[lang][key];
-                }
-            });
-
-            // Update html lang attribute
-            document.documentElement.lang = lang;
-
-            // Update button states
-            document.querySelectorAll('.language-toggle button').forEach(btn => {
-                const btnLang = btn.getAttribute('data-lang');
-                if (btnLang === lang) {
-                    btn.classList.add('active');
-                    btn.setAttribute('aria-pressed', 'true');
-                } else {
-                    btn.classList.remove('active');
-                    btn.setAttribute('aria-pressed', 'false');
-                }
-            });
-
-            // Save to localStorage
-            localStorage.setItem('lang', lang);
-        }
-
-        // Language toggle
-        document.querySelectorAll('.language-toggle button').forEach(button => {
-            button.addEventListener('click', () => {
-                const lang = button.getAttribute('data-lang');
-                setLanguage(lang);
-            });
-        });
-
-        // Load saved language or default to English
-        const savedLang = localStorage.getItem('lang') || 'en';
-        setLanguage(savedLang);
+        })();
     </script>
 </body>
 </html>
