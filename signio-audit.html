@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paywall UX Audit — Signio App</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 40px;
+    }
+
+    header {
+      margin-bottom: 32px;
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 16px;
+    }
+
+    header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+    header p  { margin-top: 6px; color: #555; font-size: 12px; }
+
+    .legend {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #444;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Custom checkbox ── */
+    .check-wrap {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .check-wrap input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .checkmark {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d1d5db;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+      background: #fff;
+      flex-shrink: 0;
+    }
+
+    .check-wrap input:checked + .checkmark {
+      background: #16a34a;
+      border-color: #16a34a;
+    }
+
+    .check-wrap input:checked + .checkmark::after {
+      content: '';
+      display: block;
+      width: 5px;
+      height: 9px;
+      border: 2.5px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translate(-1px, -1px);
+    }
+
+    /* ── Done row styling ── */
+    tr.done-row td { background: #f0fdf4; }
+    tr.done-row .title { color: #15803d; text-decoration: line-through; text-decoration-color: #86efac; }
+    tr.done-row .desc { opacity: 0.65; }
+
+    /* ── Implementation note ── */
+    .impl-note {
+      margin-top: 7px;
+      font-size: 10.5px;
+      color: #166534;
+      background: #dcfce7;
+      border-left: 3px solid #16a34a;
+      padding: 5px 8px;
+      border-radius: 0 4px 4px 0;
+      line-height: 1.6;
+    }
+
+    .impl-note strong { font-weight: 700; }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+    thead th {
+      background: #1a1a1a;
+      color: #fff;
+      text-align: left;
+      padding: 9px 12px;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    tbody tr { border-bottom: 1px solid #e8e8e8; }
+    tbody tr:not(.done-row):hover { background: #fafafa; }
+
+    td { padding: 10px 12px; vertical-align: top; line-height: 1.5; }
+
+    td.check { text-align: center; width: 36px; padding-top: 13px; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .critical { background: #fee2e2; color: #b91c1c; }
+    .high     { background: #ffedd5; color: #c2410c; }
+    .medium   { background: #fef9c3; color: #a16207; }
+    .low      { background: #f0fdf4; color: #166534; }
+
+    .status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      border: 1px solid #d0d0d0;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .status.done     { background: #f0fdf4; border-color: #86efac; color: #166534; }
+    .status.progress { background: #eff6ff; border-color: #93c5fd; color: #1d4ed8; }
+    .status.todo     { background: #f9fafb; border-color: #d1d5db; color: #6b7280; }
+
+    .section-header td {
+      background: #f3f4f6;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #374151;
+      padding: 6px 12px;
+      border-bottom: 1px solid #d1d5db;
+    }
+
+    .num   { color: #9ca3af; font-size: 11px; width: 28px; }
+    .title { font-weight: 600; color: #111; }
+    .desc  { color: #555; margin-top: 2px; font-size: 11px; }
+
+    .tag {
+      display: inline-block;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-top: 4px;
+      margin-right: 3px;
+    }
+
+    footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+      color: #9ca3af;
+      font-size: 11px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media print {
+      body { padding: 20px; font-size: 11px; }
+      header h1 { font-size: 18px; }
+      .no-print { display: none; }
+      td { padding: 7px 10px; }
+      .checkmark { width: 16px; height: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Signio Ecosystem — Paywall &amp; Flow Audit</h1>
+    <p>Datum: 20 mei 2026 &nbsp;·&nbsp; Scope: TYD-app · TYD-web · Ecosystem bridges &nbsp;·&nbsp; 31 bevindingen</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><div class="dot" style="background:#b91c1c"></div> Critical — Blokkerend voor gebruiker</div>
+    <div class="legend-item"><div class="dot" style="background:#c2410c"></div> High — Slechte UX, snel fixen</div>
+    <div class="legend-item"><div class="dot" style="background:#a16207"></div> Medium — Verbetering gewenst</div>
+    <div class="legend-item"><div class="dot" style="background:#166534"></div> Low — Nice to have</div>
+    <div class="legend-item" style="margin-left:auto; color:#15803d; font-weight:600;">✓ = afgerond</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:36px">✓</th>
+        <th style="width:28px">#</th>
+        <th>Bevinding</th>
+        <th style="width:80px">Prioriteit</th>
+        <th style="width:90px">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- CRITICAL -->
+      <tr class="section-header">
+        <td colspan="5">🔴 Critical</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">1</td>
+        <td>
+          <div class="title">Geen subscribe-knop in de paywall</div>
+          <div class="desc">De <em>SubscriptionModal</em> toont een vergrendelingsscherm maar heeft geen actieknop. Gebruiker heeft geen pad naar betalen — alleen een sluitknop.</div>
+          <span class="tag">SubscriptionModal.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> "Bekijk abonnementen" knop toegevoegd via <code>CustomButton mode="contained"</code> — inclusief duolingo-bounce animatie en haptic feedback. Opent <code>signio.tyd.nl/prijzen</code>.
+          </div>
+        </td>
+        <td><span class="badge critical">Critical</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">2</td>
+        <td>
+          <div class="title">Betaalde gebruiker blijft vergrendeld na betaling</div>
+          <div class="desc">Na betaling via de website keert de gebruiker terug in de app, maar de subscriptionstatus wordt niet ververst. Alles blijft vergrendeld tot opnieuw inloggen.</div>
+          <span class="tag">authenticationProvider.tsx</span>
+          <span class="tag">linking.ts</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>AppState</code> listener toegevoegd — bij terugkeer naar foreground wordt <code>refetchAuthenticatedUser()</code> aangeroepen (5 min cooldown). Daarnaast <code>Linking</code> listener voor <code>payment-success</code> URL die direct refresht zonder cooldown.
+          </div>
+        </td>
+        <td><span class="badge critical">Critical</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">3</td>
+        <td>
+          <div class="title">Geen deep link na succesvolle betaling</div>
+          <div class="desc">Er is geen <code>signio://payment-success</code> route geconfigureerd. De app kan het betalingsresultaat van de website niet ontvangen en de gebruiker niet automatisch unlocken.</div>
+          <span class="tag">linking.ts</span>
+          <span class="tag">rootStack.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Route <code>signio://payment-success</code> geconfigureerd in <code>linking.ts</code>. Nieuwe <code>PaymentSuccessScreen</code> roept <code>refetchAuthenticatedUser()</code> aan, toont bevestiging ("Abonnement geactiveerd! 🎉") en navigeert automatisch naar Home.
+          </div>
+        </td>
+        <td><span class="badge critical">Critical</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <!-- HIGH -->
+      <tr class="section-header">
+        <td colspan="5">🟠 High</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">4</td>
+        <td>
+          <div class="title">Paywall is generiek — geen context per situatie</div>
+          <div class="desc">Dezelfde modal verschijnt bij oefeningen, collecties én thema's. Geen uitleg waaróm die specifieke functie betaald is. Gebruiker begrijpt de reden niet.</div>
+          <span class="tag">map.tsx</span>
+          <span class="tag">search.tsx</span>
+          <span class="tag">collections.tsx</span>
+          <span class="tag">CollectionsUserAddTheme.tsx</span>
+          <span class="tag">SearchResultFeedbackButton.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>SubscriptionFeature</code> union type toegevoegd met 5 situaties: <code>oefeningen</code> (oefeningen op de kaart), <code>themas</code> (premium thema's in zoekresultaten), <code>collecties</code> (aanmaken/opslaan), <code>uitnodiging</code> (bewerkingstoegang accepteren) en <code>feedback</code> (gebaarfeedback geven). Elke situatie heeft eigen icon, titel en beschrijving. Alle 6 call sites voorzien van de juiste <code>feature</code> prop — inclusief state-split in <code>collections.tsx</code> voor de twee afzonderlijke triggers (aanmaken vs. uitnodiging).
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">5</td>
+        <td>
+          <div class="title">Gratis account en abonnement door elkaar</div>
+          <div class="desc">Het "Account vereist" scherm pitcht ook een abonnement, terwijl het scherm bedoeld is voor gratis registratie. Gebruiker verwacht meer van een gratis account dan het levert.</div>
+          <span class="tag">accountRequired.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> De derde alinea ("Daarnaast is er een abonnement...") verwijderd uit alle 6 varianten. Elke tekst herschreven naar 2 beknopte alinea's: wat je nodig hebt + wat je met een gratis account krijgt. "Meer over abonnementen" knop verwijderd — dit scherm gaat uitsluitend over account aanmaken of inloggen.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">6</td>
+        <td>
+          <div class="title">Na inloggen beland je op de verkeerde pagina</div>
+          <div class="desc">Na inloggen navigeert de app altijd naar Kaart of Zoeken, ongeacht waar de gebruiker vandaan kwam. Gebruiker die vanuit Favorieten inlogt, belandt op de Kaart.</div>
+          <span class="tag">accountRequired.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>handleLogin</code> gebruikt nu <code>navigation.goBack()</code> na succesvolle login — de gebruiker keert terug naar het scherm dat de blokkade triggerde. De auth-state wijziging zorgt dat dat scherm zichzelf herlaadt met de nieuwe rechten. Fallback naar <code>Search/SearchMain</code> als <code>canGoBack()</code> false is. Ongebruikte <code>userProgress</code>-logica en <code>useAppContext</code> import verwijderd.<br><br>
+            <strong>Extra design/UX verbeteringen:</strong> Close button background gewijzigd van hardcoded <code>rgba(0,0,0,0.05)</code> naar <code>${theme.colors.primary}18</code> (consistent met SubscriptionModal en LimitedThemeModal); border-radius naar <code>full</code> voor een perfect ronde knop. Foutafhandeling toegevoegd: bij mislukt inloggen toont de knop nu een foutmelding ("Inloggen mislukt. Probeer het opnieuw.") in <code>theme.colors.error</code> — was voorheen stil. Knop wordt <code>disabled</code> tijdens het laden zodat dubbele taps niet mogelijk zijn. Loading overlay: spacing tussen spinner en tekst toegevoegd via <code>gap</code>; tekst aangepast van <code>h3</code> naar <code>body</code> (juiste hiërarchie voor laadstatus). Logo-container <code>marginTop</code> gewijzigd van hardcoded <code>24</code> naar <code>theme.spacing.xxl</code>.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">7</td>
+        <td>
+          <div class="title">Favorieten: twee verschillende blokkades voor hetzelfde probleem</div>
+          <div class="desc">Niet ingelogd → "Account vereist" scherm (met context). Ingelogd maar geen abonnement → generieke paywall zonder uitleg. Inconsistente gebruikerservaring voor hetzelfde scenario.</div>
+          <span class="tag">search.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>handleThemePressForSign</code> controleerde alleen <code>hasSubscription()</code> maar niet of de gebruiker ingelogd was — niet-ingelogde gebruikers zagen de SubscriptionModal in plaats van AccountRequired. Auth-check toegevoegd vóór de abonnements-check: niet ingelogd → <code>AccountRequired variant='favorites'</code>; ingelogd zonder abonnement → <code>SubscriptionModal feature="themas"</code>. Beide paden volgen nu het consistente patroon van de rest van de app. Redundante dubbele <code>setIsFavoriteLoading(false)</code> in <code>finally</code> blok opgeschoond.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <!-- MEDIUM -->
+      <tr class="section-header">
+        <td colspan="5">🟡 Medium</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">8</td>
+        <td>
+          <div class="title">"Collectie vol" scherm noemt geen abonnement</div>
+          <div class="desc">Als een collectie vol is (max. 30 items) krijgt de gebruiker een melding, maar er staat niet bij dat een abonnement dit limiet opheft. Gemiste upsell-kans.</div>
+          <span class="tag">CollectionsLimitReachedModal.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Tekst herschreven in twee lagen: primair ("Deze collectie heeft het maximum van 30 woorden en zinnen bereikt.") + secundair ("Met een abonnement maak je meerdere collecties aan en bewaar je alles georganiseerd."). Rode "Sluiten" knop vervangen door neutraal outlined "Sluiten" + primaire "Abonnement" knop die <code>signio.tyd.nl/prijzen</code> opent. Design opgeschoond: <code>appTheme.typo.h2/body/bodySmall</code> in plaats van hardcoded font sizes; <code>borderRadius.xl</code> en <code>colors.primary}18</code> op close button; fallback <code>#DC2626</code> verwijderd.
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">9</td>
+        <td>
+          <div class="title">Collectie aanmaken: paywall vóór de preview</div>
+          <div class="desc">De gebruiker ziet direct de paywall, zonder eerst te zien wat ze zouden aanmaken. Beter: toon eerst een preview van de functie, dan pas de blokkade.</div>
+          <span class="tag">CollectionsUserAddTheme.tsx</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">10</td>
+        <td>
+          <div class="title">Thema openen toont paywall zonder preview</div>
+          <div class="desc">Klikken op een thema vanuit de zoekpagina toont direct de paywall. Gebruiker heeft geen idee wat ze mislopen — geen inhoudsindruk voor de blokkade.</div>
+          <span class="tag">search.tsx</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">11</td>
+        <td>
+          <div class="title">"Meer over abonnementen" opent altijd de homepage</div>
+          <div class="desc">De link in het accountscherm gaat altijd naar de algemene website, ongeacht de context. Beter: een pagina die aansluit op wat de gebruiker probeerde te doen.</div>
+          <span class="tag">accountRequired.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> "Meer over abonnementen" knop volledig verwijderd uit <code>AccountRequired</code> (zie #5) — het scherm pitcht geen abonnement meer. De knop is daarmee overbodig geworden; <code>Linking</code> import en <code>handleSubscriptionInfo</code> handler ook verwijderd. De abonnementspitch zit nu uitsluitend in de <code>SubscriptionModal</code> op het moment dat een feature daadwerkelijk geblokkeerd is.
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">12</td>
+        <td>
+          <div class="title">Prijs hardcoded in de code</div>
+          <div class="desc">"€4,99/maand" staat direct in de broncode. Bij een prijswijziging moet een developer dit handmatig aanpassen — risico op vergeten.</div>
+          <span class="tag">SubscriptionModal.tsx</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">13</td>
+        <td>
+          <div class="title">Kleuren niet via het thema — dark mode breekt</div>
+          <div class="desc">Enkele kleuren in de paywall zijn hardcoded (<code>rgba(0,0,0,0.05)</code>). Ze volgen de dark mode niet en zorgen voor visuele inconsistentie.</div>
+          <span class="tag">SubscriptionModal.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Close button background in <code>SubscriptionModal</code> en <code>LimitedThemeModal</code> gewijzigd van hardcoded <code>rgba(0,0,0,0.05)</code> / <code>rgba(0,165,152,0.1)</code> naar <code>${theme.colors.primary}18</code> — volledig dynamisch, volgt dark mode correct. Extra: emoji-iconen vervangen door Material Icons (zie bevinding #16).
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <!-- LOW -->
+      <tr class="section-header">
+        <td colspan="5">🔵 Low</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">14</td>
+        <td>
+          <div class="title">Gratis niveaus nergens uitgelegd aan de gebruiker</div>
+          <div class="desc">Hoofdstuk 0, niveaus 1–3 zijn gratis — maar de gebruiker ziet dit nergens vermeld in de app. Proactieve communicatie over de free tier ontbreekt.</div>
+          <span class="tag">map.tsx</span>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">15</td>
+        <td>
+          <div class="title">Openingsanimatie paywall voelt schokkerig</div>
+          <div class="desc">De modal verschijnt met een abrupte schaalanimatie (geen easing). Een vloeiende spring-animatie geeft een professionelere indruk.</div>
+          <span class="tag">SubscriptionModal.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Entry animation gewijzigd van lineaire <code>withTiming</code> naar <code>withSpring</code> (damping: 15, stiffness: 300) — consistent met de rest van de app.
+          </div>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <!-- BONUS -->
+      <tr class="section-header">
+        <td colspan="5">⚡ Extra verbeteringen</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">17</td>
+        <td>
+          <div class="title">Popup-design inconsistent — close buttons, typografie en kleuren niet uniform</div>
+          <div class="desc">Alle collectie- en zoekmodals hadden unstyle close buttons (geen achtergrond, geen borderRadius), hardcoded font sizes in plaats van theme tokens, en een rode knop voor neutrale acties zoals "Sluiten".</div>
+          <span class="tag">CollectionsDeleteConfirmModal.tsx</span>
+          <span class="tag">CollectionsLeaveConfirmModal.tsx</span>
+          <span class="tag">SearchCollectionPickerModal.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Drie modals volledig op het design system gebracht:<br>
+            • <strong>Close buttons</strong> — alle drie voorzien van <code>${primary}18</code> achtergrond en <code>borderRadius.full</code>, consistent met SubscriptionModal, LimitedThemeModal en AccountRequired.<br>
+            • <strong>Typografie</strong> — hardcoded <code>fontSize: 22/16/14, fontWeight: 700/600</code> vervangen door <code>appTheme.typo.h2 / .body / .bodySmall</code>.<br>
+            • <strong>Knoppen</strong> — "Annuleren" was text-only met <code>placeholder</code> kleur (nauwelijks zichtbaar) → <code>mode="outlined"</code> met <code>text</code> kleur. "Sluiten" in SearchCollectionPickerModal was rood (<code>error</code>) → <code>mode="outlined"</code> neutraal.<br>
+            • <strong>borderRadius</strong> — hardcoded <code>16</code> → <code>appTheme.borderRadius.xl</code> in alle drie.<br>
+            • <strong>Dead imports</strong> — ongebruikte <code>useSafeAreaInsets</code> verwijderd uit Delete en Leave modals.<br>
+            • <strong>Tekst</strong> — Delete modal: "Dit kan niet ongedaan worden gemaakt." toegevoegd. Leave modal: tekst verkort en verduidelijkt. Picker modal: subtitle en lege staat beknopter gemaakt.
+          </div>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">16</td>
+        <td>
+          <div class="title">Emoji-iconen vervangen door vector icons — professionelere uitstraling</div>
+          <div class="desc">De paywall en gerelateerde modals gebruikten emoji (<code>🔒 🎯 📚 📁 ✏️ 💬 ⏰ 🎉 ⏳</code>) als functionele iconen. Emoji renderen platform-afhankelijk en inconsistent, en passen niet bij de Material Design stijl van de rest van de app.</div>
+          <span class="tag">SubscriptionModal.tsx</span>
+          <span class="tag">LimitedThemeModal.tsx</span>
+          <span class="tag">rootStack.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Alle emoji vervangen door <code>&lt;Icon&gt;</code> componenten met Material Icons:<br>
+            • <strong>SubscriptionModal</strong> — hero-icoon per feature (<code>fitness-center</code>, <code>library-books</code>, <code>folder</code>, <code>edit</code>, <code>rate-review</code>, <code>lock</code>); ✓ checkmarks in featurelijst → <code>check-circle</code> icoon met <code>theme.colors.success</code>.<br>
+            • <strong>LimitedThemeModal</strong> — <code>⏰</code> → <code>access-time</code> Material Icon met <code>theme.colors.primary</code>.<br>
+            • <strong>PaymentSuccessScreen</strong> — <code>🎉</code> → <code>celebration</code>; <code>⏳</code> → <code>hourglass</code>. Kleuren via <code>appTheme.colors.primary</code>.<br>
+            Alle icoonkleuren zijn nu theme-aware en schalen correct op elk schermformaat.
+          </div>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <!-- ══════════════════════════════════════════ -->
+      <!-- TYD-WEB                                    -->
+      <!-- ══════════════════════════════════════════ -->
+
+      <tr class="section-header">
+        <td colspan="5" style="background:#1a1a1a; color:#fff; font-size:12px; padding:8px 12px; letter-spacing:0.6px;">🌐 TYD-web — signio.tyd.nl</td>
+      </tr>
+
+      <!-- WEB CRITICAL -->
+      <tr class="section-header">
+        <td colspan="5">🔴 Critical</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">18</td>
+        <td>
+          <div class="title">Hard auth-gate op /woordenboek — geen preview voor anonieme gebruiker</div>
+          <div class="desc">Anonieme gebruiker die /woordenboek bezoekt wordt direct naar Auth0 gestuurd — geen enkele glimp van de inhoud. Gebruiker weet niet wat hij mist en haakt vroeg af.</div>
+          <span class="tag">pages/woordenboek/index.page.tsx</span>
+          <span class="tag">src/components/WoordenboekPaywall.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>withPageAuthRequired()</code> vervangen door eigen <code>getServerSideProps</code> die <code>req.cookies.appSession</code> controleert zonder te redirecten. Anonieme gebruikers zien nu <code>WoordenboekPaywall</code>: 6 sample woordkaarten met lock-overlay, soft paywall met "Log in gratis" + "Account aanmaken" + "Bekijk abonnementen" CTAs, en een app-download sectie ("gratis, geen account nodig").
+          </div>
+        </td>
+        <td><span class="badge critical">Critical</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <!-- WEB HIGH -->
+      <tr class="section-header">
+        <td colspan="5">🟠 High</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">19</td>
+        <td>
+          <div class="title">Voucher veld direct zichtbaar op /actie &amp; /account — voelt als gemiste korting</div>
+          <div class="desc">Na aanmelden ziet 95%+ van de gebruikers een prominent voucher-invoerveld. Zij hebben geen code, maar voelen alsof ze iets mislopen. Verhoogt drop-off vóór betaling.</div>
+          <span class="tag">pages/actie.page.tsx</span>
+          <span class="tag">pages/account.page.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Voucher veld verborgen achter "Heb je een kortingscode?" toggle link (collapsed by default, <code>MUI Collapse</code>). Primaire CTA "Verder" / "Abonnement starten" staat nu bovenaan zonder afleiding. Hero-titel /actie gewijzigd van "Heb je een vouchercode?" → "Bijna klaar!" zodat de pagina leidt met de actie i.p.v. de uitzondering. TextField krijgt <code>autoFocus</code> bij openen.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">20</td>
+        <td>
+          <div class="title">Ingelogde gebruiker zonder abonnement krijgt geen inline paywall</div>
+          <div class="desc">Wanneer een ingelogde gebruiker zonder actief abonnement gated content probeert te bereiken, is er geen duidelijke upgrade-prompt in de pagina. Gemiste conversiekans.</div>
+          <span class="tag">pages/woordenboek/index.page.tsx</span>
+          <span class="tag">pages/mijnbundels/index.page.tsx</span>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <!-- WEB MEDIUM -->
+      <tr class="section-header">
+        <td colspan="5">🟡 Medium</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">21</td>
+        <td>
+          <div class="title">"Eén abonnement = app + web" nergens duidelijk gecommuniceerd op /prijzen</div>
+          <div class="desc">De prijspagina toont app- en webkolommen apart in de vergelijkingstabel maar legt niet uit dat één abonnement beide dekt. Gebruiker kan denken dat hij twee keer moet betalen.</div>
+          <span class="tag">pages/prijzen.page.tsx</span>
+          <span class="tag">src/components/PriceCard.tsx</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">22</td>
+        <td>
+          <div class="title">Auth0 login scherm zegt "TYD" i.p.v. "Signio"</div>
+          <div class="desc">"Meld u aan bij TYD om door te gaan naar TYD online leren." Gebruikers komen van Signio en zien plotseling een TYD-scherm — verwarrend en onprofessioneel voor de Signio-merkbeleving.</div>
+          <span class="tag">Auth0 tenant (extern — tyd.eu.auth0.com)</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">23</td>
+        <td>
+          <div class="title">Prijs €4,99 hardcoded op meerdere web-pagina's</div>
+          <div class="desc">Dezelfde fout als app #12: prijs staat rechtstreeks in de broncode van /prijzen en /actie. Bij een prijswijziging moet een developer elke pagina handmatig bijwerken.</div>
+          <span class="tag">pages/prijzen.page.tsx</span>
+          <span class="tag">pages/actie.page.tsx</span>
+          <span class="tag">src/components/PriceCard.tsx</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <!-- WEB LOW -->
+      <tr class="section-header">
+        <td colspan="5">🔵 Low</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">24</td>
+        <td>
+          <div class="title">Gratis toegang nergens proactief vermeld op web</div>
+          <div class="desc">Het woordenboek en de eerste 3 game-niveaus zijn gratis — maar de homepage en /prijzen communiceren dit niet actief. Gebruikers denken dat alles betaald is en haken eerder af.</div>
+          <span class="tag">pages/index.page.tsx</span>
+          <span class="tag">pages/prijzen.page.tsx</span>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <!-- ══════════════════════════════════════════ -->
+      <!-- ECOSYSTEM BRIDGES                          -->
+      <!-- ══════════════════════════════════════════ -->
+
+      <tr class="section-header">
+        <td colspan="5" style="background:#1a1a1a; color:#fff; font-size:12px; padding:8px 12px; letter-spacing:0.6px;">🔗 Ecosystem Bridges — App ↔ Web</td>
+      </tr>
+
+      <!-- BRIDGES CRITICAL -->
+      <tr class="section-header">
+        <td colspan="5">🔴 Critical</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">25</td>
+        <td>
+          <div class="title">Web stuurt signio://zoeken na betaling — app ontvangt nooit payment-success</div>
+          <div class="desc">App #3 configureerde <code>signio://payment-success</code> als ontvanger. Maar <code>openApp()</code> op web opent altijd <code>signio://zoeken</code> — geen parameterondersteuning. Na betaling op web belandt de app-gebruiker op het zoekscherm i.p.v. de bevestigingspagina.</div>
+          <span class="tag">src/lib/deviceUtils.ts (web)</span>
+          <span class="tag">pages/betaling.page.tsx (web)</span>
+          <span class="tag">linking.ts (app — ontvangst al gedaan in #3)</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>openApp(path: string = 'zoeken')</code> — optionele path parameter toegevoegd. iOS: <code>signio://${path}</code>, Android: <code>intent://${path}#Intent;...</code>. "Open in app" knop op /betaling (success + subscription) roept nu <code>openApp('payment-success')</code> aan. Overige "Terug naar app" knoppen (canceled/pending/failed) houden <code>openApp()</code> → <code>signio://zoeken</code>. Alle bestaande <code>onClick={openApp}</code> call sites gewrapped naar <code>onClick={() => openApp()}</code> voor TypeScript compatibiliteit.
+          </div>
+        </td>
+        <td><span class="badge critical">Critical</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <!-- BRIDGES HIGH -->
+      <tr class="section-header">
+        <td colspan="5">🟠 High</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">26</td>
+        <td>
+          <div class="title">/collection/[token] redirect-pagina aanwezig maar niet getest</div>
+          <div class="desc">De web-pagina die app-gedeelde collecties via URL ontvangt en doorstuurt naar <code>signio://collection/&lt;token&gt;</code> is gebuild maar niet gevalideerd. Edge cases: app niet geïnstalleerd (fallback na 1,2s), ongeldige token, iOS vs Android deep link gedrag.</div>
+          <span class="tag">pages/collection/[token].page.tsx (web)</span>
+          <span class="tag">linking.ts (app — ontvangst)</span>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">27</td>
+        <td>
+          <div class="title">App download niet gepromoot bij gated web-content</div>
+          <div class="desc">Wanneer een web-gebruiker op een paywall of auth-gate stuit, is er geen verwijzing naar de gratis Signio-app. Gemiste kans: het woordenboek is gratis in de app en kan de drempel verlagen.</div>
+          <span class="tag">pages/woordenboek/index.page.tsx</span>
+          <span class="tag">soft paywall component (nieuw)</span>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <!-- BRIDGES MEDIUM -->
+      <tr class="section-header">
+        <td colspan="5">🟡 Medium</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">28</td>
+        <td>
+          <div class="title">App → /prijzen zonder context — web weet niet dat gebruiker uit de app komt</div>
+          <div class="desc">De app-paywall stuurt gebruikers naar <code>signio.tyd.nl/prijzen</code> zonder <code>?source=app</code>. De web-flow kan daardoor de mobile betaalstap (<code>/account</code>) niet proactief selecteren. Gebruiker kan in de desktop-flow terechtkomen op een mobiel scherm.</div>
+          <span class="tag">SubscriptionModal.tsx (app)</span>
+          <span class="tag">pages/prijzen.page.tsx (web)</span>
+          <span class="tag">pages/actie.page.tsx (web)</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">29</td>
+        <td>
+          <div class="title">Prijs €4,99 op beide platforms onafhankelijk hardcoded — één bron gewenst</div>
+          <div class="desc">App (#12) en web (#23) bevatten beide hun eigen hardcoded prijs. Bij een prijswijziging moeten beide repo's handmatig worden bijgewerkt — risico op mismatch tussen app en website. Langetermijnoplossing: prijs ophalen via Mollie API of gedeelde config.</div>
+          <span class="tag">SubscriptionModal.tsx (app)</span>
+          <span class="tag">pages/prijzen.page.tsx (web)</span>
+          <span class="tag">pages/actie.page.tsx (web)</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <!-- BRIDGES LOW -->
+      <tr class="section-header">
+        <td colspan="5">🔵 Low</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">30</td>
+        <td>
+          <div class="title">"Open in app" op web linkt niet naar het huidige woord/scherm</div>
+          <div class="desc"><code>openApp()</code> opent altijd <code>signio://zoeken</code> — geen context over welk woord of welke pagina de gebruiker bekijkt. Een gebruiker die een woord op web ziet en naar de app wil, begint helemaal opnieuw.</div>
+          <span class="tag">src/lib/deviceUtils.ts (web)</span>
+          <span class="tag">pages/woordenboek/ (web)</span>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">31</td>
+        <td>
+          <div class="title">Modal-design inconsistent — create/edit, share, 3D en video modals niet op design system</div>
+          <div class="desc">Vier modals hadden hardcoded kleuren, font sizes en borderRadius-waarden buiten het theme systeem om. Close buttons misten achtergrond. "Annuleren"/"Sluiten" knoppen waren invisibel (placeholder-kleur). Ongebruikte imports aanwezig.</div>
+          <span class="tag">CollectionsUserThemeModal.tsx</span>
+          <span class="tag">CollectionsUserThemeShareModal.tsx</span>
+          <span class="tag">SC3DModal.tsx</span>
+          <span class="tag">VideoModal.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong><br>
+            • <strong>CollectionsUserThemeModal</strong> — Close button → <code>${primary}18</code> + <code>borderRadius.full</code>. <code>borderRadius: 20</code> → <code>appTheme.borderRadius.xxl</code>. Titel en alle tekst → <code>appTheme.typo.*</code>. <code>error || '#DC2626'</code> → <code>appTheme.colors.error</code>. "Annuleren" → <code>mode="outlined"</code>. Dode styles verwijderd: <code>modalTitle, sectionTitle, limitWarning, emptyText, selectedHeader</code>.<br>
+            • <strong>CollectionsUserThemeShareModal</strong> — Ongebruikte <code>useSafeAreaInsets</code> en <code>handlePermissionChange</code> verwijderd. Close button → <code>${primary}18</code> + <code>borderRadius.full</code>. <code>borderColor: '#E5E7EB'</code> → <code>appTheme.colors.gray200</code>. <code>backgroundColor: '#F5F5F5'</code> → <code>appTheme.colors.background</code>. Alle tekst → <code>appTheme.typo.*</code>. "Sluiten" → <code>mode="outlined"</code>. Dode styles verwijderd.<br>
+            • <strong>SC3DModal</strong> — <code>backgroundColor: 'white'</code> → <code>theme.colors.white</code>. <code>borderRadius: 16</code> → <code>theme.borderRadius.xl</code>. Loading overlay <code>'#f5f5f5'</code> → <code>theme.colors.background</code>. Alles inline via theme.<br>
+            • <strong>VideoModal</strong> — <code>useTheme</code> geïmporteerd. <code>backgroundColor: 'white'</code> → <code>appTheme.colors.white</code>. <code>borderRadius: 20</code> → <code>appTheme.borderRadius.xxl</code>. Alles inline via theme.
+          </div>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <footer>
+    <span>Signio Ecosystem · Paywall &amp; Flow Audit · 20 mei 2026</span>
+    <span>16 afgerond · 15 resterend &nbsp;·&nbsp; 31 bevindingen totaal</span>
+  </footer>
+
+  <script>
+    function toggleDone(checkbox) {
+      const row = checkbox.closest('tr');
+      const statusCell = row.querySelector('.status');
+      if (checkbox.checked) {
+        row.classList.add('done-row');
+        if (statusCell && !statusCell.classList.contains('done')) {
+          statusCell.classList.remove('todo', 'progress');
+          statusCell.classList.add('done');
+          statusCell.textContent = 'Done';
+        }
+      } else {
+        row.classList.remove('done-row');
+        if (statusCell && statusCell.classList.contains('done')) {
+          statusCell.classList.remove('done');
+          statusCell.classList.add('todo');
+          statusCell.textContent = 'To do';
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>
