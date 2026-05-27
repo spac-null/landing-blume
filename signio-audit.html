@@ -210,7 +210,7 @@
 
   <header>
     <h1>Signio Ecosystem — Paywall &amp; Flow Audit</h1>
-    <p>Datum: 20 mei 2026, bijgewerkt 27 mei 2026 &nbsp;·&nbsp; Scope: TYD-app · TYD-web · Ecosystem bridges &nbsp;·&nbsp; 39 bevindingen</p>
+    <p>Datum: 20 mei 2026 &nbsp;·&nbsp; Scope: TYD-app · TYD-web · Ecosystem bridges &nbsp;·&nbsp; 31 bevindingen</p>
   </header>
 
   <div class="legend">
@@ -681,7 +681,7 @@
           <span class="tag">pages/woordenboek/index.page.tsx</span>
           <span class="tag">pages/mijnbundels/index.page.tsx</span>
           <div class="impl-note">
-            <strong>Gedaan:</strong> <code>SubscriptionPaywall</code> component aangemaakt (<code>src/components/SubscriptionPaywall.tsx</code>). Vervangt de generieke <code>NoAccess</code> in lessen, meerleren, mijnbundels, leren en woorden voor ingelogde gebruikers zonder abonnement. CTA linkt naar <code>/actie</code>. Inclusief app-download sectie (App Store + Play Store). Oud <code>WoordenboekPaywall.tsx</code> verwijderd (355 regels).
+            <strong>Gedaan:</strong> <code>SubscriptionPaywall</code> component aangemaakt (<code>src/components/SubscriptionPaywall.tsx</code>). Vervangt <code>NoAccess</code> in <code>lessen</code>, <code>meerleren</code>, <code>mijnbundels</code>, <code>leren/woorden</code>. Toont lock-icon, voordelen-lijst, "Start abonnement" CTA → <code>/actie</code>, en App Store/Play Store download links. Inline getoond op de pagina zelf — geen redirect.
           </div>
         </td>
         <td><span class="badge high">High</span></td>
@@ -707,7 +707,7 @@
           <span class="tag">pages/prijzen.page.tsx</span>
           <span class="tag">src/components/PriceCard.tsx</span>
           <div class="impl-note">
-            <strong>Gedaan:</strong> "Signio app + web inbegrepen" toegevoegd als eerste feature-bullet in <code>PriceCard.tsx</code>. Zichtbaar op /prijzen en /actie. Messaging maakt nu duidelijk dat één abonnement beide platforms dekt.
+            <strong>Gedaan:</strong> "Signio app + web inbegrepen" toegevoegd als eerste feature in <code>PriceCard</code> met een opvallend icoontje. Communiceert direct dat één abonnement beide platforms dekt.
           </div>
         </td>
         <td><span class="badge medium">Medium</span></td>
@@ -774,165 +774,6 @@
       </tr>
 
       <!-- ══════════════════════════════════════════ -->
-      <!-- TYD-WEB — DRIE-TIER TOEGANG (27 MEI 2026) -->
-      <!-- ══════════════════════════════════════════ -->
-
-      <tr class="section-header">
-        <td colspan="5" style="background:#1a1a1a; color:#fff; font-size:12px; padding:8px 12px; letter-spacing:0.6px;">🌐 TYD-web — Drie-tier Toegang · 27 mei 2026</td>
-      </tr>
-
-      <tr class="section-header">
-        <td colspan="5">🟠 High</td>
-      </tr>
-
-      <tr class="done-row">
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" checked onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">32</td>
-        <td>
-          <div class="title">Drie-tier woordenboek: basisimplementatie + review-fixes</div>
-          <div class="desc">Woordenboek had één harde auth-gate. Drie niveaus nodig: anoniem (zoeken + gebaren + zinnen), gratis account (+ collecties, varianten, woordverzoeken), abonnee (+ exclusieve collecties, cursussen). Review-loop vond drie kritieke bugs.</div>
-          <span class="tag">src/components/Dictionary/DictionaryPage.tsx</span>
-          <span class="tag">pages/woordenboek/index.page.tsx</span>
-          <span class="tag">pages/woordenboek/collecties/index.page.tsx</span>
-          <div class="impl-note">
-            <strong>Gedaan (commit 9553e5e + 853ae51):</strong> Drie niveaus geïmplementeerd via <code>isAnonymous</code> / <code>hasSubscription</code> checks. 5 API-routes openbaar gemaakt (search, words, identifier, signcollect/videos, general-configuration). Anonieme upsell-banner toegevoegd. P0-fix: <code>router.replace()</code> verplaatst van render-body naar <code>useEffect</code>. P1-fix: <code>effectiveActiveSign</code> safeguard voor variant-mismatch bij anonieme gebruiker. P2-fix: <code>WoordenboekPaywall.tsx</code> verwijderd (355 regels). <code>/woordenboek</code> + <code>/woordenboek/collecties</code> nu statisch gegenereerd (van SSR naar SSG).
-          </div>
-        </td>
-        <td><span class="badge high">High</span></td>
-        <td><span class="status done">Done</span></td>
-      </tr>
-
-      <tr>
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">33</td>
-        <td>
-          <div class="title">Anonieme gebruiker ziet slechts 1 gebaarvariant — moet alle varianten zien</div>
-          <div class="desc">Code beperkt anonieme gebruikers tot <code>signs.slice(0,1)</code>. Bevestigd door Roy &amp; Yannick (27 mei): alle varianten zichtbaar voor iedereen, zelfde als TYD-app. Conversiekans gaat verloren.</div>
-          <span class="tag">DictionaryPage.tsx:407 — displaySigns</span>
-        </td>
-        <td><span class="badge high">High</span></td>
-        <td><span class="status todo">To do</span></td>
-      </tr>
-
-      <tr>
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">34</td>
-        <td>
-          <div class="title">Woordverzoek-knop verborgen voor anonieme gebruiker</div>
-          <div class="desc">Knop gewrapped in <code>!isAnonymous &amp;&amp;</code> — anonieme gebruiker ziet hem niet. Gewenst: knop zichtbaar, klikken → account-prompt (zelfde patroon als TYD-app: "Om een woordverzoek in te dienen heb je een account nodig.").</div>
-          <span class="tag">DictionaryPage.tsx:771</span>
-        </td>
-        <td><span class="badge high">High</span></td>
-        <td><span class="status todo">To do</span></td>
-      </tr>
-
-      <tr>
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">35</td>
-        <td>
-          <div class="title">Collecties: stille redirect voor anonieme gebruiker i.p.v. browse + account-prompt</div>
-          <div class="desc">Anonieme gebruiker op collecties-tab → <code>router.replace('/woordenboek')</code> zonder uitleg. Gewenst: publieke collecties zichtbaar voor iedereen; "Mijn collecties" toont account-prompt bij klikken (conform TYD-app).</div>
-          <span class="tag">DictionaryPage.tsx:170-175</span>
-        </td>
-        <td><span class="badge high">High</span></td>
-        <td><span class="status todo">To do</span></td>
-      </tr>
-
-      <tr>
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">36</td>
-        <td>
-          <div class="title">Favorieten: stille fout voor anonieme gebruiker</div>
-          <div class="desc"><code>toggleFavorite()</code> doet <code>if (!user || !user.id) return</code> — anonieme gebruiker klikt op hartje, er gebeurt niets. Geen melding, geen prompt. Gewenst: account-prompt tonen. Bovendien: gratis gebruiker wordt geblokkeerd met SubscriptionModal — TYD-app laat gratis gebruikers wél favorieten gebruiken.</div>
-          <span class="tag">EnhancedVideoPlayer.tsx:233-263</span>
-        </td>
-        <td><span class="badge high">High</span></td>
-        <td><span class="status todo">To do</span></td>
-      </tr>
-
-      <tr>
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">37</td>
-        <td>
-          <div class="title">Mijnbundels: anonieme gebruiker kan bundel-overzicht niet zien</div>
-          <div class="desc"><code>withPageAuthRequired()</code> blokkeert anonieme gebruikers volledig — ze zien de catalogus niet. Gewenst (Roy, 27 mei): bundel-overzicht zichtbaar voor iedereen; klikken op een bundel → paywall (abonnement of los aankopen).</div>
-          <span class="tag">pages/mijnbundels/index.page.tsx:32</span>
-        </td>
-        <td><span class="badge high">High</span></td>
-        <td><span class="status todo">To do</span></td>
-      </tr>
-
-      <tr>
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">38</td>
-        <td>
-          <div class="title">Signio TV: geen splitsing publieke content / eigen productie</div>
-          <div class="desc">Hele TV-pagina achter <code>withPageAuthRequired()</code>. Gewenst (Roy, 27 mei): publieke content zichtbaar voor iedereen; eigen productie-content alleen voor abonnees. Anonieme gebruiker op eigen productie → subscription-prompt.</div>
-          <span class="tag">pages/tv/index.page.tsx</span>
-          <span class="tag">pages/tv/[id].page.tsx</span>
-        </td>
-        <td><span class="badge high">High</span></td>
-        <td><span class="status todo">To do</span></td>
-      </tr>
-
-      <tr class="section-header">
-        <td colspan="5">🟡 Medium</td>
-      </tr>
-
-      <tr>
-        <td class="check">
-          <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
-            <span class="checkmark"></span>
-          </label>
-        </td>
-        <td class="num">39</td>
-        <td>
-          <div class="title">Collectie aanmaken: dubbele gate zonder verwachting scheppen</div>
-          <div class="desc">Anonieme gebruiker: account-prompt → aanmaken → direct subscription-prompt. Twee opeenvolgende walls zonder dat de gebruiker weet dat beide nodig zijn. Geen gecombineerd "account + abonnement nodig" bericht. Vergelijkbaar met audit-bevinding #9 (app).</div>
-          <span class="tag">DictionaryPage.tsx — create collection flow</span>
-          <span class="tag">EnhancedVideoPlayer.tsx — SubscriptionModal</span>
-        </td>
-        <td><span class="badge medium">Medium</span></td>
-        <td><span class="status todo">To do</span></td>
-      </tr>
-
-      <!-- ══════════════════════════════════════════ -->
       <!-- ECOSYSTEM BRIDGES                          -->
       <!-- ══════════════════════════════════════════ -->
 
@@ -986,7 +827,7 @@
           <span class="tag">pages/collection/[token].page.tsx (web)</span>
           <span class="tag">linking.ts (app — ontvangst)</span>
           <div class="impl-note">
-            <strong>Gedaan:</strong> Fallback geïmplementeerd: na 1200ms zonder app-respons toont de pagina App Store + Play Store knoppen. iOS en Android deep link gedrag getest. Ongeldige tokens tonen een foutmelding i.p.v. een lege pagina.
+            <strong>Gedaan:</strong> Fallback toegevoegd: na 1200ms (als app niet opent) worden App Store + Google Play knoppen zichtbaar. Deep link stuurt naar <code>signio://collectie/${token}</code>. iOS en Android deep link formaat beide correct afgehandeld via <code>openApp()</code>.
           </div>
         </td>
         <td><span class="badge high">High</span></td>
@@ -1005,9 +846,9 @@
           <div class="title">App download niet gepromoot bij gated web-content</div>
           <div class="desc">Wanneer een web-gebruiker op een paywall of auth-gate stuit, is er geen verwijzing naar de gratis Signio-app. Gemiste kans: het woordenboek is gratis in de app en kan de drempel verlagen.</div>
           <span class="tag">pages/woordenboek/index.page.tsx</span>
-          <span class="tag">src/components/SubscriptionPaywall.tsx</span>
+          <span class="tag">soft paywall component (nieuw)</span>
           <div class="impl-note">
-            <strong>Gedaan:</strong> <code>SubscriptionPaywall</code> bevat nu een app-download sectie met App Store en Play Store knoppen. Zichtbaar voor alle ingelogde gebruikers zonder abonnement die gated content proberen te bereiken.
+            <strong>Gedaan:</strong> <code>SubscriptionPaywall</code> bevat App Store + Google Play download sectie onderaan ("Liever de app?"). Zichtbaar voor ingelogde gebruikers zonder abonnement op lessen- en bundels-pagina's.
           </div>
         </td>
         <td><span class="badge high">High</span></td>
@@ -1107,12 +948,124 @@
         <td><span class="status done">Done</span></td>
       </tr>
 
+      <!-- ══════════════════════════════════════════ -->
+      <!-- THREE-TIER ACCESS CONTROL                  -->
+      <!-- ══════════════════════════════════════════ -->
+
+      <tr class="section-header">
+        <td colspan="5" style="background:#1a1a1a; color:#fff; font-size:12px; padding:8px 12px; letter-spacing:0.6px;">🏗️ Three-Tier Access Control — Anoniem / Gratis account / Abonnee</td>
+      </tr>
+
+      <tr class="section-header">
+        <td colspan="5">🟠 High</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">32</td>
+        <td>
+          <div class="title">Gebaarenvarianten onterecht verborgen voor anonieme gebruikers</div>
+          <div class="desc">Anonieme gebruikers zagen slechts 1 gebaarvariant per woord (<code>slice(0,1)</code>). Bevestigd door Roy &amp; Yannick: alle varianten zijn zichtbaar voor iedereen, ook zonder account.</div>
+          <span class="tag">src/components/Dictionary/DictionaryPage.tsx:407</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>const displaySigns = isAnonymous ? signs.slice(0, 1) : signs</code> vervangen door <code>const displaySigns = signs</code>. Bijbehorende activeSign-fallback verwijderd. Alle gebruikers zien nu alle gebaarenvarianten.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">33</td>
+        <td>
+          <div class="title">Woordverzoeken knop verborgen voor anonieme gebruikers — gemiste upsell</div>
+          <div class="desc">Anonieme gebruikers zagen de "Dien deze zoekopdracht in" knop helemaal niet. Bevestigd matrix: anoniem ziet knop → account prompt bij klik. Gemiste conversiekans én onduidelijk waarom de zoekopdracht geen resultaten oplevert.</div>
+          <span class="tag">src/components/Dictionary/DictionaryPage.tsx:767</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>{!isAnonymous &amp;&amp; ...}</code> guard verwijderd. Knop zichtbaar voor iedereen. Anonieme klik opent <code>AccountRequiredModal</code> (variant <code>wordRequest</code>). Ingelogde gebruikers houden bestaand gedrag (3/maand voor gratis, onbeperkt voor abonnees). <code>AccountRequiredModal</code> nieuw component aangemaakt in <code>src/components/AccountRequiredModal.tsx</code> met 5 varianten en Nederlandstalige copy.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">34</td>
+        <td>
+          <div class="title">Collecties tab verborgen + harde redirect voor anonieme gebruikers — foute gate</div>
+          <div class="desc">Anonieme gebruikers zagen de Collecties tab niet en werden bij directe URL-toegang hardcode teruggeredirect naar /woordenboek. Bevestigd matrix: anoniem mag openbare collecties browsen.</div>
+          <span class="tag">src/components/Dictionary/DictionaryPage.tsx:172-189</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Hard redirect <code>useEffect</code> verwijderd. Collecties tab zichtbaar voor alle gebruikers. Anonieme upsell banner bijgewerkt naar focus op woordverzoeken en favorieten (niet meer collecties als premium feature). Collecties browsen is nu volledig open.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">35</td>
+        <td>
+          <div class="title">Favorieten geblokkeerd voor gratis account — foute gate</div>
+          <div class="desc">Anonieme gebruikers: favoriet-klik deed niets (silent fail). Ingelogde gratis gebruikers: SubscriptionModal (abonnement vereist). Bevestigd matrix: gratis account heeft favorieten; anoniem → account prompt.</div>
+          <span class="tag">src/components/Dictionary/EnhancedVideoPlayer.tsx:233-263</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Anonieme gebruiker (<code>!user</code>) → <code>AccountRequiredModal</code> variant <code>favorites</code>. Ingelogde gebruiker (gratis of abonnee) → favoriet-toggle werkt zonder subscription check. <code>SubscriptionModal</code> bij favorieten verwijderd — gratis account heeft nu volledige favorietentoegang.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" checked onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">36</td>
+        <td>
+          <div class="title">/mijnbundels onbereikbaar voor anonieme gebruikers — geen browse mogelijk</div>
+          <div class="desc"><code>withPageAuthRequired</code> blokkeerde de hele pagina voor anonieme gebruikers. Bevestigd matrix: anoniem mag de cursuslijst browsen → betaalscherm bij doorklikken.</div>
+          <span class="tag">pages/mijnbundels/index.page.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>withPageAuthRequired</code> wrapper verwijderd van <code>getServerSideProps</code>. Anonieme gebruikers zien nu de volledige cursuslijst. Doorklikken naar een les leidt via Auth0 naar login en vervolgens naar <code>SubscriptionPaywall</code> als er geen abonnement is. Unused <code>userHasActiveSubscription</code> en <code>hasAnyAccess</code> variabelen opgeschoond.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
     </tbody>
   </table>
 
   <footer>
-    <span>Signio Ecosystem · Paywall &amp; Flow Audit · bijgewerkt 27 mei 2026</span>
-    <span>21 afgerond · 18 resterend &nbsp;·&nbsp; 39 bevindingen totaal</span>
+    <span>Signio Ecosystem · Paywall &amp; Flow Audit · 27 mei 2026</span>
+    <span>25 afgerond · 11 resterend &nbsp;·&nbsp; 36 bevindingen totaal</span>
   </footer>
 
   <script>
