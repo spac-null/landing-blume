@@ -1086,7 +1086,7 @@
       </tr>
 
       <tr class="section-header">
-        <td colspan="5">🟢 Session 28 mei 2026 — /app rewrite, /prijzen, overflow fixes</td>
+        <td colspan="5">🟢 Session 28 mei 2026 — /app rewrite, /prijzen, overflow fixes, navbar, SignioTV, /</td>
       </tr>
 
       <tr class="done-row">
@@ -1150,12 +1150,94 @@
         <td><span class="status done">Done</span></td>
       </tr>
 
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" checked />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">41</td>
+        <td>
+          <div class="title">Navbar: volgorde onduidelijk, SignioTV verborgen voor anoniem</div>
+          <div class="desc">Navbar startte met "App" als eerste item — niet het kernproduct. SignioTV was achter login verborgen. Volgorde communiceerde betaling voor oriëntatie.</div>
+          <span class="tag">src/components/Navbar.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Volgorde gewijzigd naar Woordenboek | SignioTV | App | Abonnement nemen | Log in → voor anoniem. SignioTV guard (<code>profile &amp;&amp; !isLoading</code>) verwijderd — zichtbaar voor iedereen. Zelfde logica in mobile drawer.
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" checked />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">42</td>
+        <td>
+          <div class="title">SignioTV geblokkeerd voor anonieme gebruikers</div>
+          <div class="desc"><code>withPageAuthRequired</code> op zowel /tv als /tv/[id] — anonieme bezoekers konden geen video's bekijken of browsen. Access matrix zegt: publieke content ✅ voor iedereen.</div>
+          <span class="tag">pages/tv/index.page.tsx</span>
+          <span class="tag">pages/tv/[id].page.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>withPageAuthRequired</code> verwijderd van beide pagina's. Plain <code>GetServerSideProps</code> — data fetching werkt zonder sessie. Page title "Videos" → "SignioTV". Chip label "SIGNIO TV" → "SignioTV". Anonieme gebruikers zien nu alle content.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" checked />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">43</td>
+        <td>
+          <div class="title">/prijzen: geen gratis tier zichtbaar, vergelijkingstabel onduidelijk</div>
+          <div class="desc">PriceCard (€4,99) was het eerste wat gebruikers zagen op mobile. Geen visuele gratis tier. "Toegang Signio Web" row impliceerde dat web toegang betaald was. 13 tabelrijen te veel detail.</div>
+          <span class="tag">pages/prijzen.page.tsx</span>
+          <span class="tag">src/components/PriceCard.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> GratisCard toegevoegd (€0, "Gratis starten", "woordenboek zonder account") boven PriceCard in sticky kolom. "Toegang Signio" rij verwijderd. "Toegang Signio Web" → "Leerroutes &amp; cursussen web". 6 dovencultuur rijen → 2. Tabel van 13 → 9 rijen. Leergame: "paidWeb: false", freeSpan gecorrigeerd. PriceCard mb:4 verwijderd.
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" checked />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">44</td>
+        <td>
+          <div class="title">/ homepage: onnodige tussenstap voor alle bezoekers</div>
+          <div class="desc">Signio is het woordenboek — geen homepage nodig. Logged-in gebruikers werden al doorgestuurd, anoniem niet. Direct URL / bookmark leidde naar marketing-pagina i.p.v. het product.</div>
+          <span class="tag">pages/index.page.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>getServerSideProps</code> gewijzigd naar universele 307 redirect → /woordenboek voor alle gebruikers. Homepage component blijft intact maar is niet meer bereikbaar.
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
     </tbody>
   </table>
 
   <footer>
     <span>Signio Ecosystem · Paywall &amp; Flow Audit · 28 mei 2026</span>
-    <span>29 afgerond · 11 resterend &nbsp;·&nbsp; 40 bevindingen totaal</span>
+    <span>33 afgerond · 11 resterend &nbsp;·&nbsp; 44 bevindingen totaal</span>
   </footer>
 
   <script>
