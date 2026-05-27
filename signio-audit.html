@@ -1065,30 +1065,97 @@
         <td colspan="5">🟡 Medium — Open design vragen</td>
       </tr>
 
-      <tr>
+      <tr class="done-row">
         <td class="check">
           <label class="check-wrap">
-            <input type="checkbox" onchange="toggleDone(this)" />
+            <input type="checkbox" onchange="toggleDone(this)" checked />
             <span class="checkmark"></span>
           </label>
         </td>
         <td class="num">37</td>
         <td>
           <div class="title">Navbar voor anonieme gebruikers — wat communiceren we?</div>
-          <div class="desc">De navbar toont nu "App | Abonnement nemen | Log in →" voor anonieme bezoekers. Open vragen: (1) Moet Signio TV zichtbaar zijn in de navigatie voor anoniem? TV-pagina is momenteel verborgen (wacht op design). (2) Is "Abonnement nemen" de juiste CTA als eerste kennismaking, of past "Probeer gratis" beter? (3) Ontbreekt een "Woordenboek" of "Lessen" link voor snelle oriëntatie?</div>
+          <div class="desc">De navbar toonde "App | Abonnement nemen | Log in →" voor anonieme bezoekers — geen oriëntatiepunt naar het woordenboek.</div>
           <span class="tag">src/components/Navbar.tsx</span>
-          <span class="tag">pages/tv/index.page.tsx (verborgen)</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> "Woordenboek" link toegevoegd aan anonieme navbar (desktop + mobile drawer). Volgorde nu: App | Woordenboek | Abonnement nemen | Log in →. TV-pagina blijft verborgen (future). "Abonnement nemen" CTA-tekst als open punt bewaard.
+          </div>
         </td>
         <td><span class="badge medium">Medium</span></td>
-        <td><span class="status todo">To do</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="section-header">
+        <td colspan="5">🟢 Session 28 mei 2026 — /app rewrite, /prijzen, overflow fixes</td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" checked />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">38</td>
+        <td>
+          <div class="title">/app pagina: leeg of Strapi-afhankelijk — geen standalone landing</div>
+          <div class="desc">De /app pagina had geen eigen content en hing aan Strapi voor CMS-blokken die er nooit kwamen. Geen duidelijke CTA's naar App Store / Google Play.</div>
+          <span class="tag">pages/app.page.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Volledige rewrite zonder Strapi. Teal gradient hero met "Download op App Store" + "Download op Google Play" knoppen (witte achtergrond / outlined wit, MUI PhoneIphone icon). 6-card feature grid met MUI Avatar + icon (Search, SportsEsports, School, RecordVoiceOver, BookmarkBorder, AutoAwesome) — geen emoji. Onderste CTA-balk: "Probeer woordenboek gratis →" (→ /woordenboek) + "Bekijk abonnementen →" (→ /prijzen).
+          </div>
+        </td>
+        <td><span class="badge high">High</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" checked />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">39</td>
+        <td>
+          <div class="title">/prijzen: Leergame als web-feature, gratis link ontbreekt in PriceCard</div>
+          <div class="desc">PriceCard toonde Leergame als betaalde web-feature (paidWeb: 'Coming soon'), terwijl het app-only is. "Probeer gratis" link ontbrak onder de CTA-knop.</div>
+          <span class="tag">pages/prijzen.page.tsx</span>
+          <span class="tag">src/components/PriceCard.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> Leergame-rij gecorrigeerd: <code>paidWeb: false</code>, <code>freeSpan: 'Tot en met level 3 (app)'</code>. PriceCard: "Probeer het woordenboek gratis →" tekst-link toegevoegd onder "Direct beginnen" knop — linkt naar /woordenboek.
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status done">Done</span></td>
+      </tr>
+
+      <tr class="done-row">
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" checked />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">40</td>
+        <td>
+          <div class="title">DictionaryPage content-kolom overflow op smalle schermen</div>
+          <div class="desc">Op mobile/tablet werd de rechterkolom van het woordenboek (woordkaart, video-player) afgekapt door missende overflow-controle in de flex container.</div>
+          <span class="tag">src/components/Dictionary/DictionaryPage.tsx</span>
+          <div class="impl-note">
+            <strong>Gedaan:</strong> <code>minWidth: 0</code> toegevoegd aan de content-kolom <code>sx</code>. Flex-kinderen in een 1fr grid respekteren nu de container-breedte en lopen niet meer buiten beeld.
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status done">Done</span></td>
       </tr>
 
     </tbody>
   </table>
 
   <footer>
-    <span>Signio Ecosystem · Paywall &amp; Flow Audit · 27 mei 2026</span>
-    <span>25 afgerond · 12 resterend &nbsp;·&nbsp; 37 bevindingen totaal</span>
+    <span>Signio Ecosystem · Paywall &amp; Flow Audit · 28 mei 2026</span>
+    <span>29 afgerond · 11 resterend &nbsp;·&nbsp; 40 bevindingen totaal</span>
   </footer>
 
   <script>
