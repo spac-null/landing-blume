@@ -1013,7 +1013,8 @@
           <div class="desc">Anonieme gebruikers zagen de Collecties tab niet en werden bij directe URL-toegang hardcode teruggeredirect naar /woordenboek. Bevestigd matrix: anoniem mag openbare collecties browsen.</div>
           <span class="tag">src/components/Dictionary/DictionaryPage.tsx:172-189</span>
           <div class="impl-note">
-            <strong>Gedaan:</strong> Hard redirect <code>useEffect</code> verwijderd. Collecties tab zichtbaar voor alle gebruikers. Anonieme upsell banner bijgewerkt naar focus op woordverzoeken en favorieten (niet meer collecties als premium feature). Collecties browsen is nu volledig open.
+            <strong>Gedaan:</strong> Hard redirect <code>useEffect</code> verwijderd. Collecties tab zichtbaar voor alle gebruikers. Collecties browsen is nu volledig open.<br><br>
+            <strong>Design review (924fb17):</strong> De anonieme upsell banner ("Maak een gratis account aan voor woordverzoeken en favorieten") is volledig verwijderd — de volledige breedte teal-blok was visueel te zwaar. Kan later terugkomen in een lichtere vorm.
           </div>
         </td>
         <td><span class="badge high">High</span></td>
@@ -1060,12 +1061,34 @@
         <td><span class="status done">Done</span></td>
       </tr>
 
+      <tr class="section-header">
+        <td colspan="5">🟡 Medium — Open design vragen</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">37</td>
+        <td>
+          <div class="title">Navbar voor anonieme gebruikers — wat communiceren we?</div>
+          <div class="desc">De navbar toont nu "App | Abonnement nemen | Log in →" voor anonieme bezoekers. Open vragen: (1) Moet Signio TV zichtbaar zijn in de navigatie voor anoniem? TV-pagina is momenteel verborgen (wacht op design). (2) Is "Abonnement nemen" de juiste CTA als eerste kennismaking, of past "Probeer gratis" beter? (3) Ontbreekt een "Woordenboek" of "Lessen" link voor snelle oriëntatie?</div>
+          <span class="tag">src/components/Navbar.tsx</span>
+          <span class="tag">pages/tv/index.page.tsx (verborgen)</span>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
     </tbody>
   </table>
 
   <footer>
     <span>Signio Ecosystem · Paywall &amp; Flow Audit · 27 mei 2026</span>
-    <span>25 afgerond · 11 resterend &nbsp;·&nbsp; 36 bevindingen totaal</span>
+    <span>25 afgerond · 12 resterend &nbsp;·&nbsp; 37 bevindingen totaal</span>
   </footer>
 
   <script>
