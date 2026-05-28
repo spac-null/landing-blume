@@ -1232,12 +1232,134 @@
         <td><span class="status done">Done</span></td>
       </tr>
 
+      <!-- ══════════════════════════════════════════ -->
+      <!-- /WOORDENBOEK LANDING                       -->
+      <!-- ══════════════════════════════════════════ -->
+
+      <tr class="section-header">
+        <td colspan="5" style="background:#1a1a1a; color:#fff; font-size:12px; padding:8px 12px; letter-spacing:0.6px;">🎯 /woordenboek Landing — Engagement &amp; Messaging</td>
+      </tr>
+
+      <tr class="section-header">
+        <td colspan="5">🟡 Medium</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">45</td>
+        <td>
+          <div class="title">Gradient header zegt "Zoeken" — geen waardepropositie</div>
+          <div class="desc">De linker sidebar toont "WOORDENBOEK / Zoeken / Ontdek gebaren, zinnen en dovencultuur" — een navigatielabel als heading, geen reden waarom de bezoeker hier moet zijn. Eerste-tijdsgebruiker weet niet wat dit product is.</div>
+          <span class="tag">DictionaryPage.tsx — layoutHeading / layoutSubheading</span>
+          <div style="margin-top:5px; font-size:10.5px; color:#555;">
+            Wijziging: <code>layoutHeading</code> (search mode) → "Nederlandse Gebarentaal" &nbsp;·&nbsp;
+            <code>layoutSubheading</code> → "Leer gebaren, ontdek zinnen en dovencultuur" (actieve stem).
+            SEO title apart aanpassen (gebruikt nu layoutHeading als <code>&lt;title&gt;</code>).
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr class="section-header">
+        <td colspan="5">🔵 Low</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">46</td>
+        <td>
+          <div class="title">Geen schaalsindicator — bezoeker weet niet hoe groot het woordenboek is</div>
+          <div class="desc">6.000+ gebaren beschikbaar (bevestigd), maar nergens zichtbaar op de landing. Vertrouwenssignaal en USP die nu verborgen is. Collecties toont al "X collecties beschikbaar" — zelfde patroon mist voor het woordenboek zelf.</div>
+          <span class="tag">DictionaryPage.tsx — gradient header box (~regel 756)</span>
+          <div style="margin-top:5px; font-size:10.5px; color:#555;">
+            Toevoegen: <code>&lt;Typography&gt;</code> "6.000+ gebaren beschikbaar" in gradient box (hardcoded, alleen search/idle mode). Zelfde positie als bestaande collectionsCount regel.
+          </div>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">47</td>
+        <td>
+          <div class="title">Mobile: zoekbalk impliceert "type eerst" — gebaar van de dag niet zichtbaar boven the fold</div>
+          <div class="desc">Op mobile staat de zoekbalk boven de video, wat de indruk wekt dat de gebruiker eerst moet zoeken. Het gebaar van de dag (de sterkste haak) is alleen zichtbaar na scrollen — ook al is het technisch order: 1 in de DOM.</div>
+          <span class="tag">DictionaryPage.tsx — mobile search Box (~regel 695)</span>
+          <div style="margin-top:5px; font-size:10.5px; color:#555;">
+            Toevoegen: subtiele tekstregel onder zoekbalk op mobile wanneer <code>currentMode === ViewMode.SEARCH_IDLE</code>: "Of bekijk het gebaar van de dag ↓" — kleine, gedempte kleur, geen layout-wijziging.
+          </div>
+        </td>
+        <td><span class="badge low">Low</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr class="section-header">
+        <td colspan="5">🟡 Medium</td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">48</td>
+        <td>
+          <div class="title">"Mijn collecties" als gestippelde chip in navigatie — ziet er kapot uit</div>
+          <div class="desc">Een gestippelde rand (<code>border: '2px dashed'</code>) staat conventioneel voor een placeholder of uitgeschakeld element. Naast de twee actieve tabs communiceert het een defecte optie, geen premium upsell. Drie tabs is ook al krap op 375px.</div>
+          <span class="tag">DictionaryPage.tsx — tabsComponent (~regel 343)</span>
+          <div style="margin-top:5px; font-size:10.5px; color:#555;">
+            Verwijder de derde Chip volledig. Nav terug naar twee schone opties: Woordenboek | Collecties. "Mijn collecties" krijgt eigen plek binnen de Collecties-pagina (zie #49).
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
+      <tr>
+        <td class="check">
+          <label class="check-wrap">
+            <input type="checkbox" onchange="toggleDone(this)" />
+            <span class="checkmark"></span>
+          </label>
+        </td>
+        <td class="num">49</td>
+        <td>
+          <div class="title">"Mijn collecties" heeft geen eigen plek — subscriber-feature nergens gepromoot</div>
+          <div class="desc">Na verwijdering uit de nav (#48) heeft "Mijn collecties" geen landingsplek meer. De logische plek is bovenin de Collecties-pagina: een card die uitlegt wat het is + CTA. Nu onzichtbaar voor potentiële abonnees.</div>
+          <span class="tag">CollectionsView.tsx</span>
+          <div style="margin-top:5px; font-size:10.5px; color:#555;">
+            Card toevoegen aan CollectionsView voor anonieme/niet-abonnee gebruikers. Beknopte beschrijving + CTA-knop. Wires naar bestaande <code>handleMijnCollectiesClick</code> logica in DictionaryPage (prop threading of context nodig). Niet tonen voor abonnees.
+          </div>
+        </td>
+        <td><span class="badge medium">Medium</span></td>
+        <td><span class="status todo">To do</span></td>
+      </tr>
+
     </tbody>
   </table>
 
   <footer>
     <span>Signio Ecosystem · Paywall &amp; Flow Audit · 28 mei 2026</span>
-    <span>33 afgerond · 11 resterend &nbsp;·&nbsp; 44 bevindingen totaal</span>
+    <span>33 afgerond · 16 resterend &nbsp;·&nbsp; 49 bevindingen totaal</span>
   </footer>
 
   <script>
